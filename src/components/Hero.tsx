@@ -1,16 +1,17 @@
+
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
   return (
     <div className="relative bg-primary min-h-screen flex items-center">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/6b7f5e56-4c5e-4e2f-bcd0-5e3d5b9f86a5.png')] bg-cover bg-center opacity-30" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-3xl text-white">
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
-            Proclamer l'Espoir au Monde
+            Radio Sauti Ya Injili
           </h1>
           <p className="text-xl md:text-2xl mb-8 text-gray-200">
             Radio Sauti ya Injili, votre station de radio chrétienne à Goma, diffusant la Bonne Nouvelle à travers l'Afrique.
