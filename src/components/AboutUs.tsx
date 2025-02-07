@@ -1,3 +1,4 @@
+
 const AboutUs = () => {
   return (
     <section id="about" className="py-20 bg-gray-50">
@@ -6,25 +7,25 @@ const AboutUs = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-4">
               <img
-                src="/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                alt="Studio"
+                src="/lovable-uploads/aadc217e-e091-4719-aa5f-da6c6699bfe4.png"
+                alt="Antenne Radio Sauti ya Injili"
                 className="rounded-lg shadow-lg"
               />
               <img
-                src="/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                alt="Broadcasting"
+                src="/lovable-uploads/aadc217e-e091-4719-aa5f-da6c6699bfe4.png"
+                alt="Antenne Radio Sauti ya Injili"
                 className="rounded-lg shadow-lg"
               />
             </div>
             <div className="space-y-4 mt-8">
               <img
-                src="/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                alt="Team"
+                src="/lovable-uploads/aadc217e-e091-4719-aa5f-da6c6699bfe4.png"
+                alt="Antenne Radio Sauti ya Injili"
                 className="rounded-lg shadow-lg"
               />
               <img
-                src="/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                alt="Equipment"
+                src="/lovable-uploads/aadc217e-e091-4719-aa5f-da6c6699bfe4.png"
+                alt="Antenne Radio Sauti ya Injili"
                 className="rounded-lg shadow-lg"
               />
             </div>
