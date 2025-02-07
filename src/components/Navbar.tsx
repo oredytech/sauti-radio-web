@@ -1,3 +1,4 @@
+
 import { Button } from "@/components/ui/button";
 import { Radio } from "lucide-react";
 
@@ -18,7 +19,7 @@ const Navbar = () => {
             <a href="#" className="text-primary hover:text-secondary">Accueil</a>
             <a href="#about" className="text-primary hover:text-secondary">À propos</a>
             <a href="#schedule" className="text-primary hover:text-secondary">Programme</a>
-            <a href="#events" className="text-primary hover:text-secondary">Événements</a>
+            <a href="#news" className="text-primary hover:text-secondary">Actualités</a>
             <a href="#contact" className="text-primary hover:text-secondary">Contact</a>
           </div>
 
