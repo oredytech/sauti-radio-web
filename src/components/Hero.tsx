@@ -5,7 +5,7 @@ const Hero = () => {
   return (
     <div className="relative bg-primary min-h-screen flex items-center">
       <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/6b7f5e56-4c5e-4e2f-bcd0-5e3d5b9f86a5.png')] bg-cover bg-center opacity-30" />
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/7b9a0772-8a91-457f-9a9b-7c6ccf0cd7a1.png')] bg-cover bg-center opacity-30" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
