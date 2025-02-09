@@ -1,8 +1,17 @@
 
 const AppDownload = () => {
   return (
-    <section className="bg-primary text-white py-20">
-      <div className="container mx-auto px-4">
+    <section 
+      className="relative bg-primary text-white py-20"
+      style={{
+        backgroundImage: 'url("/lovable-uploads/65f5aa83-65c4-4552-b9c6-358b2453275c.png")',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
+      <div className="absolute inset-0 bg-primary/80"></div>
+      <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold mb-6">
             Écoutez-nous partout
