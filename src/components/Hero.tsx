@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 const Hero = () => {
   return (
     <div className="relative bg-primary min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/40 to-primary/30">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/520c2b02-c9a9-46c6-ba51-7ac92a23db2b.png')] bg-cover bg-center opacity-70" />
+      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10">
+        <div className="absolute inset-0 bg-[url('/lovable-uploads/520c2b02-c9a9-46c6-ba51-7ac92a23db2b.png')] bg-cover bg-center opacity-90" />
       </div>
       
       <div className="container mx-auto px-4 relative z-10">

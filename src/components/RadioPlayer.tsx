@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Play, Pause, Volume2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -24,9 +25,16 @@ const RadioPlayer = () => {
                 <Play className="h-8 w-8" />
               )}
             </Button>
-            <div>
-              <h3 className="font-semibold text-primary">Radio Sauti ya Injili</h3>
-              <p className="text-sm text-gray-500">En direct</p>
+            <div className="flex items-center gap-3">
+              <img
+                src="/lovable-uploads/c288b9bf-71dc-49ea-9721-51f84631a934.png"
+                alt="Radio Sauti ya Injili"
+                className="h-10 w-10 object-contain"
+              />
+              <div>
+                <h3 className="font-semibold text-primary">Radio Sauti ya Injili</h3>
+                <p className="text-sm text-gray-500">En direct</p>
+              </div>
             </div>
           </div>
 
