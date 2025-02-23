@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
+import { Link } from "react-router-dom";
 
 interface WordPressPost {
   id: number;
@@ -75,10 +76,8 @@ const Events = () => {
                     __html: post.excerpt.rendered.slice(0, 150) + "...",
                   }}
                 />
-                <a
-                  href={post.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to={`/article/${post.id}`}
                   className="text-secondary hover:text-red-600 font-semibold flex items-center gap-2"
                 >
                   Lire la suite
@@ -94,7 +93,7 @@ const Events = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           ))}
