@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { format } from "date-fns";
@@ -145,29 +144,9 @@ const NewsPage = () => {
             Actualités
           </h1>
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-            {/* Left Grid */}
-            <div className="lg:col-span-3">
-              <div className="grid gap-4">
-                {firstFivePosts.slice(0, 5).map((post) => (
-                  <Link
-                    key={post.id}
-                    to={`/article/${post.id}`}
-                    className="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition-colors"
-                  >
-                    <h3 className="font-semibold text-primary">
-                      {decodeHtmlEntities(post.title.rendered)}
-                    </h3>
-                    <div className="text-sm text-gray-600 mt-2">
-                      {format(new Date(post.date), "d MMMM yyyy", { locale: fr })}
-                    </div>
-                  </Link>
-                ))}
-              </div>
-            </div>
-
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Center Slider */}
-            <div className="lg:col-span-6">
+            <div className="lg:col-span-3">
               <Carousel>
                 <CarouselContent>
                   {firstFivePosts.map((post) => (
@@ -204,8 +183,8 @@ const NewsPage = () => {
             </div>
 
             {/* Right Grid */}
-            <div className="lg:col-span-3">
-              <div className="grid grid-cols-2 gap-4">
+            <div className="lg:col-span-1">
+              <div className="grid grid-cols-1 gap-4">
                 {nextFourPosts.map((post) => (
                   <Link
                     key={post.id}
