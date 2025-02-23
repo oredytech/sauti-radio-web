@@ -5,6 +5,7 @@ import Index from "./pages/Index";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ArticlePage from "./pages/ArticlePage";
+import NewsPage from "./pages/NewsPage";
 
 const queryClient = new QueryClient();
 
@@ -16,6 +17,7 @@ function App() {
           <Route path="/" element={<Index />} />
           <Route path="/about" element={<About />} />
           <Route path="/article/:id" element={<ArticlePage />} />
+          <Route path="/actualites" element={<NewsPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Router>
