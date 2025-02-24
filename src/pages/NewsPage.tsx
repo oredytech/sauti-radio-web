@@ -184,12 +184,12 @@ const NewsPage = () => {
 
             {/* Right Grid */}
             <div className="lg:col-span-1">
-              <div className="grid grid-cols-1 gap-4">
+              <div className="grid grid-cols-2 gap-4 h-full">
                 {nextFourPosts.map((post) => (
                   <Link
                     key={post.id}
                     to={`/article/${post.id}`}
-                    className="block bg-gray-100 rounded-lg p-4 hover:bg-gray-200 transition-colors"
+                    className="block bg-gray-100 rounded-lg p-2 hover:bg-gray-200 transition-colors"
                   >
                     <img
                       src={
@@ -197,9 +197,9 @@ const NewsPage = () => {
                         "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
                       }
                       alt={decodeHtmlEntities(post.title.rendered)}
-                      className="w-full h-32 object-cover rounded-lg mb-2"
+                      className="w-full h-24 object-cover rounded-lg mb-2"
                     />
-                    <h3 className="font-semibold text-primary text-sm">
+                    <h3 className="font-semibold text-primary text-xs line-clamp-2">
                       {decodeHtmlEntities(post.title.rendered)}
                     </h3>
                   </Link>
