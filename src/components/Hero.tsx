@@ -4,9 +4,13 @@ import { Play } from "lucide-react";
 
 const Hero = () => {
   return (
-    <div className="relative bg-primary min-h-screen flex items-center">
-      <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-primary/10">
-        <div className="absolute inset-0 bg-[url('/lovable-uploads/ed46bbe7-3b36-46d2-ad26-02193f40977b.png')] bg-cover bg-center opacity-90" />
+    <div className="relative min-h-screen flex items-center">
+      <div className="absolute inset-0">
+        <div 
+          className="absolute inset-0 bg-[url('/lovable-uploads/c556d486-14f5-4acf-a3f0-456898833de3.png')] bg-cover bg-center"
+          style={{ backgroundImage: "url('/lovable-uploads/c556d486-14f5-4acf-a3f0-456898833de3.png')" }}
+        />
+        <div className="absolute inset-0 bg-black/50" /> {/* Overlay sombre */}
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
