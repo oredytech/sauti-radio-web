@@ -92,11 +92,17 @@ const EmissionsSection = () => {
   };
 
   return (
-    <section id="emissions" className="py-20 bg-gray-50 dark:bg-gray-900">
-      <div className="container mx-auto px-4">
+    <section id="emissions" className="py-20 relative">
+      {/* Image d'arrière-plan avec overlay */}
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
+        backgroundImage: "url('/lovable-uploads/b115b786-3404-4073-9148-628fbd66947e.png')"
+      }} />
+      <div className="absolute inset-0 bg-black/70" /> {/* Overlay sombre pour améliorer la lisibilité */}
+      
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-primary dark:text-white mb-4">Nos émissions</h2>
-          <p className="text-gray-600 dark:text-gray-300">
+          <h2 className="text-4xl font-bold text-white mb-4">Nos émissions</h2>
+          <p className="text-gray-300">
             Découvrez nos différentes catégories d'émissions
           </p>
         </div>
@@ -109,7 +115,11 @@ const EmissionsSection = () => {
                 key={category.name}
                 variant={selectedCategory === category.name ? "default" : "outline"}
                 onClick={() => toggleCategory(category.name)}
-                className="flex items-center gap-2"
+                className={`flex items-center gap-2 ${
+                  selectedCategory === category.name 
+                    ? "bg-primary text-white" 
+                    : "bg-white/10 hover:bg-white/20 text-white border-white/30"
+                }`}
               >
                 {category.icon}
                 {category.name}
@@ -124,7 +134,7 @@ const EmissionsSection = () => {
 
           {/* Subcategories accordion */}
           {selectedCategory && (
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-4 mt-6">
+            <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm rounded-lg shadow-md p-4 mt-6">
               <h3 className="text-xl font-semibold mb-4 text-primary dark:text-white">
                 {selectedCategory}
               </h3>
