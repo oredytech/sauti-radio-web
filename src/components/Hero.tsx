@@ -7,7 +7,7 @@ const Hero = () => {
     <div className="relative min-h-screen flex items-center">
       <div className="absolute inset-0">
         <div 
-          className="absolute inset-0 bg-[url('/lovable-uploads/c556d486-14f5-4acf-a3f0-456898833de3.png')] bg-cover bg-center"
+          className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: "url('/lovable-uploads/c556d486-14f5-4acf-a3f0-456898833de3.png')" }}
         />
         <div className="absolute inset-0 bg-black/50" /> {/* Overlay sombre */}
