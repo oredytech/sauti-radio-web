@@ -1,8 +1,10 @@
+
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import AboutUs from "@/components/AboutUs";
 import AppDownload from "@/components/AppDownload";
 import Events from "@/components/Events";
+import EmissionsSection from "@/components/EmissionsSection";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 
@@ -14,6 +16,7 @@ const Index = () => {
       <AboutUs />
       <AppDownload />
       <Events />
+      <EmissionsSection />
       <Footer />
       <RadioPlayer />
     </div>
