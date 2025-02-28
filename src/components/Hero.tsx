@@ -6,7 +6,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-cover bg-center" style={{
         backgroundImage: "url('/lovable-uploads/c556d486-14f5-4acf-a3f0-456898833de3.png')"
       }} />
-        <div className="absolute inset-0 bg-black/50\nbackground-image(url)" /> {/* Overlay sombre */}
+        <div className="absolute inset-0 bg-black/50" /> {/* Overlay sombre */}
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
