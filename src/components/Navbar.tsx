@@ -8,16 +8,11 @@ import DropdownMenu from "./navbar/DropdownMenu";
 import SearchForm from "./navbar/SearchForm";
 import ThemeToggle from "./navbar/ThemeToggle";
 import MobileMenu from "./navbar/MobileMenu";
+import RadioControl from "./RadioControl";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-
-  const handlePlay = () => {
-    if (window.playRadio) {
-      window.playRadio();
-    }
-  };
 
   const emissionItems = [
     { label: "Morning Show", path: "/emissions/morning" },
@@ -33,12 +28,12 @@ const Navbar = () => {
             <Link to="/" className="flex items-center">
               <img alt="Radio Sauti ya Injili" className="h-16 w-16" src="/lovable-uploads/a681d37a-5626-4700-b989-7c74ac9b873c.png" />
             </Link>
-            <Button 
-              className="bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-2 rounded-lg text-sm md:text-base hidden sm:block"
-              onClick={handlePlay}
-            >
-              ÉCOUTER
-            </Button>
+            <RadioControl 
+              showText={false}
+              size="sm"
+              variant="secondary"
+              className="hidden sm:flex"
+            />
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
@@ -66,12 +61,12 @@ const Navbar = () => {
             
             <ThemeToggle />
             
-            <Button 
-              className="bg-red-600 hover:bg-red-700 text-white font-bold px-4 py-1 rounded-lg text-sm sm:hidden"
-              onClick={handlePlay}
-            >
-              ÉCOUTER
-            </Button>
+            <RadioControl 
+              showText={false}
+              size="sm"
+              variant="secondary"
+              className="sm:hidden"
+            />
             
             <Button variant="ghost" size="icon" className="md:hidden rounded-full" onClick={() => setIsOpen(!isOpen)}>
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600 dark:text-gray-300">

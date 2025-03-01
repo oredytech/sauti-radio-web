@@ -2,7 +2,7 @@
 import React from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import RadioControl from "@/components/RadioControl";
 import RadioPlayer from "@/components/RadioPlayer";
 
 const About = () => {
@@ -40,9 +40,14 @@ const About = () => {
                 </p>
               </div>
 
-              <Button variant="secondary" size="lg" className="w-full mb-12">
-                ECOUTER LA RADIO EN DIRECT
-              </Button>
+              <div className="w-full">
+                <RadioControl 
+                  showText={true} 
+                  size="lg" 
+                  variant="secondary"
+                  className="w-full mb-12"
+                />
+              </div>
 
               <div>
                 <h2 className="text-2xl font-bold text-primary mb-4">HISTORIQUE</h2>
