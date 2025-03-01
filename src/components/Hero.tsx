@@ -1,6 +1,14 @@
+
 import { Button } from "@/components/ui/button";
 import { Play } from "lucide-react";
+
 const Hero = () => {
+  const handlePlay = () => {
+    if (window.playRadio) {
+      window.playRadio();
+    }
+  };
+
   return <div className="relative min-h-screen flex items-center">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-cover bg-center" style={{
@@ -17,7 +25,10 @@ const Hero = () => {
           <p className="text-xl md:text-2xl mb-8 text-gray-200">
             Radio Sauti ya Injili, votre station de radio chrétienne à Goma, diffusant la Bonne Nouvelle à travers l'Afrique.
           </p>
-          <Button className="bg-secondary hover:bg-red-600 text-white text-lg px-8 py-6 flex items-center gap-2">
+          <Button 
+            className="bg-secondary hover:bg-red-600 text-white text-lg px-8 py-6 flex items-center gap-2"
+            onClick={handlePlay}
+          >
             <Play className="h-6 w-6" />
             Écouter en direct
           </Button>
@@ -25,4 +36,5 @@ const Hero = () => {
       </div>
     </div>;
 };
+
 export default Hero;
