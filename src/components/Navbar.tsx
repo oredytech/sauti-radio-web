@@ -1,7 +1,9 @@
-import { useState, useEffect } from "react";
+
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ChevronDown, Search, Moon, Sun, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -9,6 +11,7 @@ const Navbar = () => {
   });
   const [showSearch, setShowSearch] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const searchFormRef = useRef(null);
 
   // Toggle dark mode
   const toggleDarkMode = () => {
@@ -30,6 +33,23 @@ const Navbar = () => {
       setIsDarkMode(true);
     }
   }, []);
+
+  // Close search form when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchFormRef.current && !searchFormRef.current.contains(event.target)) {
+        setShowSearch(false);
+      }
+    };
+
+    if (showSearch) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSearch]);
+
   const handleSearch = e => {
     e.preventDefault();
     if (searchQuery.trim()) {
@@ -39,6 +59,7 @@ const Navbar = () => {
       setShowSearch(false);
     }
   };
+
   return <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
@@ -87,17 +108,38 @@ const Navbar = () => {
           {/* Boutons search et theme */}
           <div className="flex items-center space-x-2">
             {/* Search button and form */}
-            {showSearch ? <form onSubmit={handleSearch} className="relative flex items-center">
-                <input type="text" placeholder="Rechercher..." value={searchQuery} onChange={e => setSearchQuery(e.target.value)} className="bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-full pl-4 pr-10 py-1 focus:outline-none focus:ring-2 focus:ring-primary text-sm w-full md:w-64 transition-all" autoFocus />
-                <Button type="submit" variant="ghost" size="icon" className="absolute right-0 rounded-full">
-                  <Search className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                </Button>
-                <Button type="button" variant="ghost" size="icon" className="ml-1" onClick={() => setShowSearch(false)}>
-                  <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-                </Button>
-              </form> : <Button variant="ghost" size="icon" className="rounded-full" onClick={() => setShowSearch(true)}>
+            <div className="relative">
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="rounded-full" 
+                onClick={() => setShowSearch(!showSearch)}
+                aria-label="Search"
+              >
                 <Search className="h-5 w-5 text-gray-600 dark:text-gray-300" />
-              </Button>}
+              </Button>
+              
+              {showSearch && (
+                <div 
+                  ref={searchFormRef}
+                  className="absolute right-0 top-12 bg-white dark:bg-gray-800 shadow-lg rounded-lg p-4 w-72 z-50 transition-all duration-200 ease-in-out"
+                >
+                  <form onSubmit={handleSearch} className="relative flex items-center">
+                    <input 
+                      type="text" 
+                      placeholder="Rechercher..." 
+                      value={searchQuery} 
+                      onChange={e => setSearchQuery(e.target.value)} 
+                      className="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-full pl-4 pr-10 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary"
+                      autoFocus 
+                    />
+                    <Button type="submit" variant="ghost" size="icon" className="absolute right-0 rounded-full">
+                      <Search className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                    </Button>
+                  </form>
+                </div>
+              )}
+            </div>
             
             {/* Dark/Light mode toggle */}
             <Button variant="ghost" size="icon" className="rounded-full" onClick={toggleDarkMode} aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}>
@@ -156,4 +198,5 @@ const Navbar = () => {
       </div>
     </nav>;
 };
+
 export default Navbar;
