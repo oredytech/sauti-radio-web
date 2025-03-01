@@ -5,6 +5,7 @@ import AboutUs from "@/components/AboutUs";
 import AppDownload from "@/components/AppDownload";
 import Events from "@/components/Events";
 import EmissionsSection from "@/components/EmissionsSection";
+import YouTubeCallToAction from "@/components/YouTubeCallToAction";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 
@@ -17,6 +18,7 @@ const Index = () => {
       <AppDownload />
       <Events />
       <EmissionsSection />
+      <YouTubeCallToAction />
       <Footer />
       <RadioPlayer />
     </div>
