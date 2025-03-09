@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -13,8 +12,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 
@@ -40,7 +37,6 @@ const decodeHtmlEntities = (html: string) => {
   return txt.value;
 };
 
-// Composant ArticleCard extrait en dehors du composant principal
 const ArticleCard: React.FC<{ post: WordPressPost }> = ({ post }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
@@ -151,7 +147,7 @@ const NewsPage: React.FC = () => {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Center Slider */}
             <div className="lg:col-span-3">
-              <Carousel>
+              <Carousel autoplay={true} delayMs={3000} opts={{ loop: true }}>
                 <CarouselContent>
                   {firstFivePosts.map((post) => (
                     <CarouselItem key={post.id}>
@@ -181,8 +177,6 @@ const NewsPage: React.FC = () => {
                     </CarouselItem>
                   ))}
                 </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
               </Carousel>
             </div>
 
