@@ -7,11 +7,10 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Button } from "@/components/ui/button";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import ArticleCard from "@/components/news/ArticleCard";
 import HeroCarousel from "@/components/news/HeroCarousel";
-import { WordPressPost, decodeHtmlEntities } from "@/utils/wordpress";
+import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
 
 const NewsPage: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -82,25 +81,28 @@ const NewsPage: React.FC = () => {
             {/* Right Grid */}
             <div className="lg:col-span-1">
               <div className="grid grid-cols-2 gap-4 h-full">
-                {nextFourPosts.map((post) => (
-                  <Link
-                    key={post.id}
-                    to={`/article/${post.id}`}
-                    className="block bg-gray-100 dark:bg-gray-700 rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
-                  >
-                    <img
-                      src={
-                        post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                        "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                      }
-                      alt={decodeHtmlEntities(post.title.rendered)}
-                      className="w-full h-24 object-cover rounded-lg mb-2"
-                    />
-                    <h3 className="font-semibold text-primary dark:text-blue-400 text-xs line-clamp-2">
-                      {decodeHtmlEntities(post.title.rendered)}
-                    </h3>
-                  </Link>
-                ))}
+                {nextFourPosts.map((post) => {
+                  const slug = generateSlug(post.title.rendered, post.id);
+                  return (
+                    <Link
+                      key={post.id}
+                      to={`/article/${slug}`}
+                      className="block bg-gray-100 dark:bg-gray-700 rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                    >
+                      <img
+                        src={
+                          post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                          "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
+                        }
+                        alt={decodeHtmlEntities(post.title.rendered)}
+                        className="w-full h-24 object-cover rounded-lg mb-2"
+                      />
+                      <h3 className="font-semibold text-primary dark:text-blue-400 text-xs line-clamp-2">
+                        {decodeHtmlEntities(post.title.rendered)}
+                      </h3>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>

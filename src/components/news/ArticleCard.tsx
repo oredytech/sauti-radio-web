@@ -3,13 +3,15 @@ import React from "react";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Link } from "react-router-dom";
-import { WordPressPost, decodeHtmlEntities } from "@/utils/wordpress";
+import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
 
 interface ArticleCardProps {
   post: WordPressPost;
 }
 
 const ArticleCard: React.FC<ArticleCardProps> = ({ post }) => {
+  const slug = generateSlug(post.title.rendered, post.id);
+  
   return (
     <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden transition-colors duration-300">
       <img
@@ -34,7 +36,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ post }) => {
           }}
         />
         <Link
-          to={`/article/${post.id}`}
+          to={`/article/${slug}`}
           className="text-secondary dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 font-semibold text-sm flex items-center gap-2"
         >
           Lire la suite

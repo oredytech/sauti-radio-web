@@ -24,3 +24,30 @@ export const decodeHtmlEntities = (html: string) => {
   txt.innerHTML = html;
   return txt.value;
 };
+
+export const generateSlug = (title: string, id: number): string => {
+  // Decode HTML entities first
+  const decodedTitle = decodeHtmlEntities(title);
+  
+  // Convert to lowercase, remove special chars, replace spaces with hyphens
+  const slug = decodedTitle
+    .toLowerCase()
+    .normalize('NFD') // Normalize accented characters
+    .replace(/[\u0300-\u036f]/g, '') // Remove diacritics
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/\s+/g, '-') // Replace spaces with hyphens
+    .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+    .trim(); // Trim leading/trailing spaces
+  
+  // Add the ID at the end to ensure uniqueness
+  return `${slug}-${id}`;
+};
+
+export const extractIdFromSlug = (slug: string): number | null => {
+  // Extract the ID from the end of the slug
+  const match = slug.match(/-(\d+)$/);
+  if (match && match[1]) {
+    return parseInt(match[1], 10);
+  }
+  return null;
+};

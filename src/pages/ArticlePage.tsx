@@ -1,6 +1,6 @@
 
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -8,23 +8,37 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Skeleton } from "@/components/ui/skeleton";
-import { WordPressPost, decodeHtmlEntities } from "@/utils/wordpress";
+import { WordPressPost, decodeHtmlEntities, extractIdFromSlug } from "@/utils/wordpress";
 import CommentForm from "@/components/article/CommentForm";
 import SocialShare from "@/components/article/SocialShare";
 import { Helmet } from "react-helmet-async";
+import { useEffect } from "react";
 
 const ArticlePage = () => {
-  const { id } = useParams();
+  const { slug } = useParams<{ slug: string }>();
+  const navigate = useNavigate();
+  
+  // Extract the ID from the slug
+  const postId = slug ? extractIdFromSlug(slug) : null;
 
-  const { data: post, isLoading } = useQuery({
-    queryKey: ["post", id],
+  const { data: post, isLoading, isError } = useQuery({
+    queryKey: ["post", postId],
     queryFn: async () => {
+      if (!postId) throw new Error("Invalid post ID");
       const response = await axios.get<WordPressPost>(
-        `https://totalementactus.net/wp-json/wp/v2/posts/${id}?_embed`
+        `https://totalementactus.net/wp-json/wp/v2/posts/${postId}?_embed`
       );
       return response.data;
     },
+    enabled: !!postId,
   });
+
+  // Redirect to 404 if the ID is invalid or there's an error
+  useEffect(() => {
+    if (!postId || isError) {
+      navigate("/not-found", { replace: true });
+    }
+  }, [postId, isError, navigate]);
 
   if (isLoading) {
     return (
@@ -49,23 +63,7 @@ const ArticlePage = () => {
   }
 
   if (!post) {
-    return (
-      <div className="min-h-screen dark:bg-gray-900">
-        <Navbar />
-        <div className="container mx-auto px-4 py-20">
-          <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl font-bold text-primary dark:text-blue-400 mb-4">
-              Article non trouvé
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300">
-              Désolé, l'article que vous recherchez n'existe pas.
-            </p>
-          </div>
-        </div>
-        <Footer />
-        <RadioPlayer />
-      </div>
-    );
+    return null; // Will be redirected by useEffect
   }
 
   const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
