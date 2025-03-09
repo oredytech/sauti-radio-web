@@ -25,20 +25,27 @@ const ArticlePage = () => {
     queryKey: ["post", postId],
     queryFn: async () => {
       if (!postId) throw new Error("Invalid post ID");
-      const response = await axios.get<WordPressPost>(
-        `https://totalementactus.net/wp-json/wp/v2/posts/${postId}?_embed`
-      );
-      return response.data;
+      try {
+        const response = await axios.get<WordPressPost>(
+          `https://totalementactus.net/wp-json/wp/v2/posts/${postId}?_embed`
+        );
+        return response.data;
+      } catch (error) {
+        console.error("Error fetching article:", error);
+        throw error;
+      }
     },
     enabled: !!postId,
+    retry: 2,
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
   // Redirect to 404 if the ID is invalid or there's an error
   useEffect(() => {
-    if (!postId || isError) {
+    if ((!postId || isError) && !isLoading) {
       navigate("/not-found", { replace: true });
     }
-  }, [postId, isError, navigate]);
+  }, [postId, isError, navigate, isLoading]);
 
   if (isLoading) {
     return (

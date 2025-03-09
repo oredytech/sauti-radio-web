@@ -39,7 +39,7 @@ export const generateSlug = (title: string, id: number): string => {
     .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
     .trim(); // Trim leading/trailing spaces
   
-  // Add the ID at the end to ensure uniqueness
+  // Return just the slug with ID at the end
   return `${slug}-${id}`;
 };
 
@@ -50,4 +50,22 @@ export const extractIdFromSlug = (slug: string): number | null => {
     return parseInt(match[1], 10);
   }
   return null;
+};
+
+// New function to fetch a post by ID
+export const fetchPostById = async (id: number): Promise<WordPressPost> => {
+  try {
+    const response = await fetch(
+      `https://totalementactus.net/wp-json/wp/v2/posts/${id}?_embed`
+    );
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch post: ${response.status}`);
+    }
+    
+    return await response.json();
+  } catch (error) {
+    console.error("Error fetching post:", error);
+    throw error;
+  }
 };

@@ -11,6 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import ArticleCard from "@/components/news/ArticleCard";
 import HeroCarousel from "@/components/news/HeroCarousel";
 import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
+import { Helmet } from "react-helmet-async";
 
 const NewsPage: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -63,6 +64,11 @@ const NewsPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+      <Helmet>
+        <title>Actualités | Sauti Radio</title>
+        <meta name="description" content="Découvrez les dernières actualités et articles sur Sauti Radio" />
+      </Helmet>
+      
       <Navbar />
       
       {/* Hero Section */}

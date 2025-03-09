@@ -4,7 +4,7 @@ import axios from "axios";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Link } from "react-router-dom";
-import { WordPressPost, generateSlug } from "@/utils/wordpress";
+import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
 
 const Events = () => {
   const { data: posts, isLoading } = useQuery({
@@ -46,7 +46,7 @@ const Events = () => {
               <div key={post.id} className="bg-white rounded-lg shadow-lg overflow-hidden">
                 <img
                   src={post._embedded?.["wp:featuredmedia"]?.[0]?.source_url || "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"}
-                  alt={post.title.rendered}
+                  alt={decodeHtmlEntities(post.title.rendered)}
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
@@ -54,7 +54,7 @@ const Events = () => {
                     {format(new Date(post.date), "d MMMM yyyy", { locale: fr })}
                   </div>
                   <h3 className="text-xl font-bold text-primary mb-2">
-                    {post.title.rendered}
+                    {decodeHtmlEntities(post.title.rendered)}
                   </h3>
                   <div
                     className="text-gray-600 mb-4"
