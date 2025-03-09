@@ -11,7 +11,7 @@ const NavLink = ({ to, children, onClick }: NavLinkProps) => {
   return (
     <Link 
       to={to} 
-      className="text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-semibold"
+      className="text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-blue-400 font-semibold transition-colors duration-200"
       onClick={onClick}
     >
       {children}

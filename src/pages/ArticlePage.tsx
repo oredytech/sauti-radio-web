@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -39,7 +40,7 @@ const ArticlePage = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen dark:bg-gray-900">
         <Navbar />
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto">
@@ -61,14 +62,14 @@ const ArticlePage = () => {
 
   if (!post) {
     return (
-      <div className="min-h-screen">
+      <div className="min-h-screen dark:bg-gray-900">
         <Navbar />
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-2xl font-bold text-primary mb-4">
+            <h1 className="text-2xl font-bold text-primary dark:text-blue-400 mb-4">
               Article non trouvé
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               Désolé, l'article que vous recherchez n'existe pas.
             </p>
           </div>
@@ -86,10 +87,10 @@ const ArticlePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
       <article className="container mx-auto px-4 py-20">
-        <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="max-w-4xl mx-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           {post._embedded?.["wp:featuredmedia"] && (
             <img
               src={post._embedded["wp:featuredmedia"][0].source_url}
@@ -99,11 +100,11 @@ const ArticlePage = () => {
           )}
           
           <div className="p-8">
-            <h1 className="text-4xl font-bold text-primary mb-4">
+            <h1 className="text-4xl font-bold text-primary dark:text-blue-400 mb-4">
               {decodeHtmlEntities(post.title.rendered)}
             </h1>
             
-            <div className="text-gray-600 mb-8 flex items-center">
+            <div className="text-gray-600 dark:text-gray-300 mb-8 flex items-center">
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 className="h-5 w-5 mr-2" 
@@ -122,7 +123,7 @@ const ArticlePage = () => {
             </div>
 
             <div 
-              className="prose prose-lg max-w-none [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-primary [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ol]:list-decimal [&>ol]:pl-6 [&>blockquote]:border-l-4 [&>blockquote]:border-primary [&>blockquote]:pl-4 [&>blockquote]:italic [&>img]:rounded-lg [&>img]:shadow-lg [&>img]:my-8"
+              className="prose prose-lg max-w-none dark:prose-invert [&>p]:mb-6 [&>h2]:text-2xl [&>h2]:font-bold [&>h2]:text-primary dark:[&>h2]:text-blue-400 [&>h2]:mt-8 [&>h2]:mb-4 [&>ul]:list-disc [&>ul]:pl-6 [&>ol]:list-decimal [&>ol]:pl-6 [&>blockquote]:border-l-4 [&>blockquote]:border-primary dark:[&>blockquote]:border-blue-500 [&>blockquote]:pl-4 [&>blockquote]:italic [&>img]:rounded-lg [&>img]:shadow-lg [&>img]:my-8"
               dangerouslySetInnerHTML={{ __html: post.content.rendered }}
             />
           </div>

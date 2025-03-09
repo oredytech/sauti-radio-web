@@ -47,12 +47,12 @@ const DropdownMenu = ({ label, items, isMobile = false, onClick }: DropdownMenuP
       <button className="flex items-center text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-semibold">
         {label} <ChevronDown className="h-4 w-4 ml-1" />
       </button>
-      <div className="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-md p-2 w-48 mt-2">
+      <div className="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-md p-2 w-48 mt-2 transition-colors duration-300">
         {items.map((item, index) => (
           <Link 
             key={index} 
             to={item.path} 
-            className="block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-800 dark:text-gray-200"
+            className="block p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded text-gray-800 dark:text-gray-200 transition-colors duration-200"
           >
             {item.label}
           </Link>

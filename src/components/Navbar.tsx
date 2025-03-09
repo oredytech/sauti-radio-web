@@ -49,11 +49,11 @@ const Navbar = () => {
               <Button 
                 variant="ghost" 
                 size="icon" 
-                className="rounded-full" 
+                className="rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" 
                 onClick={() => setShowSearch(!showSearch)}
                 aria-label="Search"
               >
-                <Search className="h-5 w-5 text-gray-600 dark:text-gray-300" />
+                <Search className="h-5 w-5" />
               </Button>
               
               {showSearch && <SearchForm showSearch={showSearch} setShowSearch={setShowSearch} />}
@@ -68,8 +68,13 @@ const Navbar = () => {
               className="sm:hidden"
             />
             
-            <Button variant="ghost" size="icon" className="md:hidden rounded-full" onClick={() => setIsOpen(!isOpen)}>
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6 text-gray-600 dark:text-gray-300">
+            <Button 
+              variant="ghost" 
+              size="icon" 
+              className="md:hidden rounded-full text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800" 
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="h-6 w-6">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
               </svg>
             </Button>
