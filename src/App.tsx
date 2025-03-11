@@ -7,6 +7,7 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import ArticlePage from "./pages/ArticlePage";
 import NewsPage from "./pages/NewsPage";
+import Contact from "./pages/Contact";
 
 const queryClient = new QueryClient();
 
@@ -20,6 +21,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/article/:slug" element={<ArticlePage />} />
             <Route path="/actualites" element={<NewsPage />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Router>
