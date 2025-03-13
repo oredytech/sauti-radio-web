@@ -5,7 +5,6 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ArticleCard from "@/components/news/ArticleCard";
@@ -54,7 +53,6 @@ const NewsPage: React.FC = () => {
           </div>
         </div>
         <Footer />
-        <RadioPlayer />
       </div>
     );
   }
@@ -146,7 +144,6 @@ const NewsPage: React.FC = () => {
       </section>
 
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };

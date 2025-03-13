@@ -1,8 +1,10 @@
-
 import { useState, useEffect, useRef } from "react";
 import { Play, Pause, Volume2, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+
+// Static audio instance that persists across page navigations
+let audioInstance: HTMLAudioElement | null = null;
 
 const RadioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -10,36 +12,51 @@ const RadioPlayer = () => {
   const [isLoading, setIsLoading] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Create audio element on component mount
+  // Initialize the audio element once for the entire application
   useEffect(() => {
-    audioRef.current = new Audio("https://stream.zeno.fm/jyat1y09yg1tv");
-    audioRef.current.volume = volume[0] / 100;
+    // If the audio instance doesn't exist yet, create it
+    if (!audioInstance) {
+      audioInstance = new Audio("https://stream.zeno.fm/jyat1y09yg1tv");
+      audioInstance.volume = volume[0] / 100;
+    }
+    
+    // Set the ref to point to our singleton audio instance
+    audioRef.current = audioInstance;
     
     // Add event listeners
-    audioRef.current.addEventListener("playing", () => {
+    const handlePlaying = () => {
       setIsLoading(false);
       setIsPlaying(true);
-    });
+    };
     
-    audioRef.current.addEventListener("waiting", () => {
+    const handleWaiting = () => {
       setIsLoading(true);
-    });
+    };
     
-    audioRef.current.addEventListener("error", () => {
+    const handleError = () => {
       setIsLoading(false);
       setIsPlaying(false);
       console.error("Error loading audio stream");
-    });
+    };
+    
+    audioRef.current.addEventListener("playing", handlePlaying);
+    audioRef.current.addEventListener("waiting", handleWaiting);
+    audioRef.current.addEventListener("error", handleError);
+    
+    // Set component state based on current audio state
+    setIsPlaying(!audioRef.current.paused);
     
     // Set as global to access from other components
     window.radioPlayer = audioRef.current;
     
     return () => {
+      // Only remove event listeners, don't stop the audio
       if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.src = "";
-        window.radioPlayer = null;
+        audioRef.current.removeEventListener("playing", handlePlaying);
+        audioRef.current.removeEventListener("waiting", handleWaiting);
+        audioRef.current.removeEventListener("error", handleError);
       }
+      // Don't nullify window.radioPlayer on unmount since we want it to persist
     };
   }, []);
 
@@ -78,7 +95,7 @@ const RadioPlayer = () => {
     };
     
     return () => {
-      window.playRadio = undefined;
+      // Don't reset window.playRadio to keep it available throughout the app
     };
   }, [isPlaying]);
 

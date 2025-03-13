@@ -8,6 +8,7 @@ import NotFound from "./pages/NotFound";
 import ArticlePage from "./pages/ArticlePage";
 import NewsPage from "./pages/NewsPage";
 import Contact from "./pages/Contact";
+import RadioPlayer from "./components/RadioPlayer";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          {/* RadioPlayer kept outside Routes to persist across navigation */}
+          <RadioPlayer />
         </Router>
       </HelmetProvider>
     </QueryClientProvider>

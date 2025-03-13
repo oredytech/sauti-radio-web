@@ -1,9 +1,7 @@
-
 import React from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RadioControl from "@/components/RadioControl";
-import RadioPlayer from "@/components/RadioPlayer";
 
 const About = () => {
   return (
@@ -107,7 +105,6 @@ const About = () => {
         </div>
       </section>
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };

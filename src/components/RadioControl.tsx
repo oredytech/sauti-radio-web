@@ -1,4 +1,4 @@
-
+import { useState, useEffect } from "react";
 import { Play, Pause, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -15,17 +15,69 @@ const RadioControl = ({
   size = "default",
   variant = "secondary",
 }: RadioControlProps) => {
-  // State is managed by RadioPlayer, we just trigger the global function
-  const isPlaying = window.radioPlayer?.paused === false;
-  const isLoading = false; // We'll get this from a global state in the future
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  
+  useEffect(() => {
+    const updatePlayState = () => {
+      if (window.radioPlayer) {
+        setIsPlaying(!window.radioPlayer.paused);
+      }
+    };
+    
+    updatePlayState();
+    
+    const handlePlay = () => {
+      setIsPlaying(true);
+      setIsLoading(false);
+    };
+    
+    const handlePause = () => {
+      setIsPlaying(false);
+    };
+    
+    const handleWaiting = () => {
+      setIsLoading(true);
+    };
+    
+    const handleError = () => {
+      setIsLoading(false);
+      setIsPlaying(false);
+    };
+    
+    if (window.radioPlayer) {
+      window.radioPlayer.addEventListener("play", handlePlay);
+      window.radioPlayer.addEventListener("playing", handlePlay);
+      window.radioPlayer.addEventListener("pause", handlePause);
+      window.radioPlayer.addEventListener("waiting", handleWaiting);
+      window.radioPlayer.addEventListener("error", handleError);
+    }
+    
+    return () => {
+      if (window.radioPlayer) {
+        window.radioPlayer.removeEventListener("play", handlePlay);
+        window.radioPlayer.removeEventListener("playing", handlePlay);
+        window.radioPlayer.removeEventListener("pause", handlePause);
+        window.radioPlayer.removeEventListener("waiting", handleWaiting);
+        window.radioPlayer.removeEventListener("error", handleError);
+      }
+    };
+  }, []);
 
-  const handlePlay = () => {
-    if (window.playRadio) {
-      window.playRadio();
+  const handlePlayPause = () => {
+    if (window.radioPlayer) {
+      if (isPlaying) {
+        window.radioPlayer.pause();
+      } else {
+        setIsLoading(true);
+        window.radioPlayer.play().catch(err => {
+          console.error("Failed to play:", err);
+          setIsLoading(false);
+        });
+      }
     }
   };
 
-  // Determine icon size based on button size
   const iconSize = {
     sm: 16,
     default: 20,
@@ -37,7 +89,7 @@ const RadioControl = ({
       className={`${className} ${size === "lg" ? "h-11 px-8 py-6" : ""}`}
       variant={variant as any}
       size={size}
-      onClick={handlePlay}
+      onClick={handlePlayPause}
       disabled={isLoading}
     >
       {isLoading ? (
