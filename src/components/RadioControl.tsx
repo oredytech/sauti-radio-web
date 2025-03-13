@@ -1,6 +1,8 @@
+
 import { useState, useEffect } from "react";
 import { Play, Pause, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { toast } from "sonner";
 
 interface RadioControlProps {
   className?: string;
@@ -68,12 +70,22 @@ const RadioControl = ({
     if (window.radioPlayer) {
       if (isPlaying) {
         window.radioPlayer.pause();
+        toast.info("Radio en pause", {
+          duration: 2000
+        });
       } else {
         setIsLoading(true);
-        window.radioPlayer.play().catch(err => {
-          console.error("Failed to play:", err);
-          setIsLoading(false);
-        });
+        if (window.playRadio) {
+          window.playRadio();
+        } else {
+          window.radioPlayer.play().catch(err => {
+            console.error("Failed to play:", err);
+            setIsLoading(false);
+            toast.error("Erreur de lecture", {
+              description: "Impossible de lire le flux radio"
+            });
+          });
+        }
       }
     }
   };
@@ -93,7 +105,7 @@ const RadioControl = ({
       disabled={isLoading}
     >
       {isLoading ? (
-        <Loader size={iconSize[size]} />
+        <Loader size={iconSize[size]} className="animate-spin" />
       ) : isPlaying ? (
         <Pause size={iconSize[size]} />
       ) : (

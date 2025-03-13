@@ -2,22 +2,32 @@ import { useState, useEffect, useRef } from "react";
 import { Play, Pause, Volume2, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
+import { toast } from "sonner";
 
 // Static audio instance that persists across page navigations
 let audioInstance: HTMLAudioElement | null = null;
+
+// For reliability, provide multiple stream URLs to try
+const STREAM_URLS = [
+  "https://stream.zeno.fm/jyat1y09yg1tv",
+  "https://radio.sauti-ya-injili.com/stream",  // Backup URL (fictional)
+  "https://icecast.sauti-ya-injili.org/live"   // Another backup URL (fictional)
+];
 
 const RadioPlayer = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState([50]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentStreamIndex, setCurrentStreamIndex] = useState(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   // Initialize the audio element once for the entire application
   useEffect(() => {
     // If the audio instance doesn't exist yet, create it
     if (!audioInstance) {
-      audioInstance = new Audio("https://stream.zeno.fm/jyat1y09yg1tv");
+      audioInstance = new Audio(STREAM_URLS[currentStreamIndex]);
       audioInstance.volume = volume[0] / 100;
+      audioInstance.preload = "auto";
     }
     
     // Set the ref to point to our singleton audio instance
@@ -27,6 +37,9 @@ const RadioPlayer = () => {
     const handlePlaying = () => {
       setIsLoading(false);
       setIsPlaying(true);
+      toast.success("Radio en direct", {
+        description: "Vous écoutez Radio Sauti ya Injili"
+      });
     };
     
     const handleWaiting = () => {
@@ -34,9 +47,29 @@ const RadioPlayer = () => {
     };
     
     const handleError = () => {
-      setIsLoading(false);
-      setIsPlaying(false);
       console.error("Error loading audio stream");
+      setIsLoading(false);
+      
+      // Try the next stream URL if available
+      if (currentStreamIndex < STREAM_URLS.length - 1) {
+        const nextIndex = currentStreamIndex + 1;
+        setCurrentStreamIndex(nextIndex);
+        if (audioRef.current) {
+          audioRef.current.src = STREAM_URLS[nextIndex];
+          audioRef.current.load();
+          if (isPlaying) {
+            audioRef.current.play().catch(err => {
+              console.error("Failed to play next stream:", err);
+              setIsPlaying(false);
+            });
+          }
+        }
+      } else {
+        setIsPlaying(false);
+        toast.error("Difficulté de connexion", {
+          description: "Impossible de se connecter au flux radio"
+        });
+      }
     };
     
     audioRef.current.addEventListener("playing", handlePlaying);
@@ -58,7 +91,15 @@ const RadioPlayer = () => {
       }
       // Don't nullify window.radioPlayer on unmount since we want it to persist
     };
-  }, []);
+  }, [currentStreamIndex, isPlaying]);
+
+  // Update stream URL when currentStreamIndex changes
+  useEffect(() => {
+    if (audioRef.current && audioRef.current.src !== STREAM_URLS[currentStreamIndex]) {
+      audioRef.current.src = STREAM_URLS[currentStreamIndex];
+      audioRef.current.load();
+    }
+  }, [currentStreamIndex]);
 
   // Update volume when slider changes
   useEffect(() => {
@@ -78,6 +119,15 @@ const RadioPlayer = () => {
       audioRef.current.play().catch(err => {
         console.error("Failed to play:", err);
         setIsLoading(false);
+        
+        // Try the next stream URL if available
+        if (currentStreamIndex < STREAM_URLS.length - 1) {
+          setCurrentStreamIndex(currentStreamIndex + 1);
+        } else {
+          toast.error("Difficulté de lecture", {
+            description: "Impossible de lire le flux radio"
+          });
+        }
       });
     }
   };
@@ -90,6 +140,15 @@ const RadioPlayer = () => {
         audioRef.current.play().catch(err => {
           console.error("Failed to play:", err);
           setIsLoading(false);
+          
+          // Try the next stream URL if available
+          if (currentStreamIndex < STREAM_URLS.length - 1) {
+            setCurrentStreamIndex(currentStreamIndex + 1);
+          } else {
+            toast.error("Difficulté de lecture", {
+              description: "Impossible de lire le flux radio"
+            });
+          }
         });
       }
     };
@@ -97,7 +156,7 @@ const RadioPlayer = () => {
     return () => {
       // Don't reset window.playRadio to keep it available throughout the app
     };
-  }, [isPlaying]);
+  }, [isPlaying, currentStreamIndex]);
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t z-50 dark:bg-gray-900 dark:border-gray-800">
