@@ -39,7 +39,7 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <NavLink to="/">Accueil</NavLink>
             <NavLink to="/actualites">Actualités</NavLink>
-            <DropdownMenu label="Émissions" items={emissionItems} />
+            <DropdownMenu label="Émissions" items={emissionItems} sectionLink="/#emissions" />
             <NavLink to="/contact">Contact</NavLink>
             <NavLink to="/about">À propos</NavLink>
           </div>

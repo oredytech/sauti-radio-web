@@ -26,8 +26,17 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
         <Link to="/actualites" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={closeMenu}>
           Actualités
         </Link>
+        <div className="relative">
+          <Link 
+            to="/#emissions" 
+            className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+            onClick={closeMenu}
+          >
+            Émissions
+          </Link>
+        </div>
         <DropdownMenu 
-          label="Émissions" 
+          label="Sous-catégories Émissions" 
           items={dropdownItems} 
           isMobile={true} 
           onClick={closeMenu}

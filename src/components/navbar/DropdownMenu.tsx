@@ -12,9 +12,10 @@ interface DropdownMenuProps {
   items: DropdownItem[];
   isMobile?: boolean;
   onClick?: () => void;
+  sectionLink?: string;
 }
 
-const DropdownMenu = ({ label, items, isMobile = false, onClick }: DropdownMenuProps) => {
+const DropdownMenu = ({ label, items, isMobile = false, onClick, sectionLink }: DropdownMenuProps) => {
   if (isMobile) {
     return (
       <div className="relative">
@@ -44,10 +45,13 @@ const DropdownMenu = ({ label, items, isMobile = false, onClick }: DropdownMenuP
 
   return (
     <div className="relative group">
-      <button className="flex items-center text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-semibold">
+      <Link 
+        to={sectionLink || "#"} 
+        className="flex items-center text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-semibold"
+      >
         {label} <ChevronDown className="h-4 w-4 ml-1" />
-      </button>
-      <div className="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-md p-2 w-48 mt-2 transition-colors duration-300">
+      </Link>
+      <div className="absolute hidden group-hover:block bg-white dark:bg-gray-800 shadow-lg rounded-md p-2 w-48 mt-2 transition-colors duration-300 z-50">
         {items.map((item, index) => (
           <Link 
             key={index} 
