@@ -5,9 +5,10 @@ const Hero = () => {
   return <div className="relative min-h-screen flex items-center">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-cover bg-center" style={{
-        backgroundImage: "url('/lovable-uploads/c556d486-14f5-4acf-a3f0-456898833de3.png')"
-      }} />
-        <div className="absolute inset-0 bg-black/50" /> {/* Overlay sombre */}
+          // Remplacement de l'image avec une nouvelle image plus nette
+          backgroundImage: "url('/lovable-uploads/8f100b7c-cc2f-44fc-89f7-f3c48f156acd.png')"
+        }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-primary/70" /> {/* Overlay amélioré avec dégradé */}
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
