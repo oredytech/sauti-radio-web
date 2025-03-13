@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -72,10 +71,6 @@ const NewsPage: React.FC = () => {
       {/* Hero Section */}
       <section className="bg-white dark:bg-gray-800 py-12 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold text-primary dark:text-blue-400 mb-12 text-center">
-            Actualités
-          </h1>
-          
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Center Slider */}
             <div className="lg:col-span-3">
