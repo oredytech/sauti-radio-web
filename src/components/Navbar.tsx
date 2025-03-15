@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import NavLink from "./navbar/NavLink";
-import DropdownMenu from "./navbar/DropdownMenu";
 import SearchForm from "./navbar/SearchForm";
 import ThemeToggle from "./navbar/ThemeToggle";
 import MobileMenu from "./navbar/MobileMenu";
@@ -13,12 +12,6 @@ import RadioControl from "./RadioControl";
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
-
-  const emissionItems = [
-    { label: "Morning Show", path: "/emissions/morning" },
-    { label: "Evening Show", path: "/emissions/evening" },
-    { label: "Weekend Show", path: "/emissions/weekend" }
-  ];
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
@@ -39,7 +32,6 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <NavLink to="/">Accueil</NavLink>
             <NavLink to="/actualites">Actualités</NavLink>
-            <DropdownMenu label="Émissions" items={emissionItems} sectionLink="/#emissions" />
             <NavLink to="/contact">Contact</NavLink>
             <NavLink to="/about">À propos</NavLink>
           </div>
