@@ -1,4 +1,3 @@
-
 import { ChevronDown } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -43,11 +42,30 @@ const DropdownMenu = ({ label, items, isMobile = false, onClick, sectionLink }: 
     );
   }
 
+  const isSection = sectionLink && sectionLink.startsWith('#');
+  
+  const handleSectionClick = (e: React.MouseEvent) => {
+    if (isSection) {
+      e.preventDefault();
+      
+      if (window.location.pathname === '/') {
+        const sectionId = sectionLink?.substring(1);
+        const section = document.getElementById(sectionId || '');
+        section?.scrollIntoView({ behavior: 'smooth' });
+      } else {
+        window.location.href = `/${sectionLink}`;
+      }
+      
+      onClick?.();
+    }
+  };
+
   return (
     <div className="relative group">
       <Link 
         to={sectionLink || "#"} 
         className="flex items-center text-gray-800 dark:text-gray-200 hover:text-primary dark:hover:text-primary font-semibold"
+        onClick={isSection ? handleSectionClick : undefined}
       >
         {label} <ChevronDown className="h-4 w-4 ml-1" />
       </Link>

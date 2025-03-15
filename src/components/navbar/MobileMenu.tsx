@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import NavLink from "./NavLink";
 import DropdownMenu from "./DropdownMenu";
@@ -16,6 +15,17 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
   ];
 
   const closeMenu = () => setIsOpen(false);
+  
+  const handleSectionClick = (sectionId: string) => {
+    closeMenu();
+    
+    if (window.location.pathname === '/') {
+      const section = document.getElementById(sectionId);
+      section?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.location.href = `/#${sectionId}`;
+    }
+  };
 
   return (
     <div className={`${isOpen ? 'block' : 'hidden'} md:hidden bg-white dark:bg-gray-900 shadow-lg transition-all duration-300`}>
@@ -26,15 +36,12 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
         <Link to="/actualites" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={closeMenu}>
           Actualités
         </Link>
-        <div className="relative">
-          <Link 
-            to="/#emissions" 
-            className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-            onClick={closeMenu}
-          >
-            Émissions
-          </Link>
-        </div>
+        <button 
+          className="block w-full text-left px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+          onClick={() => handleSectionClick('emissions')}
+        >
+          Émissions
+        </button>
         <DropdownMenu 
           label="Sous-catégories Émissions" 
           items={dropdownItems} 
