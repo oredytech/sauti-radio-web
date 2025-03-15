@@ -7,7 +7,7 @@ const Hero = () => {
         <div className="absolute inset-0 bg-cover bg-center" style={{
           backgroundImage: "url('/lovable-uploads/c8da9cd8-7dfd-4993-84ec-1ea3ece1921a.png')"
         }} />
-        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-primary/70" /> {/* Overlay avec dégradé */}
+        {/* Removed the gradient overlay div */}
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
