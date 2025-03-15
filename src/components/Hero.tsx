@@ -5,7 +5,7 @@ const Hero = () => {
   return <div className="relative min-h-screen flex items-center">
       <div className="absolute inset-0">
         <div className="absolute inset-0 bg-cover bg-center" style={{
-          backgroundImage: "url('/lovable-uploads/f86ba320-e85f-4880-b7ef-232abd1e59ba.png')"
+          backgroundImage: "url('/lovable-uploads/c8da9cd8-7dfd-4993-84ec-1ea3ece1921a.png')"
         }} />
         <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-primary/70" /> {/* Overlay avec dégradé */}
       </div>
