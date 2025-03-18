@@ -2,12 +2,18 @@
 import RadioControl from "@/components/RadioControl";
 
 const Hero = () => {
-  return <div className="relative min-h-screen flex items-center">
+  return (
+    <div className="relative min-h-screen flex items-center">
       <div className="absolute inset-0">
-        <div className="absolute inset-0 bg-cover bg-center" style={{
-          backgroundImage: "url('/lovable-uploads/c8da9cd8-7dfd-4993-84ec-1ea3ece1921a.png')"
-        }} />
-        {/* Removed the gradient overlay div */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center" 
+          style={{
+            backgroundImage: "url('/lovable-uploads/c8da9cd8-7dfd-4993-84ec-1ea3ece1921a.png')",
+            backgroundSize: "cover",
+            backgroundPosition: "center"
+          }} 
+        />
+        {/* No gradient overlay */}
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
@@ -25,7 +31,8 @@ const Hero = () => {
           />
         </div>
       </div>
-    </div>;
+    </div>
+  );
 };
 
 export default Hero;
