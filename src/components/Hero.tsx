@@ -3,7 +3,7 @@ import RadioControl from "@/components/RadioControl";
 
 const Hero = () => {
   return (
-    <div className="relative min-h-screen flex items-center">
+    <div className="relative flex items-center" style={{ minHeight: "calc(100vh - 5rem)" }}>
       <div className="absolute inset-0">
         <div 
           className="absolute inset-0 bg-cover bg-center" 
