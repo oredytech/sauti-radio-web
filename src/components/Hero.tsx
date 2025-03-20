@@ -13,7 +13,8 @@ const Hero = () => {
             backgroundPosition: "center"
           }} 
         />
-        {/* No gradient overlay */}
+        {/* Ajout d'une superposition similaire à AppDownload */}
+        <div className="absolute inset-0 bg-primary/40"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
