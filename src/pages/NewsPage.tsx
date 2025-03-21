@@ -87,7 +87,7 @@ const NewsPage: React.FC = () => {
                     <Link
                       key={post.id}
                       to={`/article/${slug}`}
-                      className="block bg-gray-100 dark:bg-gray-700 rounded-lg p-2 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                      className="block relative rounded-lg overflow-hidden h-full hover:opacity-90 transition-opacity"
                     >
                       <img
                         src={
@@ -95,9 +95,10 @@ const NewsPage: React.FC = () => {
                           "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
                         }
                         alt={decodeHtmlEntities(post.title.rendered)}
-                        className="w-full h-24 object-cover rounded-lg mb-2"
+                        className="w-full h-full object-cover"
                       />
-                      <h3 className="font-semibold text-primary dark:text-blue-400 text-xs line-clamp-2">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                      <h3 className="absolute bottom-2 left-2 right-2 font-semibold text-white text-xs line-clamp-2 z-10">
                         {decodeHtmlEntities(post.title.rendered)}
                       </h3>
                     </Link>
