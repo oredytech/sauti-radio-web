@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -71,13 +72,13 @@ const NewsPage: React.FC = () => {
       {/* Hero Section */}
       <section className="bg-white dark:bg-gray-800 py-12 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Center Slider */}
-            <div className="lg:col-span-3">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Slider - Now takes half the width */}
+            <div className="lg:col-span-1">
               <HeroCarousel posts={firstFivePosts} />
             </div>
 
-            {/* Right Grid */}
+            {/* Right Grid - Now takes half the width */}
             <div className="lg:col-span-1">
               <div className="grid grid-cols-2 gap-4 h-full">
                 {nextFourPosts.map((post) => {
