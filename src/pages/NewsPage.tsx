@@ -72,10 +72,12 @@ const NewsPage: React.FC = () => {
       {/* Hero Section */}
       <section className="bg-white dark:bg-gray-800 py-12 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Slider - Now takes half the width */}
-            <div className="lg:col-span-1">
-              <HeroCarousel posts={firstFivePosts} />
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:min-h-[500px]">
+            {/* Slider - Now takes half the width with full height */}
+            <div className="lg:col-span-1 h-full">
+              <div className="h-full">
+                <HeroCarousel posts={firstFivePosts} />
+              </div>
             </div>
 
             {/* Right Grid - Now takes half the width */}
