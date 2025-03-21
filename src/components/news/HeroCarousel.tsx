@@ -18,17 +18,18 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
           const slug = generateSlug(post.title.rendered, post.id);
           return (
             <CarouselItem key={post.id} className="h-full">
-              <Link to={`/article/${slug}`} className="block h-full">
-                <div className="relative h-full">
+              <Link to={`/article/${slug}`} className="block h-full w-full">
+                <div className="relative h-full w-full">
                   <img
                     src={
                       post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
                       "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
                     }
                     alt={decodeHtmlEntities(post.title.rendered)}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-lg absolute inset-0"
                   />
-                  <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6 rounded-b-lg">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent rounded-lg"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 z-10">
                     <h3 className="text-white text-xl font-bold mb-2">
                       {decodeHtmlEntities(post.title.rendered)}
                     </h3>
