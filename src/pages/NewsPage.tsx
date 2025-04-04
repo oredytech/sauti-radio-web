@@ -26,7 +26,7 @@ const NewsPage: React.FC = () => {
     },
   });
 
-  const { data: heroPosts } = useQuery({
+  const { data: heroPosts, isLoading: isLoadingHero } = useQuery({
     queryKey: ["hero-posts"],
     queryFn: async () => {
       const response = await axios.get<WordPressPost[]>(
@@ -36,7 +36,7 @@ const NewsPage: React.FC = () => {
     },
   });
 
-  if (isLoading) {
+  if (isLoading || isLoadingHero) {
     return (
       <div className="min-h-screen dark:bg-gray-900">
         <Navbar />
@@ -57,8 +57,13 @@ const NewsPage: React.FC = () => {
     );
   }
 
-  const firstFivePosts = heroPosts?.slice(0, 5) || [];
-  const nextFourPosts = heroPosts?.slice(5, 9) || [];
+  // Only proceed if both data sets are available
+  if (!heroPosts || !allPosts) {
+    return null;
+  }
+
+  const firstFivePosts = heroPosts.slice(0, 5);
+  const nextFourPosts = heroPosts.slice(5, 9);
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
@@ -74,8 +79,8 @@ const NewsPage: React.FC = () => {
         <div className="container mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:min-h-[500px]">
             {/* Slider - Now takes half the width with full height */}
-            <div className="lg:col-span-1 h-full">
-              <div className="h-full">
+            <div className="lg:col-span-1 h-[500px]">
+              <div className="h-full w-full">
                 <HeroCarousel posts={firstFivePosts} />
               </div>
             </div>
@@ -116,7 +121,7 @@ const NewsPage: React.FC = () => {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {allPosts?.map((post) => (
+            {allPosts.map((post) => (
               <ArticleCard key={post.id} post={post} />
             ))}
           </div>
