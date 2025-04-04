@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
 
 interface HeroCarouselProps {
@@ -12,7 +12,7 @@ interface HeroCarouselProps {
 
 const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
   return (
-    <Carousel autoplay={true} delayMs={3000} opts={{ loop: true }} className="h-full">
+    <Carousel autoplay={true} delayMs={3000} opts={{ loop: true }} className="h-full relative">
       <CarouselContent className="h-full">
         {posts.map((post) => {
           const slug = generateSlug(post.title.rendered, post.id);
@@ -45,6 +45,8 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
           );
         })}
       </CarouselContent>
+      <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white z-20" />
+      <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white z-20" />
     </Carousel>
   );
 };
