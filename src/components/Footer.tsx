@@ -67,7 +67,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
           <p>
             © {new Date().getFullYear()} Radio Sauti ya Injili. Tous droits réservés. | 
-            <a href="https://oredy.tech/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
+            <a href="https://oredytech.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
               {" "}Fièrement conçu par Oredy Technologie
             </a>
           </p>
