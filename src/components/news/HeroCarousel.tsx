@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
 import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
+import type { EmblaCarouselType } from "embla-carousel-react";
 
 interface HeroCarouselProps {
   posts: WordPressPost[];
@@ -12,7 +13,7 @@ interface HeroCarouselProps {
 
 const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [api, setApi] = useState<any | null>(null);
+  const [api, setApi] = useState<EmblaCarouselType | null>(null);
 
   // Update current slide index when the carousel slides
   useEffect(() => {
@@ -28,17 +29,6 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
     return () => {
       api.off("select", onSelect);
     };
-  }, [api]);
-
-  // Auto slide effect
-  useEffect(() => {
-    if (!api) return;
-    
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 5000); // Change slide every 5 seconds
-
-    return () => clearInterval(interval);
   }, [api]);
 
   // Handle manual navigation via dots

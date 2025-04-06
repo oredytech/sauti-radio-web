@@ -1,11 +1,11 @@
 
 import * as React from "react";
-import useEmblaCarousel from "embla-carousel-react";
+import useEmblaCarousel, { type EmblaCarouselType } from "embla-carousel-react";
 
 interface UseCarouselProps {
   opts?: any;
   plugins?: any;
-  setApi?: (api: any) => void;
+  setApi?: (api: EmblaCarouselType) => void;
   autoplay?: boolean;
   delayMs?: number;
 }
@@ -17,11 +17,12 @@ export function useCarousel({
   autoplay = false,
   delayMs = 3000,
 }: UseCarouselProps) {
-  const [carouselRef, api] = useEmblaCarousel(opts, plugins);
+  const carouselRef = React.useRef<HTMLDivElement>(null);
+  const [emblaRef, api] = useEmblaCarousel(opts, plugins);
   const [canScrollPrev, setCanScrollPrev] = React.useState(false);
   const [canScrollNext, setCanScrollNext] = React.useState(false);
 
-  const onSelect = React.useCallback((api: any) => {
+  const onSelect = React.useCallback((api: EmblaCarouselType) => {
     if (!api) {
       return;
     }
@@ -75,6 +76,7 @@ export function useCarousel({
 
   return {
     carouselRef,
+    emblaRef,
     api,
     onSelect,
     scrollPrev,

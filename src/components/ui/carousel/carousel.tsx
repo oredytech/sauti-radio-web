@@ -3,12 +3,13 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { useCarousel } from "./use-carousel";
 import { CarouselProvider } from "./carousel-context";
+import type { EmblaCarouselType } from "embla-carousel-react";
 
 export interface CarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   opts?: any;
   plugins?: any;
   orientation?: "horizontal" | "vertical";
-  setApi?: (api: any) => void;
+  setApi?: (api: EmblaCarouselType) => void;
   autoplay?: boolean;
   delayMs?: number;
 }
@@ -28,7 +29,7 @@ export const Carousel = React.forwardRef<HTMLDivElement, CarouselProps>(
     },
     ref
   ) => {
-    const { carouselRef, api, onSelect, scrollPrev, scrollNext, canScrollPrev, canScrollNext } = 
+    const { carouselRef, emblaRef, api, onSelect, scrollPrev, scrollNext, canScrollPrev, canScrollNext } = 
       useCarousel({
         opts: {
           ...opts,

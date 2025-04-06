@@ -2,7 +2,7 @@
 import * as React from "react";
 
 export interface CarouselContextProps {
-  carouselRef: ReturnType<typeof React.useRef<HTMLDivElement>>["current"];
+  carouselRef: React.RefObject<HTMLDivElement>;
   api: any;
   opts?: any;
   orientation?: "horizontal" | "vertical";
