@@ -12,15 +12,41 @@ interface HeroCarouselProps {
 
 const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [api, setApi] = useState<any | null>(null);
+
+  // Update current slide index when the carousel slides
+  useEffect(() => {
+    if (!api) return;
+
+    const onSelect = () => {
+      setActiveIndex(api.selectedScrollSnap());
+    };
+
+    api.on("select", onSelect);
+    
+    // Cleanup
+    return () => {
+      api.off("select", onSelect);
+    };
+  }, [api]);
 
   // Auto slide effect
   useEffect(() => {
+    if (!api) return;
+    
     const interval = setInterval(() => {
-      setActiveIndex((current) => (current + 1) % (posts.length || 1));
+      api.scrollNext();
     }, 5000); // Change slide every 5 seconds
 
     return () => clearInterval(interval);
-  }, [posts.length]);
+  }, [api]);
+
+  // Handle manual navigation via dots
+  const scrollToSlide = (index: number) => {
+    if (api) {
+      api.scrollTo(index);
+    }
+  };
 
   if (!posts || posts.length === 0) {
     return <div className="h-full bg-gray-200 rounded-lg flex items-center justify-center">Aucun article disponible</div>;
@@ -29,9 +55,8 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
   return (
     <Carousel 
       className="h-full relative" 
-      value={{ selectedIndex: activeIndex }}
-      onValueChange={(val) => setActiveIndex(val.selectedIndex)}
       opts={{ loop: true }}
+      setApi={setApi}
     >
       <CarouselContent className="h-full">
         {posts.map((post, index) => {
@@ -69,7 +94,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
         {posts.map((_, idx) => (
           <button
             key={idx}
-            onClick={() => setActiveIndex(idx)}
+            onClick={() => scrollToSlide(idx)}
             className={`w-2.5 h-2.5 rounded-full transition-colors ${
               idx === activeIndex ? "bg-white" : "bg-white/30"
             }`}
