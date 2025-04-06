@@ -1,55 +1,20 @@
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
-import { Carousel, CarouselContent, CarouselItem, CarouselPrevious, CarouselNext } from "@/components/ui/carousel";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
-import type { EmblaCarouselType } from "embla-carousel-react";
 
 interface HeroCarouselProps {
   posts: WordPressPost[];
 }
 
 const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [api, setApi] = useState<EmblaCarouselType | null>(null);
-
-  // Update current slide index when the carousel slides
-  useEffect(() => {
-    if (!api) return;
-
-    const onSelect = () => {
-      setActiveIndex(api.selectedScrollSnap());
-    };
-
-    api.on("select", onSelect);
-    
-    // Cleanup
-    return () => {
-      api.off("select", onSelect);
-    };
-  }, [api]);
-
-  // Handle manual navigation via dots
-  const scrollToSlide = (index: number) => {
-    if (api) {
-      api.scrollTo(index);
-    }
-  };
-
-  if (!posts || posts.length === 0) {
-    return <div className="h-full bg-gray-200 rounded-lg flex items-center justify-center">Aucun article disponible</div>;
-  }
-
   return (
-    <Carousel 
-      className="h-full relative" 
-      opts={{ loop: true }}
-      setApi={setApi}
-    >
+    <Carousel autoplay={true} delayMs={3000} opts={{ loop: true }} className="h-full">
       <CarouselContent className="h-full">
-        {posts.map((post, index) => {
+        {posts.map((post) => {
           const slug = generateSlug(post.title.rendered, post.id);
           return (
             <CarouselItem key={post.id} className="h-full">
@@ -80,20 +45,6 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
           );
         })}
       </CarouselContent>
-      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
-        {posts.map((_, idx) => (
-          <button
-            key={idx}
-            onClick={() => scrollToSlide(idx)}
-            className={`w-2.5 h-2.5 rounded-full transition-colors ${
-              idx === activeIndex ? "bg-white" : "bg-white/30"
-            }`}
-            aria-label={`Go to slide ${idx + 1}`}
-          />
-        ))}
-      </div>
-      <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white z-20" />
-      <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white z-20" />
     </Carousel>
   );
 };
