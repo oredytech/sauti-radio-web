@@ -28,7 +28,7 @@ const YouTubeCallToAction = () => {
           <Button 
             size="lg"
             className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-6 h-auto"
-            onClick={() => window.open("https://www.youtube.com/@RADIOSAUTIYAINJILI", "_blank")}
+            onClick={() => window.open("https://www.youtube.com/@RADIOSAUTIYAINJILI?sub_confirmation=1", "_blank")}
           >
             <Youtube className="mr-2 h-5 w-5" />
             S'abonner à notre chaîne
