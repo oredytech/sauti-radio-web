@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
@@ -11,10 +11,30 @@ interface HeroCarouselProps {
 }
 
 const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // Auto slide effect
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((current) => (current + 1) % (posts.length || 1));
+    }, 5000); // Change slide every 5 seconds
+
+    return () => clearInterval(interval);
+  }, [posts.length]);
+
+  if (!posts || posts.length === 0) {
+    return <div className="h-full bg-gray-200 rounded-lg flex items-center justify-center">Aucun article disponible</div>;
+  }
+
   return (
-    <Carousel autoplay={true} delayMs={3000} opts={{ loop: true }} className="h-full relative">
+    <Carousel 
+      className="h-full relative" 
+      value={{ selectedIndex: activeIndex }}
+      onValueChange={(val) => setActiveIndex(val.selectedIndex)}
+      opts={{ loop: true }}
+    >
       <CarouselContent className="h-full">
-        {posts.map((post) => {
+        {posts.map((post, index) => {
           const slug = generateSlug(post.title.rendered, post.id);
           return (
             <CarouselItem key={post.id} className="h-full">
@@ -45,6 +65,18 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
           );
         })}
       </CarouselContent>
+      <div className="absolute bottom-4 left-0 right-0 flex justify-center gap-2 z-20">
+        {posts.map((_, idx) => (
+          <button
+            key={idx}
+            onClick={() => setActiveIndex(idx)}
+            className={`w-2.5 h-2.5 rounded-full transition-colors ${
+              idx === activeIndex ? "bg-white" : "bg-white/30"
+            }`}
+            aria-label={`Go to slide ${idx + 1}`}
+          />
+        ))}
+      </div>
       <CarouselPrevious className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white z-20" />
       <CarouselNext className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white z-20" />
     </Carousel>
