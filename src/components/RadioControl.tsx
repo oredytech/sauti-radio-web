@@ -20,14 +20,17 @@ const RadioControl = ({
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   
+  // Synchroniser l'état du bouton avec l'état réel du lecteur
   useEffect(() => {
-    const updatePlayState = () => {
+    const syncPlayerState = () => {
       if (window.radioPlayer) {
+        // Mettre à jour l'état isPlaying basé sur l'état du lecteur
         setIsPlaying(!window.radioPlayer.paused);
       }
     };
     
-    updatePlayState();
+    // Vérifier immédiatement l'état du lecteur
+    syncPlayerState();
     
     const handlePlay = () => {
       setIsPlaying(true);
@@ -47,14 +50,20 @@ const RadioControl = ({
       setIsPlaying(false);
     };
     
+    // S'assurer que le lecteur audio existe avant d'ajouter des écouteurs d'événements
     if (window.radioPlayer) {
       window.radioPlayer.addEventListener("play", handlePlay);
       window.radioPlayer.addEventListener("playing", handlePlay);
       window.radioPlayer.addEventListener("pause", handlePause);
       window.radioPlayer.addEventListener("waiting", handleWaiting);
       window.radioPlayer.addEventListener("error", handleError);
+      
+      // Ajouter un écouteur pour détecter les changements directs sur le lecteur
+      window.radioPlayer.addEventListener("loadstart", syncPlayerState);
+      window.radioPlayer.addEventListener("canplay", syncPlayerState);
     }
     
+    // Nettoyer les écouteurs d'événements
     return () => {
       if (window.radioPlayer) {
         window.radioPlayer.removeEventListener("play", handlePlay);
@@ -62,30 +71,33 @@ const RadioControl = ({
         window.radioPlayer.removeEventListener("pause", handlePause);
         window.radioPlayer.removeEventListener("waiting", handleWaiting);
         window.radioPlayer.removeEventListener("error", handleError);
+        window.radioPlayer.removeEventListener("loadstart", syncPlayerState);
+        window.radioPlayer.removeEventListener("canplay", syncPlayerState);
       }
     };
   }, []);
 
   const handlePlayPause = () => {
-    if (window.radioPlayer) {
-      if (isPlaying) {
-        window.radioPlayer.pause();
-        toast.info("Radio en pause", {
-          duration: 2000
-        });
+    if (!window.radioPlayer) return;
+    
+    if (isPlaying) {
+      window.radioPlayer.pause();
+      toast.info("Radio en pause", {
+        duration: 2000
+      });
+    } else {
+      setIsLoading(true);
+      // Utiliser la fonction globale playRadio si disponible
+      if (window.playRadio) {
+        window.playRadio();
       } else {
-        setIsLoading(true);
-        if (window.playRadio) {
-          window.playRadio();
-        } else {
-          window.radioPlayer.play().catch(err => {
-            console.error("Failed to play:", err);
-            setIsLoading(false);
-            toast.error("Erreur de lecture", {
-              description: "Impossible de lire le flux radio"
-            });
+        window.radioPlayer.play().catch(err => {
+          console.error("Failed to play:", err);
+          setIsLoading(false);
+          toast.error("Erreur de lecture", {
+            description: "Impossible de lire le flux radio"
           });
-        }
+        });
       }
     }
   };
@@ -103,6 +115,7 @@ const RadioControl = ({
       size={size}
       onClick={handlePlayPause}
       disabled={isLoading}
+      aria-label={isPlaying ? "Mettre en pause" : "Écouter"}
     >
       {isLoading ? (
         <Loader size={iconSize[size]} className="animate-spin" />
