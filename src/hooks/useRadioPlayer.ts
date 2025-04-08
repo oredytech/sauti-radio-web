@@ -7,7 +7,9 @@ export function useRadioPlayer() {
   const [volume, setVolume] = useState([50]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentStreamIndex, setCurrentStreamIndex] = useState(0);
+  const [networkError, setNetworkError] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const wasPlayingBeforeError = useRef(false);
 
   // Initialize the audio element once for the entire application
   useEffect(() => {
@@ -22,6 +24,7 @@ export function useRadioPlayer() {
     const handlePlaying = () => {
       setIsLoading(false);
       setIsPlaying(true);
+      setNetworkError(false);
       toast.success("Radio en direct", {
         description: "Vous écoutez Radio Sauti ya Injili"
       });
@@ -35,6 +38,11 @@ export function useRadioPlayer() {
       console.error("Error loading audio stream");
       setIsLoading(false);
       
+      // Save the current playing state before error
+      if (isPlaying) {
+        wasPlayingBeforeError.current = true;
+      }
+      
       // Try the next stream URL if available
       if (currentStreamIndex < STREAM_URLS.length - 1) {
         const nextIndex = currentStreamIndex + 1;
@@ -45,11 +53,13 @@ export function useRadioPlayer() {
           if (isPlaying) {
             audioRef.current.play().catch(err => {
               console.error("Failed to play next stream:", err);
+              setNetworkError(true);
               setIsPlaying(false);
             });
           }
         }
       } else {
+        setNetworkError(true);
         setIsPlaying(false);
         toast.error("Difficulté de connexion", {
           description: "Impossible de se connecter au flux radio"
@@ -85,6 +95,43 @@ export function useRadioPlayer() {
     }
   }, [currentStreamIndex]);
 
+  // Network connection monitoring
+  useEffect(() => {
+    const handleOnline = () => {
+      if (networkError && wasPlayingBeforeError.current) {
+        // Reset stream index to try from the beginning when connection is restored
+        setCurrentStreamIndex(0);
+        if (audioRef.current) {
+          audioRef.current.src = STREAM_URLS[0];
+          audioRef.current.load();
+          
+          // Add a small delay to ensure the browser has properly re-established network connections
+          setTimeout(() => {
+            if (audioRef.current) {
+              audioRef.current.play()
+                .then(() => {
+                  setNetworkError(false);
+                  wasPlayingBeforeError.current = false;
+                  toast.success("Connexion rétablie", {
+                    description: "Lecture audio reprise automatiquement"
+                  });
+                })
+                .catch(err => {
+                  console.error("Failed to auto-resume playback:", err);
+                });
+            }
+          }, 2000);
+        }
+      }
+    };
+
+    window.addEventListener('online', handleOnline);
+    
+    return () => {
+      window.removeEventListener('online', handleOnline);
+    };
+  }, [networkError]);
+
   const handlePlayPause = () => {
     if (!audioRef.current) return;
     
@@ -93,6 +140,9 @@ export function useRadioPlayer() {
       setIsPlaying(false);
     } else {
       setIsLoading(true);
+      // Reset network error state when manually trying to play
+      setNetworkError(false);
+      
       audioRef.current.play().catch(err => {
         console.error("Failed to play:", err);
         setIsLoading(false);
@@ -101,6 +151,7 @@ export function useRadioPlayer() {
         if (currentStreamIndex < STREAM_URLS.length - 1) {
           setCurrentStreamIndex(currentStreamIndex + 1);
         } else {
+          setNetworkError(true);
           toast.error("Difficulté de lecture", {
             description: "Impossible de lire le flux radio"
           });
@@ -114,6 +165,9 @@ export function useRadioPlayer() {
     window.playRadio = () => {
       if (audioRef.current && !isPlaying) {
         setIsLoading(true);
+        // Reset network error state when manually trying to play
+        setNetworkError(false);
+        
         audioRef.current.play().catch(err => {
           console.error("Failed to play:", err);
           setIsLoading(false);
@@ -122,6 +176,7 @@ export function useRadioPlayer() {
           if (currentStreamIndex < STREAM_URLS.length - 1) {
             setCurrentStreamIndex(currentStreamIndex + 1);
           } else {
+            setNetworkError(true);
             toast.error("Difficulté de lecture", {
               description: "Impossible de lire le flux radio"
             });
@@ -133,13 +188,14 @@ export function useRadioPlayer() {
     return () => {
       // Don't reset window.playRadio to keep it available
     };
-  }, [isPlaying, currentStreamIndex]);
+  }, [isPlaying, currentStreamIndex, networkError]);
 
   return {
     isPlaying,
     isLoading,
     volume,
     setVolume,
-    handlePlayPause
+    handlePlayPause,
+    networkError
   };
 }
