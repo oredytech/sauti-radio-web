@@ -1,5 +1,26 @@
 
+import { useState } from "react";
+import { toast } from "sonner";
+
 const AppDownload = () => {
+  const [streamUrl] = useState("https://stream.zeno.fm/jyat1y09yg1tv");
+
+  const handleVlcClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    // Pour des raisons de compatibilité, nous vérifions si l'utilisateur est sur mobile
+    // où le protocole vlc:// pourrait ne pas fonctionner correctement
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (isMobile) {
+      e.preventDefault();
+      toast.info("Téléchargement", {
+        description: "Veuillez installer VLC et copier manuellement l'URL du flux audio"
+      });
+    } else {
+      toast.success("Ajout du flux", {
+        description: "Le flux audio est en cours d'ajout à VLC"
+      });
+    }
+  };
+
   return (
     <section 
       className="relative bg-primary text-white py-20"
@@ -41,9 +62,8 @@ const AppDownload = () => {
 
             {/* VLC */}
             <a 
-              href="https://www.videolan.org/vlc/" 
-              target="_blank" 
-              rel="noopener noreferrer"
+              href={`vlc://${streamUrl}`}
+              onClick={handleVlcClick}
               className="bg-black/20 hover:bg-black/30 p-6 rounded-lg transition-all"
             >
               <div className="h-16 w-16 mx-auto mb-4">
@@ -52,7 +72,7 @@ const AppDownload = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-2">VLC Media Player</h3>
-              <p className="text-gray-300">Ajoutez notre flux audio dans VLC pour nous écouter</p>
+              <p className="text-gray-300">Ajoutez notre flux audio dans VLC en un clic</p>
             </a>
 
             {/* Site Web */}
