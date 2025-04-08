@@ -3,6 +3,7 @@ import { useRadioPlayer } from "@/hooks/useRadioPlayer";
 import PlayPauseButton from "./radio/PlayPauseButton";
 import VolumeControl from "./radio/VolumeControl";
 import RadioInfo from "./radio/RadioInfo";
+import VlcPlayButton from "./radio/VlcPlayButton";
 
 const RadioPlayer = () => {
   const { isPlaying, isLoading, volume, setVolume, handlePlayPause } = useRadioPlayer();
@@ -20,7 +21,10 @@ const RadioPlayer = () => {
             <RadioInfo isPlaying={isPlaying} />
           </div>
 
-          <VolumeControl volume={volume} setVolume={setVolume} />
+          <div className="flex items-center gap-4">
+            <VlcPlayButton variant="outline" size="sm" className="hidden md:flex" />
+            <VolumeControl volume={volume} setVolume={setVolume} />
+          </div>
         </div>
       </div>
     </div>

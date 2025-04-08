@@ -1,9 +1,9 @@
-
 import { useState } from "react";
 import { toast } from "sonner";
+import { STREAM_URLS } from "@/utils/radioUtils";
 
 const AppDownload = () => {
-  const [streamUrl] = useState("https://stream.zeno.fm/jyat1y09yg1tv");
+  const [streamUrl] = useState(STREAM_URLS[0]);
 
   const handleVlcClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Pour des raisons de compatibilité, nous vérifions si l'utilisateur est sur mobile
@@ -13,6 +13,17 @@ const AppDownload = () => {
       e.preventDefault();
       toast.info("Téléchargement", {
         description: "Veuillez installer VLC et copier manuellement l'URL du flux audio"
+      });
+      // Provide the stream URL for mobile users to copy
+      navigator.clipboard?.writeText(streamUrl).then(() => {
+        toast.success("URL copiée", {
+          description: "L'URL du flux a été copiée dans le presse-papier"
+        });
+      }).catch(() => {
+        // Clipboard API not available, just show the URL
+        toast.info("URL du flux", {
+          description: streamUrl
+        });
       });
     } else {
       toast.success("Ajout du flux", {
