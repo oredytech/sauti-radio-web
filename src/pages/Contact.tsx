@@ -92,7 +92,7 @@ const Contact = () => {
                 <Mail className="h-6 w-6 text-secondary flex-shrink-0 mt-1" />
                 <div>
                   <h3 className="font-medium text-gray-800 dark:text-gray-200 mb-1">Email</h3>
-                  <p className="text-gray-600 dark:text-gray-300">info@sautiyainjili.org</p>
+                  <p className="text-gray-600 dark:text-gray-300">contact@rsirdc.org</p>
                 </div>
               </div>
               
@@ -103,24 +103,6 @@ const Contact = () => {
                   <p className="text-gray-600 dark:text-gray-300">B.P. : 3413 GOMA-DRC</p>
                 </div>
               </div>
-            </div>
-            
-            <div className="mt-8">
-              <h3 className="text-xl font-semibold text-primary dark:text-white mb-4">Heures d'ouverture</h3>
-              <ul className="space-y-2 text-gray-600 dark:text-gray-300">
-                <li className="flex justify-between">
-                  <span>Lundi - Vendredi:</span>
-                  <span>8h00 - 18h00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Samedi:</span>
-                  <span>9h00 - 16h00</span>
-                </li>
-                <li className="flex justify-between">
-                  <span>Dimanche:</span>
-                  <span>Fermé</span>
-                </li>
-              </ul>
             </div>
             
             <div className="mt-8">
