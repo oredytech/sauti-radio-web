@@ -11,7 +11,7 @@ const Events = () => {
     queryKey: ["posts"],
     queryFn: async () => {
       const response = await axios.get<WordPressPost[]>(
-        "https://totalementactus.net/wp-json/wp/v2/posts?_embed&per_page=3"
+        "https://rsirdc.org/shr/wp-json/wp/v2/posts?_embed&per_page=3"
       );
       return response.data;
     },

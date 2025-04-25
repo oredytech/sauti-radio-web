@@ -1,4 +1,3 @@
-
 export interface WordPressPost {
   id: number;
   title: {
@@ -88,11 +87,10 @@ export const extractIdFromSlug = (slug: string): number | null => {
   }
 };
 
-// New function to fetch a post by ID
 export const fetchPostById = async (id: number): Promise<WordPressPost> => {
   try {
     const response = await fetch(
-      `https://totalementactus.net/wp-json/wp/v2/posts/${id}?_embed`
+      `https://rsirdc.org/shr/wp-json/wp/v2/posts/${id}?_embed`
     );
     
     if (!response.ok) {
@@ -106,14 +104,12 @@ export const fetchPostById = async (id: number): Promise<WordPressPost> => {
   }
 };
 
-// New function to try fetching posts by slug
 export const fetchPostBySlug = async (slug: string): Promise<WordPressPost | null> => {
   try {
-    // WordPress API allows searching by slug using ?slug=post-name
     const sanitizedSlug = slug.split('/').pop()?.split('-').slice(0, -1).join('-') || slug;
     
     const response = await fetch(
-      `https://totalementactus.net/wp-json/wp/v2/posts?slug=${sanitizedSlug}&_embed`
+      `https://rsirdc.org/shr/wp-json/wp/v2/posts?slug=${sanitizedSlug}&_embed`
     );
     
     if (!response.ok) {
