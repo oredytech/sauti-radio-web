@@ -13,7 +13,14 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
   
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      // Ensure the URL contains /shr/article/
+      const urlObj = new URL(url);
+      const path = urlObj.pathname;
+      if (!path.includes('/shr/article/')) {
+        urlObj.pathname = path.replace('/article/', '/shr/article/');
+      }
+      await navigator.clipboard.writeText(urlObj.toString());
+      
       toast({
         title: "Lien copié",
         description: "Le lien a été copié dans le presse-papiers",
@@ -29,8 +36,16 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
   };
   
   const openShareWindow = (shareUrl: string) => {
+    // Ensure the URL contains /shr/article/
+    const urlObj = new URL(url);
+    const path = urlObj.pathname;
+    if (!path.includes('/shr/article/')) {
+      urlObj.pathname = path.replace('/article/', '/shr/article/');
+    }
+    const finalUrl = urlObj.toString();
+    
     window.open(
-      shareUrl,
+      shareUrl.replace(url, finalUrl),
       "share-dialog",
       "width=800,height=600,location=yes,resizable=yes,scrollbars=yes"
     );

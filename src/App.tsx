@@ -20,12 +20,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
-            <Route path="/article/:slug" element={<ArticlePage />} />
+            <Route path="/shr/article/:slug" element={<ArticlePage />} />
+            <Route path="/article/:slug" element={<ArticlePage />} /> {/* Keep old route for compatibility */}
             <Route path="/actualites" element={<NewsPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
-          {/* RadioPlayer kept outside Routes to persist across navigation */}
           <RadioPlayer />
         </Router>
       </HelmetProvider>

@@ -63,7 +63,7 @@ const Events = () => {
                     }}
                   />
                   <Link
-                    to={`/article/${slug}`}
+                    to={`/shr/article/${slug}`}
                     className="text-secondary hover:text-red-600 font-semibold flex items-center gap-2"
                   >
                     Lire la suite

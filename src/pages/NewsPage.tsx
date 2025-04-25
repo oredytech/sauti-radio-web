@@ -79,7 +79,7 @@ const NewsPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Right Grid - Now takes half the width */}
+            {/* Right Grid */}
             <div className="lg:col-span-1">
               <div className="grid grid-cols-2 gap-4 h-full">
                 {nextFourPosts.map((post) => {
@@ -87,7 +87,7 @@ const NewsPage: React.FC = () => {
                   return (
                     <Link
                       key={post.id}
-                      to={`/article/${slug}`}
+                      to={`/shr/article/${slug}`}
                       className="block relative rounded-lg overflow-hidden h-full hover:opacity-90 transition-opacity"
                     >
                       <img
