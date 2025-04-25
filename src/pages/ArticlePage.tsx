@@ -15,11 +15,11 @@ import { Helmet } from "react-helmet-async";
 import { useEffect } from "react";
 
 const ArticlePage = () => {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug = "" } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   
-  // Extract the ID from the slug
-  const postId = slug ? extractIdFromSlug(slug) : null;
+  // Extract the ID from the slug, accounting for external links
+  const postId = extractIdFromSlug(slug);
 
   const { data: post, isLoading, isError } = useQuery({
     queryKey: ["post", postId],
@@ -43,9 +43,10 @@ const ArticlePage = () => {
   // Redirect to 404 if the ID is invalid or there's an error
   useEffect(() => {
     if ((!postId || isError) && !isLoading) {
+      console.error("Invalid article ID or error occurred:", { slug, postId, isError });
       navigate("/not-found", { replace: true });
     }
-  }, [postId, isError, navigate, isLoading]);
+  }, [postId, isError, navigate, isLoading, slug]);
 
   if (isLoading) {
     return (

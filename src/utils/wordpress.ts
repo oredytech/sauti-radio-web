@@ -44,11 +44,26 @@ export const generateSlug = (title: string, id: number): string => {
 };
 
 export const extractIdFromSlug = (slug: string): number | null => {
-  // Extract the ID from the end of the slug
+  // Try to extract the ID from the end of the slug using regex
   const match = slug.match(/-(\d+)$/);
+  
+  // If we have a match with ID at the end
   if (match && match[1]) {
     return parseInt(match[1], 10);
   }
+  
+  // If the slug doesn't end with an ID in our format,
+  // it might be a direct link from WordPress with the full post name
+  // In this case, we need to extract just the last part after the last slash
+  const pathParts = slug.split('/');
+  const lastPart = pathParts[pathParts.length - 1];
+  
+  // Try again with just the last part
+  const lastPartMatch = lastPart.match(/-(\d+)$/);
+  if (lastPartMatch && lastPartMatch[1]) {
+    return parseInt(lastPartMatch[1], 10);
+  }
+  
   return null;
 };
 
