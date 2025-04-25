@@ -38,8 +38,8 @@ export const generateSlug = (title: string, id: number): string => {
     .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
     .trim(); // Trim leading/trailing spaces
   
-  // Return just the slug with ID at the end
-  return `${slug}-${id}`;
+  // Return just the slug without ID
+  return slug;
 };
 
 export const extractIdFromSlug = (slug: string): number | null => {
