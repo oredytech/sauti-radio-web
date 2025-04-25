@@ -44,27 +44,48 @@ export const generateSlug = (title: string, id: number): string => {
 };
 
 export const extractIdFromSlug = (slug: string): number | null => {
-  // Try to extract the ID from the end of the slug using regex
-  const match = slug.match(/-(\d+)$/);
+  if (!slug) return null;
   
-  // If we have a match with ID at the end
-  if (match && match[1]) {
-    return parseInt(match[1], 10);
+  try {
+    // First, try to extract the ID directly from the end using our format
+    const directMatch = slug.match(/-(\d+)$/);
+    if (directMatch && directMatch[1]) {
+      return parseInt(directMatch[1], 10);
+    }
+    
+    // If that fails, handle WordPress URLs in different formats
+    
+    // 1. Handle URLs with multiple path segments (split by '/')
+    const pathParts = slug.split('/').filter(Boolean);
+    const lastPart = pathParts[pathParts.length - 1];
+    
+    // Try to extract ID from the last part
+    const lastPartMatch = lastPart?.match(/-(\d+)$/);
+    if (lastPartMatch && lastPartMatch[1]) {
+      return parseInt(lastPartMatch[1], 10);
+    }
+    
+    // 2. Look for any numeric part that could be a post ID (fallback)
+    // This is more permissive but helps with unusual URL patterns
+    const anyNumberMatch = slug.match(/\/(\d+)(?:\/|$)/);
+    if (anyNumberMatch && anyNumberMatch[1]) {
+      return parseInt(anyNumberMatch[1], 10);
+    }
+    
+    // 3. If it's a WordPress permalink without ID in URL, try to extract from query params
+    // Some WordPress sites use ?p=123 format
+    if (slug.includes('?p=')) {
+      const params = new URLSearchParams(slug.split('?')[1]);
+      const postId = params.get('p');
+      if (postId) return parseInt(postId, 10);
+    }
+    
+    // Nothing matched
+    return null;
+  } catch (error) {
+    console.error("Error extracting ID from slug:", error);
+    return null;
   }
-  
-  // If the slug doesn't end with an ID in our format,
-  // it might be a direct link from WordPress with the full post name
-  // In this case, we need to extract just the last part after the last slash
-  const pathParts = slug.split('/');
-  const lastPart = pathParts[pathParts.length - 1];
-  
-  // Try again with just the last part
-  const lastPartMatch = lastPart.match(/-(\d+)$/);
-  if (lastPartMatch && lastPartMatch[1]) {
-    return parseInt(lastPartMatch[1], 10);
-  }
-  
-  return null;
 };
 
 // New function to fetch a post by ID
@@ -82,5 +103,27 @@ export const fetchPostById = async (id: number): Promise<WordPressPost> => {
   } catch (error) {
     console.error("Error fetching post:", error);
     throw error;
+  }
+};
+
+// New function to try fetching posts by slug
+export const fetchPostBySlug = async (slug: string): Promise<WordPressPost | null> => {
+  try {
+    // WordPress API allows searching by slug using ?slug=post-name
+    const sanitizedSlug = slug.split('/').pop()?.split('-').slice(0, -1).join('-') || slug;
+    
+    const response = await fetch(
+      `https://totalementactus.net/wp-json/wp/v2/posts?slug=${sanitizedSlug}&_embed`
+    );
+    
+    if (!response.ok) {
+      throw new Error(`Failed to fetch post by slug: ${response.status}`);
+    }
+    
+    const posts = await response.json();
+    return posts.length > 0 ? posts[0] : null;
+  } catch (error) {
+    console.error("Error fetching post by slug:", error);
+    return null;
   }
 };

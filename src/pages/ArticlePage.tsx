@@ -8,45 +8,83 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Skeleton } from "@/components/ui/skeleton";
-import { WordPressPost, decodeHtmlEntities, extractIdFromSlug } from "@/utils/wordpress";
+import { 
+  WordPressPost, 
+  decodeHtmlEntities, 
+  extractIdFromSlug, 
+  fetchPostBySlug 
+} from "@/utils/wordpress";
 import CommentForm from "@/components/article/CommentForm";
 import SocialShare from "@/components/article/SocialShare";
 import { Helmet } from "react-helmet-async";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const ArticlePage = () => {
   const { slug = "" } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [isRedirecting, setIsRedirecting] = useState(false);
   
   // Extract the ID from the slug, accounting for external links
   const postId = extractIdFromSlug(slug);
 
-  const { data: post, isLoading, isError } = useQuery({
-    queryKey: ["post", postId],
+  const { 
+    data: post, 
+    isLoading, 
+    isError, 
+    refetch 
+  } = useQuery({
+    queryKey: ["post", postId, slug],
     queryFn: async () => {
-      if (!postId) throw new Error("Invalid post ID");
-      try {
-        const response = await axios.get<WordPressPost>(
-          `https://totalementactus.net/wp-json/wp/v2/posts/${postId}?_embed`
-        );
-        return response.data;
-      } catch (error) {
-        console.error("Error fetching article:", error);
-        throw error;
+      // If we have an ID, try fetching by ID first
+      if (postId) {
+        try {
+          const response = await axios.get<WordPressPost>(
+            `https://totalementactus.net/wp-json/wp/v2/posts/${postId}?_embed`
+          );
+          return response.data;
+        } catch (error) {
+          console.log(`Failed to fetch post by ID ${postId}, trying slug lookup`);
+          // If ID fetch fails, try by slug as fallback
+          const slugPost = await fetchPostBySlug(slug);
+          if (slugPost) return slugPost;
+          throw error;
+        }
+      } else {
+        // No ID in slug, try fetching by slug directly
+        const slugPost = await fetchPostBySlug(slug);
+        if (slugPost) return slugPost;
+        throw new Error("Post not found");
       }
     },
-    enabled: !!postId,
+    enabled: !!slug,
     retry: 2,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
   });
 
-  // Redirect to 404 if the ID is invalid or there's an error
+  // Attempt to recover from errors by trying alternative methods
   useEffect(() => {
-    if ((!postId || isError) && !isLoading) {
-      console.error("Invalid article ID or error occurred:", { slug, postId, isError });
-      navigate("/not-found", { replace: true });
+    if (isError && !isRedirecting) {
+      console.log("Error fetching post, attempting recovery:", { slug });
+      // Only try recovery once to avoid loops
+      setIsRedirecting(true);
+      
+      // Try to find the post by slug as a last resort
+      fetchPostBySlug(slug)
+        .then(recoveredPost => {
+          if (recoveredPost) {
+            console.log("Successfully recovered post by slug lookup");
+            refetch();
+          } else {
+            console.error("Failed to recover post, redirecting to not-found");
+            navigate("/not-found", { replace: true });
+          }
+        })
+        .catch(() => {
+          navigate("/not-found", { replace: true });
+        });
     }
-  }, [postId, isError, navigate, isLoading, slug]);
+  }, [isError, slug, navigate, refetch, isRedirecting]);
 
   if (isLoading) {
     return (
@@ -71,7 +109,22 @@ const ArticlePage = () => {
   }
 
   if (!post) {
-    return null; // Will be redirected by useEffect
+    return (
+      <div className="min-h-screen dark:bg-gray-900">
+        <Navbar />
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-4xl mx-auto">
+            <Alert>
+              <AlertDescription>
+                Chargement de l'article...
+              </AlertDescription>
+            </Alert>
+          </div>
+        </div>
+        <Footer />
+        <RadioPlayer />
+      </div>
+    );
   }
 
   const featuredImage = post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
