@@ -1,5 +1,5 @@
 
-import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { Toaster } from "@/components/ui/toaster";
@@ -20,8 +20,11 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
+            {/* Toutes les variations possibles de routes d'articles */}
             <Route path="/shr/article/:slug" element={<ArticlePage />} />
             <Route path="/article/:slug" element={<ArticlePage />} />
+            <Route path="/actualites/:slug" element={<ArticlePage />} />
+            <Route path="/news/:slug" element={<ArticlePage />} />
             <Route path="/actualites" element={<NewsPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />

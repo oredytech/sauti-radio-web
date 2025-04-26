@@ -16,8 +16,8 @@ const NotFound = () => {
   
   useEffect(() => {
     const checkForArticle = async () => {
-      console.error(
-        "404 Error: User attempted to access non-existent route:",
+      console.log(
+        "404 Error: Attempted to access non-existent route:",
         location.pathname
       );
       
@@ -48,6 +48,25 @@ const NotFound = () => {
             navigate(`/shr/article/${potentialSlug}`, { replace: true });
             return;
           } else {
+            // Try to extract a numeric ID if present in the slug
+            const idMatch = potentialSlug.match(/\d+$/);
+            if (idMatch) {
+              const numericId = idMatch[0];
+              const cleanedSlug = potentialSlug.replace(/\-\d+$/, '');
+              
+              // Try with the cleaned slug
+              const postByCleanSlug = await fetchPostBySlug(cleanedSlug);
+              if (postByCleanSlug) {
+                console.log("Found article with cleaned slug:", cleanedSlug);
+                toast({
+                  title: "Article trouvé",
+                  description: "Redirection vers l'article...",
+                });
+                navigate(`/shr/article/${cleanedSlug}-${numericId}`, { replace: true });
+                return;
+              }
+            }
+            
             toast({
               title: "Article introuvable",
               description: "Nous n'avons pas pu trouver l'article demandé",

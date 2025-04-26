@@ -18,7 +18,7 @@ const HeroCarousel: React.FC<HeroCarouselProps> = ({ posts }) => {
           const slug = generateSlug(post.title.rendered, post.id);
           return (
             <CarouselItem key={post.id} className="h-full">
-              <Link to={`/article/${slug}`} className="block h-full">
+              <Link to={`/shr/article/${slug}`} className="block h-full">
                 <div className="relative h-full w-full">
                   <img
                     src={
