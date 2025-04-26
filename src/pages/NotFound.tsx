@@ -7,10 +7,12 @@ import RadioPlayer from "@/components/RadioPlayer";
 import { Button } from "@/components/ui/button";
 import { fetchPostBySlug } from "@/utils/wordpress";
 import { useNavigate } from "react-router-dom";
+import { useToast } from "@/hooks/use-toast";
 
 const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { toast } = useToast();
   
   useEffect(() => {
     const checkForArticle = async () => {
@@ -19,27 +21,52 @@ const NotFound = () => {
         location.pathname
       );
       
-      // Try to extract a slug from the URL
+      // Try to extract a slug from the URL - handle different URL formats
       const pathSegments = location.pathname.split('/');
-      const potentialSlug = pathSegments[pathSegments.length - 1];
+      let potentialSlug = pathSegments[pathSegments.length - 1];
+      
+      // If we're in a path like /article/slug
+      if (pathSegments.includes('article') && pathSegments.length >= 3) {
+        potentialSlug = pathSegments[pathSegments.indexOf('article') + 1];
+      }
       
       if (potentialSlug) {
         try {
+          toast({
+            title: "Recherche de l'article",
+            description: "Nous essayons de trouver l'article correspondant...",
+          });
+          
           // Check if this is an article with a different URL format
           const post = await fetchPostBySlug(potentialSlug);
           if (post) {
             console.log("Found article with slug:", potentialSlug);
+            toast({
+              title: "Article trouvé",
+              description: "Redirection vers l'article...",
+            });
             navigate(`/shr/article/${potentialSlug}`, { replace: true });
             return;
+          } else {
+            toast({
+              title: "Article introuvable",
+              description: "Nous n'avons pas pu trouver l'article demandé",
+              variant: "destructive",
+            });
           }
         } catch (error) {
           console.error("Error checking for article:", error);
+          toast({
+            title: "Erreur",
+            description: "Une erreur est survenue lors de la recherche de l'article",
+            variant: "destructive",
+          });
         }
       }
     };
     
     checkForArticle();
-  }, [location.pathname, navigate]);
+  }, [location.pathname, navigate, toast]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">

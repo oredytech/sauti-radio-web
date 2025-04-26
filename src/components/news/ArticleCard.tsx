@@ -36,7 +36,7 @@ const ArticleCard: React.FC<ArticleCardProps> = ({ post }) => {
           }}
         />
         <Link
-          to={`/article/${slug}`}
+          to={`/shr/article/${slug}`}
           className="text-secondary dark:text-red-400 hover:text-red-600 dark:hover:text-red-300 font-semibold text-sm flex items-center gap-2"
         >
           Lire la suite
