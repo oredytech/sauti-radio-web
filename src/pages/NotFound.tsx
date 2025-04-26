@@ -5,16 +5,41 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Button } from "@/components/ui/button";
+import { fetchPostBySlug } from "@/utils/wordpress";
+import { useNavigate } from "react-router-dom";
 
 const NotFound = () => {
   const location = useLocation();
-
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    console.error(
-      "404 Error: User attempted to access non-existent route:",
-      location.pathname
-    );
-  }, [location.pathname]);
+    const checkForArticle = async () => {
+      console.error(
+        "404 Error: User attempted to access non-existent route:",
+        location.pathname
+      );
+      
+      // Try to extract a slug from the URL
+      const pathSegments = location.pathname.split('/');
+      const potentialSlug = pathSegments[pathSegments.length - 1];
+      
+      if (potentialSlug) {
+        try {
+          // Check if this is an article with a different URL format
+          const post = await fetchPostBySlug(potentialSlug);
+          if (post) {
+            console.log("Found article with slug:", potentialSlug);
+            navigate(`/shr/article/${potentialSlug}`, { replace: true });
+            return;
+          }
+        } catch (error) {
+          console.error("Error checking for article:", error);
+        }
+      }
+    };
+    
+    checkForArticle();
+  }, [location.pathname, navigate]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">

@@ -11,15 +11,29 @@ interface SocialShareProps {
 const SocialShare = ({ url, title }: SocialShareProps) => {
   const { toast } = useToast();
   
-  const handleCopyLink = async () => {
+  const ensureCorrectUrl = (url: string): string => {
     try {
-      // Ensure the URL contains /shr/article/
       const urlObj = new URL(url);
       const path = urlObj.pathname;
+      
+      // Ensure the URL contains /shr/article/ for sharing
       if (!path.includes('/shr/article/')) {
-        urlObj.pathname = path.replace('/article/', '/shr/article/');
+        const pathSegments = path.split('/');
+        const slug = pathSegments[pathSegments.length - 1];
+        urlObj.pathname = `/shr/article/${slug}`;
       }
-      await navigator.clipboard.writeText(urlObj.toString());
+      
+      return urlObj.toString();
+    } catch (err) {
+      // If URL parsing fails, return the original URL
+      return url;
+    }
+  };
+  
+  const handleCopyLink = async () => {
+    try {
+      const correctUrl = ensureCorrectUrl(url);
+      await navigator.clipboard.writeText(correctUrl);
       
       toast({
         title: "Lien copié",
@@ -36,16 +50,10 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
   };
   
   const openShareWindow = (shareUrl: string) => {
-    // Ensure the URL contains /shr/article/
-    const urlObj = new URL(url);
-    const path = urlObj.pathname;
-    if (!path.includes('/shr/article/')) {
-      urlObj.pathname = path.replace('/article/', '/shr/article/');
-    }
-    const finalUrl = urlObj.toString();
+    const correctUrl = ensureCorrectUrl(url);
     
     window.open(
-      shareUrl.replace(url, finalUrl),
+      shareUrl.replace(url, correctUrl),
       "share-dialog",
       "width=800,height=600,location=yes,resizable=yes,scrollbars=yes"
     );
@@ -83,7 +91,7 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
       <Button
         variant="outline"
         className="flex justify-start bg-white dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300"
-        onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`}
+        onClick={() => window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(ensureCorrectUrl(url))}`}
       >
         <Mail className="mr-2" size={18} />
         Envoyer par email
@@ -105,7 +113,7 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
           onClick={() => {
             navigator.share({
               title: title,
-              url: url,
+              url: ensureCorrectUrl(url),
             }).catch(err => console.error("Error sharing:", err));
           }}
         >
