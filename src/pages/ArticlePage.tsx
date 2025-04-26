@@ -9,82 +9,66 @@ import Footer from "@/components/Footer";
 import RadioPlayer from "@/components/RadioPlayer";
 import { Skeleton } from "@/components/ui/skeleton";
 import { 
-  WordPressPost, 
-  decodeHtmlEntities, 
-  extractIdFromSlug, 
-  fetchPostBySlug 
+  WordPressPost,
+  decodeHtmlEntities,
+  fetchPostBySlug
 } from "@/utils/wordpress";
 import CommentForm from "@/components/article/CommentForm";
 import SocialShare from "@/components/article/SocialShare";
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useToast } from "@/components/ui/use-toast";
 
 const ArticlePage = () => {
   const { slug = "" } = useParams<{ slug: string }>();
   const navigate = useNavigate();
-  const [isRedirecting, setIsRedirecting] = useState(false);
+  const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
+  const { toast } = useToast();
   
-  // Extract the ID from the slug, accounting for external links
-  const postId = extractIdFromSlug(slug);
-
   const { 
     data: post, 
     isLoading, 
-    isError, 
-    refetch 
+    isError 
   } = useQuery({
-    queryKey: ["post", postId, slug],
+    queryKey: ["post", slug],
     queryFn: async () => {
-      // If we have an ID, try fetching by ID first
-      if (postId) {
-        try {
-          const response = await axios.get<WordPressPost>(
-            `https://totalementactus.net/wp-json/wp/v2/posts/${postId}?_embed`
-          );
-          return response.data;
-        } catch (error) {
-          console.log(`Failed to fetch post by ID ${postId}, trying slug lookup`);
-          // If ID fetch fails, try by slug as fallback
-          const slugPost = await fetchPostBySlug(slug);
-          if (slugPost) return slugPost;
-          throw error;
-        }
-      } else {
-        // No ID in slug, try fetching by slug directly
+      console.log("Fetching post with slug:", slug);
+      
+      try {
+        // Try to fetch directly by slug
         const slugPost = await fetchPostBySlug(slug);
-        if (slugPost) return slugPost;
+        
+        if (slugPost) {
+          console.log("Successfully found post by slug");
+          return slugPost;
+        }
+        
+        // If we get here, the post wasn't found
         throw new Error("Post not found");
+      } catch (error) {
+        console.error("Error in article fetch:", error);
+        throw error;
       }
     },
     enabled: !!slug,
     retry: 2,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-  });
-
-  // Attempt to recover from errors by trying alternative methods
-  useEffect(() => {
-    if (isError && !isRedirecting) {
-      console.log("Error fetching post, attempting recovery:", { slug });
-      // Only try recovery once to avoid loops
-      setIsRedirecting(true);
-      
-      // Try to find the post by slug as a last resort
-      fetchPostBySlug(slug)
-        .then(recoveredPost => {
-          if (recoveredPost) {
-            console.log("Successfully recovered post by slug lookup");
-            refetch();
-          } else {
-            console.error("Failed to recover post, redirecting to not-found");
-            navigate("/not-found", { replace: true });
-          }
-        })
-        .catch(() => {
-          navigate("/not-found", { replace: true });
+    onError: () => {
+      if (!isLoadingRedirect) {
+        setIsLoadingRedirect(true);
+        toast({
+          title: "Article introuvable",
+          description: "Nous n'avons pas pu trouver l'article demandé",
+          variant: "destructive"
         });
+        
+        setTimeout(() => {
+          navigate("/actualites", { replace: true });
+        }, 2000);
+      }
     }
-  }, [isError, slug, navigate, refetch, isRedirecting]);
+  });
 
   if (isLoading) {
     return (
@@ -108,15 +92,15 @@ const ArticlePage = () => {
     );
   }
 
-  if (!post) {
+  if (isError || !post) {
     return (
       <div className="min-h-screen dark:bg-gray-900">
         <Navbar />
         <div className="container mx-auto px-4 py-20">
           <div className="max-w-4xl mx-auto">
-            <Alert>
+            <Alert variant="destructive">
               <AlertDescription>
-                Chargement de l'article...
+                L'article demandé n'a pas pu être trouvé. Redirection vers les actualités...
               </AlertDescription>
             </Alert>
           </div>

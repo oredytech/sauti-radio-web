@@ -1,19 +1,15 @@
 
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Link } from "react-router-dom";
-import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
+import { WordPressPost, decodeHtmlEntities, generateSlug, fetchPosts } from "@/utils/wordpress";
 
 const Events = () => {
   const { data: posts, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
-      const response = await axios.get<WordPressPost[]>(
-        "https://rsirdc.org/shr/wp-json/wp/v2/posts?_embed&per_page=3"
-      );
-      return response.data;
+      return await fetchPosts(1, 3);
     },
   });
 
