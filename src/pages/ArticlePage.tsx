@@ -1,7 +1,6 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import Navbar from "@/components/Navbar";
@@ -54,18 +53,20 @@ const ArticlePage = () => {
     enabled: !!slug,
     retry: 2,
     staleTime: 5 * 60 * 1000, // Cache for 5 minutes
-    onError: () => {
-      if (!isLoadingRedirect) {
-        setIsLoadingRedirect(true);
-        toast({
-          title: "Article introuvable",
-          description: "Nous n'avons pas pu trouver l'article demandé",
-          variant: "destructive"
-        });
-        
-        setTimeout(() => {
-          navigate("/actualites", { replace: true });
-        }, 2000);
+    meta: {
+      onError: () => {
+        if (!isLoadingRedirect) {
+          setIsLoadingRedirect(true);
+          toast({
+            title: "Article introuvable",
+            description: "Nous n'avons pas pu trouver l'article demandé",
+            variant: "destructive"
+          });
+          
+          setTimeout(() => {
+            navigate("/actualites", { replace: true });
+          }, 2000);
+        }
       }
     }
   });
