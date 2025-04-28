@@ -2,11 +2,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/components/ui/use-toast";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
 import ArticleSkeleton from "@/components/article/ArticleSkeleton";
 import ArticleError from "@/components/article/ArticleError";
 import ArticleContent from "@/components/article/ArticleContent";
@@ -23,6 +22,13 @@ const ArticlePage = () => {
   const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
   const { toast } = useToast();
   
+  // Additional check for empty slugs or invalid paths
+  useEffect(() => {
+    if (!slug) {
+      navigate("/actualites", { replace: true });
+    }
+  }, [slug, navigate]);
+  
   const { 
     data: post, 
     isLoading, 
@@ -32,11 +38,31 @@ const ArticlePage = () => {
     queryFn: async () => {
       console.log("Fetching post with slug:", slug);
       try {
+        // Try first with exact slug
         const slugPost = await fetchPostBySlug(slug);
         if (slugPost) {
           console.log("Successfully found post by slug");
           return slugPost;
         }
+        
+        // If not found, try with slug variations
+        const slugVariations = [
+          slug,
+          slug.replace(/-/g, ' '), // Replace hyphens with spaces
+          slug.toLowerCase(),
+          encodeURIComponent(slug)
+        ];
+        
+        for (const variation of slugVariations) {
+          if (variation !== slug) {
+            const variantPost = await fetchPostBySlug(variation);
+            if (variantPost) {
+              console.log("Found post with slug variation:", variation);
+              return variantPost;
+            }
+          }
+        }
+        
         throw new Error("Post not found");
       } catch (error) {
         console.error("Error in article fetch:", error);
@@ -70,7 +96,6 @@ const ArticlePage = () => {
         <Navbar />
         <ArticleSkeleton />
         <Footer />
-        <RadioPlayer />
       </div>
     );
   }
@@ -81,7 +106,6 @@ const ArticlePage = () => {
         <Navbar />
         <ArticleError />
         <Footer />
-        <RadioPlayer />
       </div>
     );
   }
@@ -132,7 +156,6 @@ const ArticlePage = () => {
         </div>
       </div>
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };

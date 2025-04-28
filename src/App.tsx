@@ -21,11 +21,12 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
-            {/* Article routes */}
+            {/* Article routes with different URL patterns for compatibility */}
             <Route path="/article/:slug" element={<ArticlePage />} />
             <Route path="/shr/article/:slug" element={<ArticlePage />} /> {/* Keep for backward compatibility */}
             <Route path="/actualites/:slug" element={<ArticlePage />} />
             <Route path="/news/:slug" element={<ArticlePage />} />
+            <Route path="/:slug" element={<ArticlePage />} /> {/* Catch direct article slugs */}
             <Route path="/actualites" element={<NewsPage />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />

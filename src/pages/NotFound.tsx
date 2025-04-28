@@ -3,7 +3,6 @@ import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
 import { Button } from "@/components/ui/button";
 import { fetchPostBySlug } from "@/utils/wordpress";
 import { useNavigate } from "react-router-dom";
@@ -22,18 +21,31 @@ const NotFound = () => {
       );
       
       // Try to extract a slug from the URL - handle different URL formats
-      const pathSegments = location.pathname.split('/');
+      const pathSegments = location.pathname.split('/').filter(Boolean);
       let potentialSlug = pathSegments[pathSegments.length - 1];
       
+      // Direct article slugs - if the URL is just /{slug}
+      if (pathSegments.length === 1) {
+        potentialSlug = pathSegments[0];
+      }
       // If we're in a path like /article/slug
-      if (pathSegments.includes('article') && pathSegments.length >= 3) {
-        potentialSlug = pathSegments[pathSegments.indexOf('article') + 1];
-      } else if (pathSegments.includes('actualites') && pathSegments.length >= 3) {
+      else if (pathSegments.includes('article') && pathSegments.length >= 2) {
+        const articleIndex = pathSegments.indexOf('article');
+        if (articleIndex < pathSegments.length - 1) {
+          potentialSlug = pathSegments[articleIndex + 1];
+        }
+      } else if (pathSegments.includes('actualites') && pathSegments.length >= 2) {
         // Also check /actualites/slug format
-        potentialSlug = pathSegments[pathSegments.indexOf('actualites') + 1];
-      } else if (pathSegments.includes('news') && pathSegments.length >= 3) {
+        const actualitesIndex = pathSegments.indexOf('actualites');
+        if (actualitesIndex < pathSegments.length - 1) {
+          potentialSlug = pathSegments[actualitesIndex + 1];
+        }
+      } else if (pathSegments.includes('news') && pathSegments.length >= 2) {
         // And check /news/slug format
-        potentialSlug = pathSegments[pathSegments.indexOf('news') + 1];
+        const newsIndex = pathSegments.indexOf('news');
+        if (newsIndex < pathSegments.length - 1) {
+          potentialSlug = pathSegments[newsIndex + 1];
+        }
       }
       
       if (potentialSlug) {
@@ -57,7 +69,6 @@ const NotFound = () => {
             // Try to extract a numeric ID if present in the slug
             const idMatch = potentialSlug.match(/\d+$/);
             if (idMatch) {
-              const numericId = idMatch[0];
               const cleanedSlug = potentialSlug.replace(/\-\d+$/, '');
               
               // Try with the cleaned slug
@@ -86,6 +97,18 @@ const NotFound = () => {
                 navigate(`/article/${rawPathSlug}`, { replace: true });
                 return;
               }
+            }
+            
+            // Check for standard page names that might have been accessed incorrectly
+            const standardPages = ['about', 'contact', 'actualites'];
+            if (standardPages.includes(potentialSlug.toLowerCase())) {
+              console.log("Redirecting to standard page:", potentialSlug);
+              toast({
+                title: "Page trouvée",
+                description: `Redirection vers ${potentialSlug}...`,
+              });
+              navigate(`/${potentialSlug.toLowerCase()}`, { replace: true });
+              return;
             }
             
             toast({
