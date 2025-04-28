@@ -59,7 +59,7 @@ export const extractIdFromSlug = (slug: string): number | null => {
 export const fetchPostById = async (id: number): Promise<WordPressPost> => {
   try {
     const response = await fetch(
-      `https://rsirdc.org/shr/wp-json/wp/v2/posts/${id}?_embed`
+      `https://rsirdc.net/shr/wp-json/wp/v2/posts/${id}?_embed`
     );
     
     if (!response.ok) {
@@ -81,7 +81,7 @@ export const fetchPostBySlug = async (slug: string): Promise<WordPressPost | nul
     
     // Try to fetch posts with this slug
     const response = await fetch(
-      `https://rsirdc.org/shr/wp-json/wp/v2/posts?slug=${sanitizedSlug}&_embed`
+      `https://rsirdc.net/shr/wp-json/wp/v2/posts?slug=${sanitizedSlug}&_embed`
     );
     
     if (!response.ok) {
@@ -102,7 +102,7 @@ export const fetchPostBySlug = async (slug: string): Promise<WordPressPost | nul
 export const fetchPosts = async (page: number = 1, perPage: number = 10): Promise<WordPressPost[]> => {
   try {
     const response = await fetch(
-      `https://rsirdc.org/shr/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`
+      `https://rsirdc.net/shr/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`
     );
     
     if (!response.ok) {

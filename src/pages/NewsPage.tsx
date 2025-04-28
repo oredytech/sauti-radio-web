@@ -19,7 +19,7 @@ const NewsPage: React.FC = () => {
     queryKey: ["all-posts", page],
     queryFn: async () => {
       const response = await axios.get<WordPressPost[]>(
-        `https://rsirdc.org/shr/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`
+        `https://rsirdc.net/shr/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`
       );
       return response.data;
     },
@@ -29,7 +29,7 @@ const NewsPage: React.FC = () => {
     queryKey: ["hero-posts"],
     queryFn: async () => {
       const response = await axios.get<WordPressPost[]>(
-        "https://rsirdc.org/shr/wp-json/wp/v2/posts?_embed&per_page=10"
+        "https://rsirdc.net/shr/wp-json/wp/v2/posts?_embed&per_page=10"
       );
       return response.data;
     },

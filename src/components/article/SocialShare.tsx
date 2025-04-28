@@ -13,18 +13,30 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
   
   const ensureCorrectUrl = (url: string): string => {
     try {
+      // Extract the slug from the current URL
       const urlObj = new URL(url);
       const path = urlObj.pathname;
       
-      // Ensure the URL contains /shr/article/ for sharing
-      if (!path.includes('/shr/article/')) {
-        const pathSegments = path.split('/');
-        const slug = pathSegments[pathSegments.length - 1];
-        urlObj.pathname = `/shr/article/${slug}`;
+      // Try to extract the slug from various possible URL patterns
+      let slug = "";
+      if (path.includes('/article/')) {
+        slug = path.split('/article/')[1];
+      } else if (path.includes('/shr/article/')) {
+        slug = path.split('/shr/article/')[1];
+      } else if (path.includes('/actualites/')) {
+        slug = path.split('/actualites/')[1];
+      } else if (path.includes('/news/')) {
+        slug = path.split('/news/')[1];
+      } else {
+        // If no pattern matches, use the last segment of the path
+        const segments = path.split('/');
+        slug = segments[segments.length - 1];
       }
       
-      return urlObj.toString();
+      // For sharing purposes, use rsirdc.net domain
+      return `https://rsirdc.net/article/${slug}`;
     } catch (err) {
+      console.error("Error formatting URL:", err);
       // If URL parsing fails, return the original URL
       return url;
     }
