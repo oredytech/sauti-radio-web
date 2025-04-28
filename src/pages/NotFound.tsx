@@ -45,7 +45,7 @@ const NotFound = () => {
               title: "Article trouvé",
               description: "Redirection vers l'article...",
             });
-            navigate(`/shr/article/${potentialSlug}`, { replace: true });
+            navigate(`/article/${potentialSlug}`, { replace: true });
             return;
           } else {
             // Try to extract a numeric ID if present in the slug
@@ -62,7 +62,7 @@ const NotFound = () => {
                   title: "Article trouvé",
                   description: "Redirection vers l'article...",
                 });
-                navigate(`/shr/article/${cleanedSlug}-${numericId}`, { replace: true });
+                navigate(`/article/${cleanedSlug}`, { replace: true });
                 return;
               }
             }

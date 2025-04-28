@@ -33,7 +33,7 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
         slug = segments[segments.length - 1];
       }
       
-      // For sharing purposes, use rsirdc.net domain
+      // For sharing purposes, use rsirdc.net domain without /shr
       return `https://rsirdc.net/article/${slug}`;
     } catch (err) {
       console.error("Error formatting URL:", err);
