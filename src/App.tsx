@@ -21,7 +21,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
-            {/* Toutes les variations possibles de routes d'articles */}
+            {/* Article routes */}
             <Route path="/article/:slug" element={<ArticlePage />} />
             <Route path="/shr/article/:slug" element={<ArticlePage />} /> {/* Keep for backward compatibility */}
             <Route path="/actualites/:slug" element={<ArticlePage />} />

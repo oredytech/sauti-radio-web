@@ -28,6 +28,12 @@ const NotFound = () => {
       // If we're in a path like /article/slug
       if (pathSegments.includes('article') && pathSegments.length >= 3) {
         potentialSlug = pathSegments[pathSegments.indexOf('article') + 1];
+      } else if (pathSegments.includes('actualites') && pathSegments.length >= 3) {
+        // Also check /actualites/slug format
+        potentialSlug = pathSegments[pathSegments.indexOf('actualites') + 1];
+      } else if (pathSegments.includes('news') && pathSegments.length >= 3) {
+        // And check /news/slug format
+        potentialSlug = pathSegments[pathSegments.indexOf('news') + 1];
       }
       
       if (potentialSlug) {
@@ -63,6 +69,21 @@ const NotFound = () => {
                   description: "Redirection vers l'article...",
                 });
                 navigate(`/article/${cleanedSlug}`, { replace: true });
+                return;
+              }
+            }
+            
+            // One more attempt - try to search by the raw path
+            const rawPathSlug = location.pathname.substring(1); // Remove leading slash
+            if (rawPathSlug && rawPathSlug !== potentialSlug) {
+              const postByRawPath = await fetchPostBySlug(rawPathSlug);
+              if (postByRawPath) {
+                console.log("Found article with raw path:", rawPathSlug);
+                toast({
+                  title: "Article trouvé",
+                  description: "Redirection vers l'article...",
+                });
+                navigate(`/article/${rawPathSlug}`, { replace: true });
                 return;
               }
             }
@@ -111,7 +132,6 @@ const NotFound = () => {
         </div>
       </div>
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };
