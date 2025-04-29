@@ -38,8 +38,8 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
         return url;
       }
       
-      // For consistent sharing, use canonical URL format
-      return `${urlObj.protocol}//${urlObj.host}/article/${slug}`;
+      // Use rsirdc.net domain for article sharing
+      return `https://rsirdc.net/article/${slug}`;
     } catch (err) {
       console.error("Error formatting URL:", err);
       // If URL parsing fails, return the original URL
