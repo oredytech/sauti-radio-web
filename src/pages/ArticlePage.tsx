@@ -13,7 +13,8 @@ import ArticleSidebar from "@/components/article/ArticleSidebar";
 import { 
   WordPressPost,
   decodeHtmlEntities,
-  fetchPostBySlug
+  fetchPostBySlug,
+  fetchPosts
 } from "@/utils/wordpress";
 
 const ArticlePage = () => {
@@ -22,10 +23,12 @@ const ArticlePage = () => {
   const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
   const { toast } = useToast();
   
-  // Additional check for empty slugs or invalid paths
+  // Handle standard page routes that might have been accessed directly
   useEffect(() => {
-    if (!slug) {
-      navigate("/actualites", { replace: true });
+    const standardPages = ['about', 'contact', 'actualites'];
+    if (standardPages.includes(slug.toLowerCase())) {
+      navigate(`/${slug.toLowerCase()}`, { replace: true });
+      return;
     }
   }, [slug, navigate]);
   
@@ -50,7 +53,9 @@ const ArticlePage = () => {
           slug,
           slug.replace(/-/g, ' '), // Replace hyphens with spaces
           slug.toLowerCase(),
-          encodeURIComponent(slug)
+          encodeURIComponent(slug),
+          decodeURIComponent(slug), // Try decoding if it's URL encoded
+          slug.replace(/\.[^/.]+$/, ""), // Remove file extension if any
         ];
         
         for (const variation of slugVariations) {
@@ -63,18 +68,30 @@ const ArticlePage = () => {
           }
         }
         
+        // If still not found, attempt to search latest posts
+        const latestPosts = await fetchPosts(1, 20);
+        const matchedPost = latestPosts.find(post => {
+          const postSlug = generateSlug(post.title.rendered, post.id);
+          return postSlug.includes(slug) || slug.includes(postSlug);
+        });
+        
+        if (matchedPost) {
+          console.log("Found similar post in latest posts");
+          return matchedPost;
+        }
+        
         throw new Error("Post not found");
       } catch (error) {
         console.error("Error in article fetch:", error);
         throw error;
       }
     },
-    enabled: !!slug,
+    enabled: !!slug && !standardPages.includes(slug.toLowerCase()),
     retry: 2,
     staleTime: 5 * 60 * 1000,
     meta: {
-      onError: () => {
-        if (!isLoadingRedirect) {
+      onSettled: (data, error) => {
+        if (error && !isLoadingRedirect) {
           setIsLoadingRedirect(true);
           toast({
             title: "Article introuvable",
@@ -89,6 +106,19 @@ const ArticlePage = () => {
       }
     }
   });
+
+  // Helper function to generate slugs (copied from wordpress.ts for local use)
+  const generateSlug = (title: string, id: number): string => {
+    const decodedTitle = decodeHtmlEntities(title);
+    return decodedTitle
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
 
   if (isLoading) {
     return (

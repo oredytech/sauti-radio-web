@@ -21,14 +21,21 @@ function App() {
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/about" element={<About />} />
-            {/* Article routes with different URL patterns for compatibility */}
+            
+            {/* Enhanced article routes */}
             <Route path="/article/:slug" element={<ArticlePage />} />
-            <Route path="/shr/article/:slug" element={<ArticlePage />} /> {/* Keep for backward compatibility */}
+            <Route path="/shr/article/:slug" element={<ArticlePage />} /> 
             <Route path="/actualites/:slug" element={<ArticlePage />} />
             <Route path="/news/:slug" element={<ArticlePage />} />
-            <Route path="/:slug" element={<ArticlePage />} /> {/* Catch direct article slugs */}
+            
+            {/* Standard pages */}
             <Route path="/actualites" element={<NewsPage />} />
             <Route path="/contact" element={<Contact />} />
+            
+            {/* This route will try to match a direct slug before showing 404 */}
+            <Route path="/:slug" element={<ArticlePage />} />
+            
+            {/* Fallback route - only shown if nothing else matches */}
             <Route path="*" element={<NotFound />} />
           </Routes>
           <RadioPlayer />

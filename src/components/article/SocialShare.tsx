@@ -29,12 +29,17 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
         slug = path.split('/news/')[1];
       } else {
         // If no pattern matches, use the last segment of the path
-        const segments = path.split('/');
+        const segments = path.split('/').filter(Boolean);
         slug = segments[segments.length - 1];
       }
       
-      // For sharing purposes, use rsirdc.net domain without /shr
-      return `https://rsirdc.net/article/${slug}`;
+      // Ensure slug is not empty
+      if (!slug) {
+        return url;
+      }
+      
+      // For consistent sharing, use canonical URL format
+      return `${urlObj.protocol}//${urlObj.host}/article/${slug}`;
     } catch (err) {
       console.error("Error formatting URL:", err);
       // If URL parsing fails, return the original URL
@@ -65,7 +70,7 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
     const correctUrl = ensureCorrectUrl(url);
     
     window.open(
-      shareUrl.replace(url, correctUrl),
+      shareUrl.replace(encodeURIComponent(url), encodeURIComponent(correctUrl)),
       "share-dialog",
       "width=800,height=600,location=yes,resizable=yes,scrollbars=yes"
     );
