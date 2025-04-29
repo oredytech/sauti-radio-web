@@ -1,4 +1,3 @@
-
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -23,9 +22,11 @@ const ArticlePage = () => {
   const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
   const { toast } = useToast();
   
+  // Define standardPages here before using it
+  const standardPages = ['about', 'contact', 'actualites'];
+  
   // Handle standard page routes that might have been accessed directly
   useEffect(() => {
-    const standardPages = ['about', 'contact', 'actualites'];
     if (standardPages.includes(slug.toLowerCase())) {
       navigate(`/${slug.toLowerCase()}`, { replace: true });
       return;
