@@ -17,7 +17,7 @@ const Hero = () => {
           <h1 className="text-5xl md:text-6xl font-bold mb-6">
             Radio Sauti Ya Injili
           </h1>
-          <p className="text-xl md:text-2xl mb-8 text-gray-200">votre station de radio chrétienne à Goma, diffusant la Bonne Nouvelle à travers l'Afrique.</p>
+          <p className="text-xl md:text-2xl mb-8 text-gray-200">votre station de radio chrétienne à Goma, diffusant la Bonne Nouvelle à travers le monde.</p>
           <RadioControl showText={true} size="lg" variant="secondary" />
         </div>
       </div>
