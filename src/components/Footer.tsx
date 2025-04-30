@@ -17,9 +17,7 @@ const Footer = () => {
             <p className="text-gray-300 mb-6">
               Pour vos contributions financières vous pouvez utiliser:
             </p>
-            <p className="text-gray-300">
-              FBNBANK DRC, SA: 00014280003010013790510
-            </p>
+            <p className="text-gray-300">FirstBANK DRC, SA: 00014280003010013790510</p>
           </div>
 
           {/* A propos */}
