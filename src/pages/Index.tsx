@@ -16,8 +16,8 @@ const Index = () => {
       <Hero />
       <AboutUs />
       <EmissionsSection />
-      <AppDownload />
       <Events />
+      <AppDownload />
       <YouTubeCallToAction />
       <Footer />
       <RadioPlayer />
