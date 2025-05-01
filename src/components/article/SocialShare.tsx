@@ -38,8 +38,8 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
         return url;
       }
       
-      // Use rsirdc.net domain for article sharing
-      return `https://rsirdc.net/article/${slug}`;
+      // Use rsirdc.net domain for article sharing without the /article/ part
+      return `https://rsirdc.net/${slug}`;
     } catch (err) {
       console.error("Error formatting URL:", err);
       // If URL parsing fails, return the original URL
