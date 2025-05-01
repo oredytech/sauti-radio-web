@@ -8,10 +8,26 @@ import SearchForm from "./navbar/SearchForm";
 import ThemeToggle from "./navbar/ThemeToggle";
 import MobileMenu from "./navbar/MobileMenu";
 import RadioControl from "./RadioControl";
+import LanguageSwitcher from "./navbar/LanguageSwitcher";
+import { useTranslation } from "@/hooks/useTranslation";
+import DropdownMenu from "./navbar/DropdownMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
+  const { t } = useTranslation();
+
+  const internalActivitiesItems = [
+    { label: t('nav.internal.info'), path: "/activities/internal-info" },
+    { label: t('nav.internal.gallery'), path: "/activities/gallery" },
+  ];
+
+  const teamItems = [
+    { label: t('nav.team.direction'), path: "/team/direction" },
+    { label: t('nav.team.technical'), path: "/team/technical" },
+    { label: t('nav.team.editorial'), path: "/team/editorial" },
+    { label: t('nav.team.collaborators'), path: "/team/collaborators" },
+  ];
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
@@ -30,10 +46,13 @@ const Navbar = () => {
           </div>
 
           <div className="hidden md:flex items-center space-x-8">
-            <NavLink to="/">Accueil</NavLink>
-            <NavLink to="/actualites">Actualités</NavLink>
-            <NavLink to="/contact">Contact</NavLink>
-            <NavLink to="/about">À propos</NavLink>
+            <NavLink to="/">{t('nav.home')}</NavLink>
+            <NavLink to="/emissions">{t('nav.shows')}</NavLink>
+            <NavLink to="/actualites">{t('nav.news')}</NavLink>
+            <DropdownMenu label={t('nav.internal')} items={internalActivitiesItems} />
+            <DropdownMenu label={t('nav.team')} items={teamItems} />
+            <NavLink to="/contact">{t('nav.contact')}</NavLink>
+            <NavLink to="/about">{t('nav.about')}</NavLink>
           </div>
 
           <div className="flex items-center space-x-2">
@@ -51,6 +70,7 @@ const Navbar = () => {
               {showSearch && <SearchForm showSearch={showSearch} setShowSearch={setShowSearch} />}
             </div>
             
+            <LanguageSwitcher />
             <ThemeToggle />
             
             <RadioControl 
