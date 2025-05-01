@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { Music, Book, GraduationCap, Heart, List, Mic, Bandage, ChevronDown, ChevronRight } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface EmissionCategory {
   name: string;
@@ -12,6 +13,7 @@ interface EmissionCategory {
 
 const EmissionsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { t } = useTranslation();
 
   const emissionCategories: EmissionCategory[] = [
     {
@@ -95,15 +97,15 @@ const EmissionsSection = () => {
     <section id="emissions" className="py-20 relative">
       {/* Image d'arrière-plan avec overlay */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-        backgroundImage: "url('/lovable-uploads/b115b786-3404-4073-9148-628fbd66947e.png')"
+        backgroundImage: "url('/lovable-uploads/d2afbb7a-2d69-412f-87cf-9e09d9d1f649.png')"
       }} />
       <div className="absolute inset-0 bg-black/70" /> {/* Overlay sombre pour améliorer la lisibilité */}
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-white mb-4">Nos émissions</h2>
+          <h2 className="text-4xl font-bold text-white mb-4">{t('emissions.title')}</h2>
           <p className="text-gray-300">
-            Découvrez nos différentes catégories d'émissions
+            {t('emissions.subtitle')}
           </p>
         </div>
 
@@ -153,7 +155,7 @@ const EmissionsSection = () => {
               </div>
               
               {emissionCategories.find((cat) => cat.name === selectedCategory)?.subcategories.length === 0 && (
-                <p className="text-gray-500 dark:text-gray-400">Aucune sous-catégorie disponible</p>
+                <p className="text-gray-500 dark:text-gray-400">{t('emissions.noSubcategories')}</p>
               )}
             </div>
           )}

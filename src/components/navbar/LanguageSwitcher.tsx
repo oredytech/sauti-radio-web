@@ -35,7 +35,7 @@ const LanguageSwitcher = () => {
         {languages.map((lang) => (
           <DropdownMenuItem
             key={lang.code}
-            onClick={() => changeLanguage(lang.code)}
+            onClick={() => changeLanguage(lang.code as "fr" | "en" | "sw")}
             className="cursor-pointer text-sm"
           >
             {lang.name}
