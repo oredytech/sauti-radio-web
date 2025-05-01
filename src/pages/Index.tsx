@@ -15,9 +15,9 @@ const Index = () => {
       <Navbar />
       <Hero />
       <AboutUs />
+      <EmissionsSection />
       <AppDownload />
       <Events />
-      <EmissionsSection />
       <YouTubeCallToAction />
       <Footer />
       <RadioPlayer />
