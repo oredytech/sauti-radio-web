@@ -1,5 +1,4 @@
 
-import { useState } from "react";
 import { Globe } from "lucide-react";
 import { 
   DropdownMenu,
@@ -36,7 +35,7 @@ const LanguageSwitcher = () => {
           <DropdownMenuItem
             key={lang.code}
             onClick={() => changeLanguage(lang.code as "fr" | "en" | "sw")}
-            className="cursor-pointer text-sm"
+            className={`cursor-pointer text-sm ${currentLanguage === lang.code ? "bg-gray-100 dark:bg-gray-700" : ""}`}
           >
             {lang.name}
           </DropdownMenuItem>
