@@ -2,8 +2,11 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Youtube } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const YouTubeCallToAction = () => {
+  const { t } = useTranslation();
+
   return (
     <section className="py-16 relative">
       {/* Fond avec dégradé et overlay */}
@@ -17,12 +20,11 @@ const YouTubeCallToAction = () => {
           <Youtube className="w-16 h-16 text-red-600 bg-white p-3 rounded-full mx-auto mb-6" />
           
           <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Suivez-nous sur YouTube
+            {t('home.youtube.title')}
           </h2>
           
           <p className="text-lg text-gray-200 mb-8 max-w-2xl mx-auto">
-            Retrouvez nos émissions, prédications et moments forts sur notre chaîne YouTube officielle.
-            Ne manquez aucun contenu et abonnez-vous !
+            {t('home.youtube.description')}
           </p>
           
           <Button 
@@ -31,7 +33,7 @@ const YouTubeCallToAction = () => {
             onClick={() => window.open("https://www.youtube.com/@RADIOSAUTIYAINJILI?sub_confirmation=1", "_blank")}
           >
             <Youtube className="mr-2 h-5 w-5" />
-            S'abonner à notre chaîne
+            {t('home.youtube.subscribe')}
           </Button>
         </div>
       </div>

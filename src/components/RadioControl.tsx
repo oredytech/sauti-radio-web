@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { Play, Pause, Loader } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface RadioControlProps {
   className?: string;
@@ -19,6 +20,7 @@ const RadioControl = ({
 }: RadioControlProps) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const { t } = useTranslation();
   
   // Synchroniser l'état du bouton avec l'état réel du lecteur
   useEffect(() => {
@@ -82,7 +84,7 @@ const RadioControl = ({
     
     if (isPlaying) {
       window.radioPlayer.pause();
-      toast.info("Radio en pause", {
+      toast.info(t('radio.paused'), {
         duration: 2000
       });
     } else {
@@ -94,8 +96,8 @@ const RadioControl = ({
         window.radioPlayer.play().catch(err => {
           console.error("Failed to play:", err);
           setIsLoading(false);
-          toast.error("Erreur de lecture", {
-            description: "Impossible de lire le flux radio"
+          toast.error(t('radio.playError'), {
+            description: t('radio.playErrorDesc')
           });
         });
       }
@@ -126,7 +128,7 @@ const RadioControl = ({
       )}
       {showText && (
         <span className={size === "lg" ? "text-lg" : ""}>
-          {isPlaying ? "En direct" : "Écouter en direct"}
+          {isPlaying ? t('radio.onAir') : t('radio.listen')}
         </span>
       )}
     </Button>

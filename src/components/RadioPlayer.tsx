@@ -6,9 +6,11 @@ import RadioInfo from "./radio/RadioInfo";
 import VlcPlayButton from "./radio/VlcPlayButton";
 import { Wifi, WifiOff } from "lucide-react";
 import { Alert, AlertDescription } from "./ui/alert";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const RadioPlayer = () => {
   const { isPlaying, isLoading, volume, setVolume, handlePlayPause, networkError } = useRadioPlayer();
+  const { t } = useTranslation();
 
   return (
     <div className="fixed bottom-0 left-0 right-0 bg-white shadow-lg border-t z-50 dark:bg-gray-900 dark:border-gray-800">
@@ -17,8 +19,8 @@ const RadioPlayer = () => {
           <div className="flex items-center gap-2">
             {navigator.onLine ? <Wifi className="h-4 w-4" /> : <WifiOff className="h-4 w-4" />}
             <AlertDescription className="text-xs">
-              Problème de connexion au flux radio. 
-              {navigator.onLine ? " Tentative de reconnexion automatique..." : " Vérifiez votre connexion internet..."}
+              {t('radio.connectionProblem')} 
+              {navigator.onLine ? " " + t('radio.reconnecting') : " " + t('radio.checkConnection')}
             </AlertDescription>
           </div>
         </Alert>

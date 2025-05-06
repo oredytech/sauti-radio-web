@@ -1,9 +1,12 @@
+
 import { useState } from "react";
 import { toast } from "sonner";
 import { STREAM_URLS } from "@/utils/radioUtils";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const AppDownload = () => {
   const [streamUrl] = useState(STREAM_URLS[0]);
+  const { t } = useTranslation();
 
   const handleVlcClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     // Pour des raisons de compatibilité, nous vérifions si l'utilisateur est sur mobile
@@ -11,8 +14,8 @@ const AppDownload = () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     if (isMobile) {
       e.preventDefault();
-      toast.info("Téléchargement", {
-        description: "Veuillez installer VLC et copier manuellement l'URL du flux audio"
+      toast.info(t('common.submit'), {
+        description: t('radio.playErrorDesc')
       });
       // Provide the stream URL for mobile users to copy
       navigator.clipboard?.writeText(streamUrl).then(() => {
@@ -26,7 +29,7 @@ const AppDownload = () => {
         });
       });
     } else {
-      toast.success("Ajout du flux", {
+      toast.success(t('common.submit'), {
         description: "Le flux audio est en cours d'ajout à VLC"
       });
     }
@@ -46,10 +49,10 @@ const AppDownload = () => {
       <div className="container mx-auto px-4 relative">
         <div className="text-center max-w-3xl mx-auto">
           <h2 className="text-4xl font-bold mb-6">
-            Écoutez-nous partout
+            {t('appDownload.title')}
           </h2>
           <p className="text-xl mb-12">
-            Retrouvez Radio Sauti ya Injili sur différentes plateformes pour nous écouter où que vous soyez.
+            {t('appDownload.subtitle')}
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -68,7 +71,7 @@ const AppDownload = () => {
                 />
               </div>
               <h3 className="text-xl font-semibold mb-2">Radio Garden</h3>
-              <p className="text-gray-300">Écoutez les radios du monde entier sur une carte interactive</p>
+              <p className="text-gray-300">{t('appDownload.radioGarden')}</p>
             </a>
 
             {/* VLC */}
@@ -83,7 +86,7 @@ const AppDownload = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-2">VLC Media Player</h3>
-              <p className="text-gray-300">Ajoutez notre flux audio dans VLC en un clic</p>
+              <p className="text-gray-300">{t('appDownload.vlc')}</p>
             </a>
 
             {/* Site Web */}
@@ -98,7 +101,7 @@ const AppDownload = () => {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold mb-2">Site Web</h3>
-              <p className="text-gray-300">Écoutez directement depuis notre site web</p>
+              <p className="text-gray-300">{t('appDownload.website')}</p>
             </a>
           </div>
         </div>

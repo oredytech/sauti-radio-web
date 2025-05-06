@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -10,10 +11,12 @@ import ArticleCard from "@/components/news/ArticleCard";
 import HeroCarousel from "@/components/news/HeroCarousel";
 import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
 import { Helmet } from "react-helmet-async";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const NewsPage: React.FC = () => {
   const [page, setPage] = useState(1);
   const perPage = 12;
+  const { t } = useTranslation();
 
   const { data: allPosts, isLoading } = useQuery({
     queryKey: ["all-posts", page],
@@ -62,8 +65,8 @@ const NewsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
       <Helmet>
-        <title>Actualités | Sauti Radio</title>
-        <meta name="description" content="Découvrez les dernières actualités et articles sur Sauti Radio" />
+        <title>{t('news.title')}</title>
+        <meta name="description" content={t('news.description')} />
       </Helmet>
       
       <Navbar />
@@ -127,7 +130,7 @@ const NewsPage: React.FC = () => {
               disabled={page === 1}
               className="dark:border-gray-700 dark:text-gray-300"
             >
-              Précédent
+              {t('common.previous')}
             </Button>
             <Button
               variant="outline"
@@ -135,7 +138,7 @@ const NewsPage: React.FC = () => {
               disabled={!allPosts || allPosts.length < perPage}
               className="dark:border-gray-700 dark:text-gray-300"
             >
-              Suivant
+              {t('common.next')}
             </Button>
           </div>
         </div>

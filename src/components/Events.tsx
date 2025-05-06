@@ -4,8 +4,11 @@ import { format } from "date-fns";
 import { fr } from "date-fns/locale";
 import { Link } from "react-router-dom";
 import { WordPressPost, decodeHtmlEntities, generateSlug, fetchPosts } from "@/utils/wordpress";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const Events = () => {
+  const { t, currentLanguage } = useTranslation();
+  
   const { data: posts, isLoading } = useQuery({
     queryKey: ["posts"],
     queryFn: async () => {
@@ -13,12 +16,24 @@ const Events = () => {
     },
   });
 
+  // Helper function to format dates according to the selected language
+  const formatDate = (date: string) => {
+    const dateObj = new Date(date);
+    
+    // Use appropriate locale based on selected language
+    const locale = currentLanguage === 'fr' ? fr : 
+                   currentLanguage === 'en' ? undefined : // undefined means browser default (en-US)
+                   undefined; // Default for other languages
+    
+    return format(dateObj, "d MMMM yyyy", { locale });
+  };
+
   if (isLoading) {
     return (
       <section id="news" className="py-20">
         <div className="container mx-auto px-4">
           <div className="text-center">
-            <p>Chargement des actualités...</p>
+            <p>{t('common.loadMore')}...</p>
           </div>
         </div>
       </section>
@@ -29,9 +44,9 @@ const Events = () => {
     <section id="news" className="py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold text-primary mb-4">Actualités</h2>
+          <h2 className="text-4xl font-bold text-primary mb-4">{t('events.title')}</h2>
           <p className="text-gray-600">
-            Restez informé des dernières nouvelles !
+            {t('events.subtitle')}
           </p>
         </div>
 
@@ -47,7 +62,7 @@ const Events = () => {
                 />
                 <div className="p-6">
                   <div className="text-secondary font-semibold mb-2">
-                    {format(new Date(post.date), "d MMMM yyyy", { locale: fr })}
+                    {formatDate(post.date)}
                   </div>
                   <h3 className="text-xl font-bold text-primary mb-2">
                     {decodeHtmlEntities(post.title.rendered)}
@@ -62,7 +77,7 @@ const Events = () => {
                     to={`/article/${slug}`}
                     className="text-secondary hover:text-red-600 font-semibold flex items-center gap-2"
                   >
-                    Lire la suite
+                    {t('events.readMore')}
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       className="h-5 w-5"

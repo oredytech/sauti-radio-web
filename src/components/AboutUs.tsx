@@ -20,13 +20,10 @@ const AboutUs = () => {
           <div>
             <h2 className="text-4xl font-bold text-primary mb-6">{t('home.about.title')}</h2>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Radio Sauti ya Injili est une station de radio chrétienne basée à Goma, en République Démocratique du Congo. 
-              Nous diffusons de la musique chrétienne inspirante et des enseignements bibliques.
+              {t('aboutus.description')}
             </p>
             <p className="text-gray-600 dark:text-gray-300 mb-6">
-              Notre mission est d'atteindre toutes les nations avec l'Évangile. Nous croyons que nous toucherons de nombreuses 
-              vies et impacterons les nations à travers notre programmation qui promeut les valeurs morales basées sur les 
-              principes bibliques.
+              {t('aboutus.mission')}
             </p>
             <Link to="/about" className="text-secondary hover:text-red-600 font-semibold flex items-center gap-2">
               {t('common.readMore')}

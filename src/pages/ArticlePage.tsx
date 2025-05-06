@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -9,6 +10,7 @@ import ArticleSkeleton from "@/components/article/ArticleSkeleton";
 import ArticleError from "@/components/article/ArticleError";
 import ArticleContent from "@/components/article/ArticleContent";
 import ArticleSidebar from "@/components/article/ArticleSidebar";
+import { useTranslation } from "@/hooks/useTranslation";
 import { 
   WordPressPost,
   decodeHtmlEntities,
@@ -21,6 +23,7 @@ const ArticlePage = () => {
   const navigate = useNavigate();
   const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   // Define standardPages here before using it
   const standardPages = ['about', 'contact', 'actualites'];
@@ -95,8 +98,8 @@ const ArticlePage = () => {
         if (error && !isLoadingRedirect) {
           setIsLoadingRedirect(true);
           toast({
-            title: "Article introuvable",
-            description: "Nous n'avons pas pu trouver l'article demandé",
+            title: t('404.notFound'),
+            description: t('404.notFoundDesc'),
             variant: "destructive"
           });
           

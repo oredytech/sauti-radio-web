@@ -7,11 +7,13 @@ import { Button } from "@/components/ui/button";
 import { fetchPostBySlug } from "@/utils/wordpress";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/useTranslation";
 
 const NotFound = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { t } = useTranslation();
   
   useEffect(() => {
     const checkForArticle = async () => {
@@ -51,8 +53,8 @@ const NotFound = () => {
       if (potentialSlug) {
         try {
           toast({
-            title: "Recherche de l'article",
-            description: "Nous essayons de trouver l'article correspondant...",
+            title: t('404.searching'),
+            description: t('404.searchingDesc'),
           });
           
           // Check if this is an article with a different URL format
@@ -60,8 +62,8 @@ const NotFound = () => {
           if (post) {
             console.log("Found article with slug:", potentialSlug);
             toast({
-              title: "Article trouvé",
-              description: "Redirection vers l'article...",
+              title: t('404.found'),
+              description: t('404.foundDesc'),
             });
             navigate(`/article/${potentialSlug}`, { replace: true });
             return;
@@ -76,8 +78,8 @@ const NotFound = () => {
               if (postByCleanSlug) {
                 console.log("Found article with cleaned slug:", cleanedSlug);
                 toast({
-                  title: "Article trouvé",
-                  description: "Redirection vers l'article...",
+                  title: t('404.found'),
+                  description: t('404.foundDesc'),
                 });
                 navigate(`/article/${cleanedSlug}`, { replace: true });
                 return;
@@ -91,8 +93,8 @@ const NotFound = () => {
               if (postByRawPath) {
                 console.log("Found article with raw path:", rawPathSlug);
                 toast({
-                  title: "Article trouvé",
-                  description: "Redirection vers l'article...",
+                  title: t('404.found'),
+                  description: t('404.foundDesc'),
                 });
                 navigate(`/article/${rawPathSlug}`, { replace: true });
                 return;
@@ -104,24 +106,24 @@ const NotFound = () => {
             if (standardPages.includes(potentialSlug.toLowerCase())) {
               console.log("Redirecting to standard page:", potentialSlug);
               toast({
-                title: "Page trouvée",
-                description: `Redirection vers ${potentialSlug}...`,
+                title: t('404.found'),
+                description: t('404.foundDesc'),
               });
               navigate(`/${potentialSlug.toLowerCase()}`, { replace: true });
               return;
             }
             
             toast({
-              title: "Article introuvable",
-              description: "Nous n'avons pas pu trouver l'article demandé",
+              title: t('404.notFound'),
+              description: t('404.notFoundDesc'),
               variant: "destructive",
             });
           }
         } catch (error) {
           console.error("Error checking for article:", error);
           toast({
-            title: "Erreur",
-            description: "Une erreur est survenue lors de la recherche de l'article",
+            title: t('404.error'),
+            description: t('404.errorDesc'),
             variant: "destructive",
           });
         }
@@ -129,7 +131,7 @@ const NotFound = () => {
     };
     
     checkForArticle();
-  }, [location.pathname, navigate, toast]);
+  }, [location.pathname, navigate, toast, t]);
 
   return (
     <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
@@ -138,17 +140,17 @@ const NotFound = () => {
         <div className="max-w-md w-full text-center bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
           <h1 className="text-5xl font-bold mb-4 text-primary dark:text-blue-400">404</h1>
           <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">
-            La page que vous recherchez n'existe pas ou a été déplacée.
+            {t('404.title')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild>
               <Link to="/">
-                Retour à l'accueil
+                {t('common.backToHome')}
               </Link>
             </Button>
             <Button variant="outline" asChild>
               <Link to="/actualites">
-                Parcourir nos actualités
+                {t('nav.news')}
               </Link>
             </Button>
           </div>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
@@ -13,11 +12,63 @@ interface EmissionCategory {
 
 const EmissionsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const { t } = useTranslation();
+  const { t, currentLanguage } = useTranslation();
+
+  // Define categories with translations
+  const getCategoryName = (frName: string): string => {
+    // For existing translations we'll keep the French names in the code
+    // and use translation keys for new components
+    switch (frName) {
+      case "Enseignements Bibliques":
+        return currentLanguage === "fr" 
+          ? "Enseignements Bibliques" 
+          : currentLanguage === "en" 
+            ? "Biblical Teachings"
+            : "Mafundisho ya Biblia";
+      case "Emissions Traditionnelles":
+        return currentLanguage === "fr" 
+          ? "Emissions Traditionnelles" 
+          : currentLanguage === "en" 
+            ? "Traditional Shows"
+            : "Vipindi vya Jadi";
+      case "Emissions Educatives":
+        return currentLanguage === "fr" 
+          ? "Emissions Educatives" 
+          : currentLanguage === "en" 
+            ? "Educational Shows"
+            : "Vipindi vya Elimu";
+      case "Enseignements de couple":
+        return currentLanguage === "fr" 
+          ? "Enseignements de couple" 
+          : currentLanguage === "en" 
+            ? "Couple Teachings"
+            : "Mafundisho ya Wanandoa";
+      case "Divertissements":
+        return currentLanguage === "fr" 
+          ? "Divertissements" 
+          : currentLanguage === "en" 
+            ? "Entertainment"
+            : "Burudani";
+      case "Santé":
+        return currentLanguage === "fr" 
+          ? "Santé" 
+          : currentLanguage === "en" 
+            ? "Health"
+            : "Afya";
+      case "Maoni ya musikilizaji":
+        return currentLanguage === "fr" 
+          ? "Maoni ya musikilizaji" 
+          : currentLanguage === "en" 
+            ? "Listener Opinions"
+            : "Maoni ya Wasikilizaji";
+      default:
+        return frName;
+    }
+  };
 
   const emissionCategories: EmissionCategory[] = [
     {
-      name: "Enseignements Bibliques",
+      name: getCategoryName("Enseignements Bibliques"),
       icon: <Book className="h-5 w-5" />,
       subcategories: [
         "Bibliya ina jibu",
@@ -31,7 +82,7 @@ const EmissionsSection = () => {
       ],
     },
     {
-      name: "Emissions Traditionnelles",
+      name: getCategoryName("Emissions Traditionnelles"),
       icon: <Music className="h-5 w-5" />,
       subcategories: [
         "Kifuliro",
@@ -44,7 +95,7 @@ const EmissionsSection = () => {
       ],
     },
     {
-      name: "Emissions Educatives",
+      name: getCategoryName("Emissions Educatives"),
       icon: <GraduationCap className="h-5 w-5" />,
       subcategories: [
         "Ake na Mama",
@@ -55,7 +106,7 @@ const EmissionsSection = () => {
       ],
     },
     {
-      name: "Enseignements de couple",
+      name: getCategoryName("Enseignements de couple"),
       icon: <Heart className="h-5 w-5" />,
       subcategories: [
         "Tujenge ndoa zetu",
@@ -63,7 +114,7 @@ const EmissionsSection = () => {
       ],
     },
     {
-      name: "Divertissements",
+      name: getCategoryName("Divertissements"),
       icon: <Music className="h-5 w-5" />,
       subcategories: [
         "Salamu Na Nyimbo",
@@ -71,7 +122,7 @@ const EmissionsSection = () => {
       ],
     },
     {
-      name: "Santé",
+      name: getCategoryName("Santé"),
       icon: <Bandage className="h-5 w-5" />,
       subcategories: [
         "Jiko letu",
@@ -79,7 +130,7 @@ const EmissionsSection = () => {
       ],
     },
     {
-      name: "Maoni ya musikilizaji",
+      name: getCategoryName("Maoni ya musikilizaji"),
       icon: <Mic className="h-5 w-5" />,
       subcategories: [],
     },

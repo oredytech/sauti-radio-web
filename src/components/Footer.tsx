@@ -1,21 +1,28 @@
+
 import { MapPin, Phone, Mail, ArrowUp, Facebook, Mail as MailIcon } from "lucide-react";
+import { useTranslation } from "@/hooks/useTranslation";
+
 const Footer = () => {
+  const { t } = useTranslation();
+  
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
     });
   };
-  return <footer className="bg-[#0D0B21] text-white relative">
+  
+  return (
+    <footer className="bg-[#0D0B21] text-white relative">
       <div className="container mx-auto px-4 py-12 pb-20">
         <div className="grid md:grid-cols-3 gap-12">
           {/* Faire un don */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
-              Faire un don
+              {t('footer.donate')}
             </h3>
             <p className="text-gray-300 mb-6">
-              Pour vos contributions financières vous pouvez utiliser:
+              {t('footer.donateDescription')}
             </p>
             <p className="text-gray-300">FirstBANK DRC, SA: 00014280003010013790510</p>
           </div>
@@ -23,22 +30,22 @@ const Footer = () => {
           {/* A propos */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
-              A propos
+              {t('footer.about')}
             </h3>
             <p className="text-gray-300">
-              La RSI, collabore avec toutes les Églises Chrétiennes qui proclament l'Évangile de Notre Seigneur JÉSUS-CHRIST
+              {t('footer.aboutDescription')}
             </p>
           </div>
 
           {/* Contacts */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
-              Contacts
+              {t('footer.contacts')}
             </h3>
             <ul className="space-y-4">
               <li className="flex items-center gap-3">
                 <Phone className="h-5 w-5 text-blue-500" />
-                <span>Phone: +243 976 512 077, +243 993 918 000</span>
+                <span>{t('footer.phone')}: +243 976 512 077, +243 993 918 000</span>
               </li>
               <li className="flex items-center gap-3">
                 <MapPin className="h-5 w-5 text-blue-500" />
@@ -63,9 +70,9 @@ const Footer = () => {
 
         <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
           <p>
-            © {new Date().getFullYear()} Radio Sauti ya Injili. Tous droits réservés. | 
+            © {new Date().getFullYear()} Radio Sauti ya Injili. {t('footer.copyright')}. | 
             <a href="https://oredytech.com/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300 transition-colors">
-              {" "}Fièrement conçu par Oredy Technologie
+              {" "}{t('footer.designedBy')} Oredy Technologie
             </a>
           </p>
         </div>
@@ -75,6 +82,8 @@ const Footer = () => {
       <button onClick={scrollToTop} className="fixed bottom-8 right-8 bg-blue-800 p-3 rounded-md hover:bg-blue-700 transition-colors mx-[15px] px-[5px] py-[5px] my-[35px]">
         <ArrowUp className="h-6 w-6" />
       </button>
-    </footer>;
+    </footer>
+  );
 };
+
 export default Footer;
