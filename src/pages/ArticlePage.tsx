@@ -23,7 +23,7 @@ const ArticlePage = () => {
   const navigate = useNavigate();
   const [isLoadingRedirect, setIsLoadingRedirect] = useState(false);
   const { toast } = useToast();
-  const { t } = useTranslation();
+  const { t, translateWithBrowser } = useTranslation();
   
   // Define standardPages here before using it
   const standardPages = ['about', 'contact', 'actualites'];
@@ -152,16 +152,16 @@ const ArticlePage = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Helmet>
-        <title>{title} | Sauti Radio</title>
-        <meta name="description" content={excerpt} />
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={excerpt} />
+        <title>{translateWithBrowser(title)} | Sauti Radio</title>
+        <meta name="description" content={translateWithBrowser(excerpt)} />
+        <meta property="og:title" content={translateWithBrowser(title)} />
+        <meta property="og:description" content={translateWithBrowser(excerpt)} />
         <meta property="og:type" content="article" />
         <meta property="og:url" content={postUrl} />
         {featuredImage && <meta property="og:image" content={featuredImage} />}
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={title} />
-        <meta name="twitter:description" content={excerpt} />
+        <meta name="twitter:title" content={translateWithBrowser(title)} />
+        <meta name="twitter:description" content={translateWithBrowser(excerpt)} />
         {featuredImage && <meta name="twitter:image" content={featuredImage} />}
       </Helmet>
       
@@ -171,7 +171,7 @@ const ArticlePage = () => {
           {featuredImage && (
             <img
               src={featuredImage}
-              alt={title}
+              alt={translateWithBrowser(title)}
               className="w-full h-[400px] object-cover rounded-t-lg shadow-lg mb-0"
             />
           )}
@@ -184,7 +184,7 @@ const ArticlePage = () => {
             <ArticleSidebar 
               postId={post.id}
               url={postUrl}
-              title={title}
+              title={translateWithBrowser(title)}
             />
           </div>
         </div>

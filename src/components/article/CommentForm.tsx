@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "@/hooks/useTranslation";
 
 interface CommentFormProps {
   postId: number;
@@ -9,6 +10,7 @@ interface CommentFormProps {
 
 const CommentForm = ({ postId }: CommentFormProps) => {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [comment, setComment] = useState("");
@@ -27,8 +29,8 @@ const CommentForm = ({ postId }: CommentFormProps) => {
       await new Promise(resolve => setTimeout(resolve, 1000));
       
       toast({
-        title: "Commentaire envoyé",
-        description: "Votre commentaire a été soumis avec succès et est en attente de modération.",
+        title: t('comment.submitted'),
+        description: t('comment.submittedDesc'),
       });
       
       // Reset form
@@ -38,8 +40,8 @@ const CommentForm = ({ postId }: CommentFormProps) => {
     } catch (error) {
       console.error("Error submitting comment:", error);
       toast({
-        title: "Erreur",
-        description: "Une erreur s'est produite lors de l'envoi de votre commentaire. Veuillez réessayer.",
+        title: t('comment.error'),
+        description: t('comment.errorDesc'),
         variant: "destructive",
       });
     } finally {
@@ -51,7 +53,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <label htmlFor="name" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Nom *
+          {t('comment.name')} *
         </label>
         <input
           id="name"
@@ -65,7 +67,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
       
       <div>
         <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Email *
+          {t('comment.email')} *
         </label>
         <input
           id="email"
@@ -79,7 +81,7 @@ const CommentForm = ({ postId }: CommentFormProps) => {
       
       <div>
         <label htmlFor="comment" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-          Commentaire *
+          {t('comment.comment')} *
         </label>
         <textarea
           id="comment"
@@ -97,11 +99,11 @@ const CommentForm = ({ postId }: CommentFormProps) => {
         className="w-full"
         disabled={isSubmitting}
       >
-        {isSubmitting ? "Envoi en cours..." : "Envoyer le commentaire"}
+        {isSubmitting ? t('comment.sending') : t('comment.send')}
       </Button>
       
       <p className="text-xs text-gray-500 dark:text-gray-400">
-        Votre adresse e-mail ne sera pas publiée. Les champs obligatoires sont indiqués par *
+        {t('comment.privacy')}
       </p>
     </form>
   );

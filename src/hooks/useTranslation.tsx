@@ -110,6 +110,24 @@ const translations: Record<Language, Record<string, string>> = {
     // News Page
     'news.title': 'Actualités | Sauti Radio',
     'news.description': 'Découvrez les dernières actualités et articles sur Sauti Radio',
+    
+    // Article page
+    'article.share': 'Partager cet article',
+    'article.leaveComment': 'Laisser un commentaire',
+    'article.relatedArticles': 'Articles similaires',
+    'article.readNext': 'Lire ensuite',
+    
+    // Comment form
+    'comment.name': 'Nom',
+    'comment.email': 'Email',
+    'comment.comment': 'Commentaire',
+    'comment.send': 'Envoyer le commentaire',
+    'comment.sending': 'Envoi en cours...',
+    'comment.submitted': 'Commentaire envoyé',
+    'comment.submittedDesc': 'Votre commentaire a été soumis avec succès et est en attente de modération.',
+    'comment.error': 'Erreur',
+    'comment.errorDesc': 'Une erreur s\'est produite lors de l\'envoi de votre commentaire. Veuillez réessayer.',
+    'comment.privacy': 'Votre adresse e-mail ne sera pas publiée. Les champs obligatoires sont indiqués par *',
   },
   en: {
     // Navigation
@@ -202,6 +220,24 @@ const translations: Record<Language, Record<string, string>> = {
     // News Page
     'news.title': 'News | Sauti Radio',
     'news.description': 'Discover the latest news and articles on Sauti Radio',
+    
+    // Article page
+    'article.share': 'Share this article',
+    'article.leaveComment': 'Leave a comment',
+    'article.relatedArticles': 'Related articles',
+    'article.readNext': 'Read next',
+    
+    // Comment form
+    'comment.name': 'Name',
+    'comment.email': 'Email',
+    'comment.comment': 'Comment',
+    'comment.send': 'Send comment',
+    'comment.sending': 'Sending...',
+    'comment.submitted': 'Comment submitted',
+    'comment.submittedDesc': 'Your comment has been successfully submitted and is awaiting moderation.',
+    'comment.error': 'Error',
+    'comment.errorDesc': 'An error occurred while sending your comment. Please try again.',
+    'comment.privacy': 'Your email address will not be published. Required fields are marked with *',
   },
   sw: {
     // Navigation
@@ -294,6 +330,24 @@ const translations: Record<Language, Record<string, string>> = {
     // News Page
     'news.title': 'Habari | Sauti Radio',
     'news.description': 'Gundua habari na makala za hivi karibuni kwenye Sauti Radio',
+    
+    // Article page
+    'article.share': 'Shiriki makala hii',
+    'article.leaveComment': 'Acha maoni',
+    'article.relatedArticles': 'Makala zinazohusiana',
+    'article.readNext': 'Soma ifuatayo',
+    
+    // Comment form
+    'comment.name': 'Jina',
+    'comment.email': 'Barua pepe',
+    'comment.comment': 'Maoni',
+    'comment.send': 'Tuma maoni',
+    'comment.sending': 'Inatuma...',
+    'comment.submitted': 'Maoni yametumwa',
+    'comment.submittedDesc': 'Maoni yako yamewasilishwa kwa mafanikio na yanasubiri kuidhinishwa.',
+    'comment.error': 'Hitilafu',
+    'comment.errorDesc': 'Hitilafu ilitokea wakati wa kutuma maoni yako. Tafadhali jaribu tena.',
+    'comment.privacy': 'Anwani yako ya barua pepe haitachapishwa. Sehemu zinazohitajika zimeonyeshwa na *',
   }
 };
 
