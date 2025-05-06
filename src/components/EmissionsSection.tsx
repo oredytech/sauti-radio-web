@@ -97,7 +97,7 @@ const EmissionsSection = () => {
     <section id="emissions" className="py-20 relative">
       {/* Image d'arrière-plan avec overlay */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
-        backgroundImage: "url('/lovable-uploads/d2afbb7a-2d69-412f-87cf-9e09d9d1f649.png')"
+        backgroundImage: "url('/lovable-uploads/da98c6a9-1dbc-4df8-aded-912f4621c67b.png')"
       }} />
       <div className="absolute inset-0 bg-black/70" /> {/* Overlay sombre pour améliorer la lisibilité */}
       
