@@ -1,7 +1,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { format } from "date-fns";
-import { fr } from "date-fns/locale";
+import { fr, enUS } from "date-fns/locale";
 import { Link } from "react-router-dom";
 import { WordPressPost, decodeHtmlEntities, generateSlug, fetchPosts } from "@/utils/wordpress";
 import { useTranslation } from "@/hooks/useTranslation";
@@ -22,8 +22,8 @@ const Events = () => {
     
     // Use appropriate locale based on selected language
     const locale = currentLanguage === 'fr' ? fr : 
-                   currentLanguage === 'en' ? undefined : // undefined means browser default (en-US)
-                   undefined; // Default for other languages
+                   currentLanguage === 'en' ? enUS : 
+                   enUS; // Default for other languages (including 'sw')
     
     return format(dateObj, "d MMMM yyyy", { locale });
   };

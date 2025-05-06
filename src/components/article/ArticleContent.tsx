@@ -1,6 +1,6 @@
 
 import { format } from "date-fns";
-import { fr, enUS, sw } from "date-fns/locale";
+import { fr, enUS } from "date-fns/locale";
 import { type WordPressPost } from "@/utils/wordpress";
 import { useTranslation } from "@/hooks/useTranslation";
 import { useEffect, useRef } from "react";
@@ -17,7 +17,7 @@ const ArticleContent = ({ post }: ArticleContentProps) => {
   const dateLocale = (() => {
     switch (currentLanguage) {
       case 'en': return enUS;
-      case 'sw': return sw; // Swahili utilise la locale par défaut
+      case 'sw': return enUS; // For Swahili, use English locale as fallback since Swahili is not available
       default: return fr;
     }
   })();
