@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -36,6 +37,21 @@ const NewsPage: React.FC = () => {
       return response.data;
     },
   });
+
+  // Function to extract category from post
+  const getCategoryName = (post: WordPressPost) => {
+    if (post._embedded && post._embedded["wp:term"]) {
+      const categories = post._embedded["wp:term"].find(
+        terms => terms.length > 0 && terms[0].taxonomy === "category"
+      );
+      
+      if (categories && categories.length > 0) {
+        return categories[0].name;
+      }
+    }
+    
+    return "Actualité"; // Default category if none found
+  };
 
   if (isLoading) {
     return (
@@ -86,24 +102,28 @@ const NewsPage: React.FC = () => {
               <div className="grid grid-cols-2 gap-4 h-full">
                 {nextFourPosts.map((post) => {
                   const slug = generateSlug(post.title.rendered, post.id);
+                  const categoryName = getCategoryName(post);
+                  
                   return (
                     <Link
                       key={post.id}
                       to={`/article/${slug}`}
                       className="block relative rounded-lg overflow-hidden hover:opacity-90 transition-opacity h-[150px] sm:h-[175px] lg:h-[195px]"
                     >
-                      <img
-                        src={
-                          post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                          "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                        }
-                        alt={decodeHtmlEntities(post.title.rendered)}
-                        className="w-full h-full object-cover"
-                      />
+                      <div className="absolute inset-0 overflow-hidden">
+                        <img
+                          src={
+                            post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                            "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
+                          }
+                          alt={decodeHtmlEntities(post.title.rendered)}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent"></div>
                       <div className="absolute top-2 left-2">
                         <span className="bg-black text-white text-xs px-2 py-1 uppercase font-bold">
-                          Totalement sport
+                          {categoryName}
                         </span>
                       </div>
                       <h3 className="absolute bottom-3 left-3 right-3 font-bold text-white text-sm md:text-base line-clamp-3 z-10">
@@ -137,53 +157,58 @@ const NewsPage: React.FC = () => {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {allPosts?.map((post) => (
-              <div key={post.id} className="relative rounded-lg overflow-hidden hover:opacity-95 transition-opacity shadow-md bg-white dark:bg-gray-800 h-[400px]">
-                <Link to={`/article/${generateSlug(post.title.rendered, post.id)}`}>
-                  <div className="relative h-[220px]">
-                    <img
-                      src={
-                        post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
-                        "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
-                      }
-                      alt={decodeHtmlEntities(post.title.rendered)}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute top-2 left-2">
-                      <span className="bg-black text-white text-xs px-2 py-1 uppercase font-bold">
-                        Totalement sport
-                      </span>
+            {allPosts?.map((post) => {
+              const slug = generateSlug(post.title.rendered, post.id);
+              const categoryName = getCategoryName(post);
+              
+              return (
+                <div key={post.id} className="relative rounded-lg overflow-hidden hover:opacity-95 transition-opacity shadow-md bg-white dark:bg-gray-800 h-[400px]">
+                  <Link to={`/article/${generateSlug(post.title.rendered, post.id)}`}>
+                    <div className="relative h-[220px] overflow-hidden">
+                      <img
+                        src={
+                          post._embedded?.["wp:featuredmedia"]?.[0]?.source_url ||
+                          "/lovable-uploads/e9395874-6c20-46b0-914a-4110cba6d314.png"
+                        }
+                        alt={decodeHtmlEntities(post.title.rendered)}
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute top-2 left-2">
+                        <span className="bg-black text-white text-xs px-2 py-1 uppercase font-bold">
+                          {categoryName}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="p-4">
-                    <h3 className="text-lg font-bold text-primary dark:text-blue-400 mb-2 line-clamp-3">
-                      {decodeHtmlEntities(post.title.rendered)}
-                    </h3>
-                    <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center mb-3">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="h-3 w-3 mr-1"
-                        viewBox="0 0 20 20"
-                        fill="currentColor"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 001.415-1.415L11 9.586V6z"
-                          clipRule="evenodd"
-                        />
-                      </svg>
-                      {new Date(post.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                    <div className="p-4">
+                      <h3 className="text-lg font-bold text-primary dark:text-blue-400 mb-2 line-clamp-3">
+                        {decodeHtmlEntities(post.title.rendered)}
+                      </h3>
+                      <div className="text-xs text-gray-500 dark:text-gray-400 flex items-center mb-3">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-3 w-3 mr-1"
+                          viewBox="0 0 20 20"
+                          fill="currentColor"
+                        >
+                          <path
+                            fillRule="evenodd"
+                            d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 001.415-1.415L11 9.586V6z"
+                            clipRule="evenodd"
+                          />
+                        </svg>
+                        {new Date(post.date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}
+                      </div>
+                      <div
+                        className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2"
+                        dangerouslySetInnerHTML={{
+                          __html: post.excerpt.rendered,
+                        }}
+                      />
                     </div>
-                    <div
-                      className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2"
-                      dangerouslySetInnerHTML={{
-                        __html: post.excerpt.rendered,
-                      }}
-                    />
-                  </div>
-                </Link>
-              </div>
-            ))}
+                  </Link>
+                </div>
+              );
+            })}
           </div>
 
           <div className="flex justify-center gap-4 mt-12">
