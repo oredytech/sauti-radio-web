@@ -74,7 +74,7 @@ const NewsPage: React.FC = () => {
       {/* Hero Section */}
       <section className="bg-white dark:bg-gray-800 py-12 transition-colors duration-300">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:min-h-[500px]">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 h-[350px] md:h-[400px] lg:h-[450px]">
             {/* Slider - Now takes half the width with full height */}
             <div className="lg:col-span-1 h-full">
               <div className="h-full">
@@ -83,7 +83,7 @@ const NewsPage: React.FC = () => {
             </div>
 
             {/* Right Grid */}
-            <div className="lg:col-span-1">
+            <div className="lg:col-span-1 h-full">
               <div className="grid grid-cols-2 gap-4 h-full">
                 {nextFourPosts.map((post) => {
                   const slug = generateSlug(post.title.rendered, post.id);
