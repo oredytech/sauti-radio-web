@@ -91,7 +91,7 @@ const NewsPage: React.FC = () => {
                     <Link
                       key={post.id}
                       to={`/shr/article/${slug}`}
-                      className="block relative rounded-lg overflow-hidden h-full hover:opacity-90 transition-opacity"
+                      className="block relative rounded-lg overflow-hidden hover:opacity-90 transition-opacity h-[125px] md:h-[150px] lg:h-[155px] xl:h-[200px]"
                     >
                       <img
                         src={
