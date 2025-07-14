@@ -44,7 +44,7 @@ export const useYouTubePlaylists = () => {
         videoCount: item.contentDetails.itemCount
       }));
     },
-    enabled: !!YOUTUBE_API_KEY && YOUTUBE_API_KEY !== 'YOUR_YOUTUBE_API_KEY'
+    enabled: !!YOUTUBE_API_KEY
   });
 };
 
@@ -71,7 +71,7 @@ export const useYouTubePlaylistVideos = (playlistId: string) => {
         videoId: item.snippet.resourceId.videoId
       }));
     },
-    enabled: !!playlistId && !!YOUTUBE_API_KEY && YOUTUBE_API_KEY !== 'YOUR_YOUTUBE_API_KEY'
+    enabled: !!playlistId && !!YOUTUBE_API_KEY
   });
 };
 
