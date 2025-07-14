@@ -19,7 +19,7 @@ export interface YouTubePlaylist {
   videoCount: number;
 }
 
-const YOUTUBE_API_KEY = 'YOUR_YOUTUBE_API_KEY'; // À remplacer par votre clé API
+const YOUTUBE_API_KEY = 'AIzaSyAm1eWQTfpnRIPKIPw4HTZDOgWuciITktI';
 const CHANNEL_ID = 'UCVtyJTceyibnYDLQ7eCK8gg';
 
 export const useYouTubePlaylists = () => {
@@ -73,4 +73,17 @@ export const useYouTubePlaylistVideos = (playlistId: string) => {
     },
     enabled: !!playlistId && !!YOUTUBE_API_KEY && YOUTUBE_API_KEY !== 'YOUR_YOUTUBE_API_KEY'
   });
+};
+
+// Fonction pour trouver une playlist correspondant à une sous-catégorie
+export const useMatchingPlaylist = (subcategoryName: string) => {
+  const { data: playlists } = useYouTubePlaylists();
+  
+  // Trouve une playlist qui correspond au nom de la sous-catégorie
+  const matchingPlaylist = playlists?.find(playlist => 
+    playlist.title.toLowerCase().includes(subcategoryName.toLowerCase()) ||
+    subcategoryName.toLowerCase().includes(playlist.title.toLowerCase())
+  );
+  
+  return matchingPlaylist;
 };

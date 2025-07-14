@@ -1,8 +1,10 @@
+
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-import { Music, Book, GraduationCap, Heart, List, Mic, Bandage, ChevronDown, ChevronRight } from "lucide-react";
+import { Music, Book, GraduationCap, Heart, List, Mic, Bandage, ChevronDown, ChevronRight, Play } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
+import { useYouTubePlaylists, useMatchingPlaylist } from "@/hooks/useYouTube";
 
 interface EmissionCategory {
   name: string;
@@ -13,11 +15,11 @@ interface EmissionCategory {
 const EmissionsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const { t, currentLanguage } = useTranslation();
+  const navigate = useNavigate();
+  const { data: playlists } = useYouTubePlaylists();
 
   // Define categories with translations
   const getCategoryName = (frName: string): string => {
-    // For existing translations we'll keep the French names in the code
-    // and use translation keys for new components
     switch (frName) {
       case "Enseignements Bibliques":
         return currentLanguage === "fr" 
@@ -110,7 +112,7 @@ const EmissionsSection = () => {
       icon: <Heart className="h-5 w-5" />,
       subcategories: [
         "Tujenge ndoa zetu",
-        "Unyumba unao Dumu",
+        "Unyumba unao Damu",
       ],
     },
     {
@@ -144,13 +146,31 @@ const EmissionsSection = () => {
     }
   };
 
+  // Fonction pour trouver une playlist correspondante
+  const findMatchingPlaylist = (subcategoryName: string) => {
+    return playlists?.find(playlist => 
+      playlist.title.toLowerCase().includes(subcategoryName.toLowerCase()) ||
+      subcategoryName.toLowerCase().includes(playlist.title.toLowerCase())
+    );
+  };
+
+  // Gérer le clic sur une sous-catégorie
+  const handleSubcategoryClick = (subcategoryName: string) => {
+    const matchingPlaylist = findMatchingPlaylist(subcategoryName);
+    if (matchingPlaylist) {
+      navigate(`/videos/${matchingPlaylist.id}`);
+    } else {
+      console.log(`Aucune playlist trouvée pour: ${subcategoryName}`);
+    }
+  };
+
   return (
     <section id="emissions" className="py-20 relative">
       {/* Image d'arrière-plan avec overlay */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{
         backgroundImage: "url('/lovable-uploads/da98c6a9-1dbc-4df8-aded-912f4621c67b.png')"
       }} />
-      <div className="absolute inset-0 bg-black/70" /> {/* Overlay sombre pour améliorer la lisibilité */}
+      <div className="absolute inset-0 bg-black/70" />
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
@@ -195,14 +215,39 @@ const EmissionsSection = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                 {emissionCategories
                   .find((cat) => cat.name === selectedCategory)
-                  ?.subcategories.map((subcat) => (
-                    <div 
-                      key={subcat} 
-                      className="p-3 border border-gray-200 dark:border-gray-700 rounded-md hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors"
-                    >
-                      <p className="text-gray-700 dark:text-gray-300">{subcat}</p>
-                    </div>
-                  ))}
+                  ?.subcategories.map((subcat) => {
+                    const matchingPlaylist = findMatchingPlaylist(subcat);
+                    const hasPlaylist = !!matchingPlaylist;
+                    
+                    return (
+                      <div 
+                        key={subcat} 
+                        className={`p-3 border border-gray-200 dark:border-gray-700 rounded-md transition-colors ${
+                          hasPlaylist 
+                            ? "hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer bg-green-50 dark:bg-green-900/20 border-green-300 dark:border-green-700" 
+                            : "bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-600"
+                        }`}
+                        onClick={() => hasPlaylist && handleSubcategoryClick(subcat)}
+                      >
+                        <div className="flex items-center justify-between">
+                          <p className={`text-gray-700 dark:text-gray-300 ${hasPlaylist ? "font-medium" : ""}`}>
+                            {subcat}
+                          </p>
+                          {hasPlaylist && (
+                            <div className="flex items-center gap-1 text-green-600 dark:text-green-400">
+                              <Play className="h-3 w-3" />
+                              <span className="text-xs">{matchingPlaylist.videoCount}</span>
+                            </div>
+                          )}
+                        </div>
+                        {hasPlaylist && (
+                          <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                            Playlist: {matchingPlaylist.title}
+                          </p>
+                        )}
+                      </div>
+                    );
+                  })}
               </div>
               
               {emissionCategories.find((cat) => cat.name === selectedCategory)?.subcategories.length === 0 && (
