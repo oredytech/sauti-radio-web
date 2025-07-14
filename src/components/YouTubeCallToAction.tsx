@@ -1,7 +1,8 @@
 
 import React from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Youtube } from "lucide-react";
+import { Youtube, PlayCircle } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
 
 const YouTubeCallToAction = () => {
@@ -27,14 +28,27 @@ const YouTubeCallToAction = () => {
             {t('home.youtube.description')}
           </p>
           
-          <Button 
-            size="lg"
-            className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-6 h-auto"
-            onClick={() => window.open("https://www.youtube.com/@RADIOSAUTIYAINJILI?sub_confirmation=1", "_blank")}
-          >
-            <Youtube className="mr-2 h-5 w-5" />
-            {t('home.youtube.subscribe')}
-          </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg"
+              className="bg-red-600 hover:bg-red-700 text-white font-bold px-8 py-6 h-auto"
+              onClick={() => window.open("https://www.youtube.com/@UCVtyJTceyibnYDLQ7eCK8gg?sub_confirmation=1", "_blank")}
+            >
+              <Youtube className="mr-2 h-5 w-5" />
+              {t('home.youtube.subscribe')}
+            </Button>
+            
+            <Link to="/playlists">
+              <Button 
+                size="lg"
+                variant="outline"
+                className="bg-white/10 border-white/20 text-white hover:bg-white/20 font-bold px-8 py-6 h-auto"
+              >
+                <PlayCircle className="mr-2 h-5 w-5" />
+                Voir nos vidéos
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     </section>
