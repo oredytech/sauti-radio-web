@@ -5,7 +5,7 @@ import { ArrowLeft, Youtube, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import VideoCard from '@/components/youtube/VideoCard';
-import AudioPlayer from '@/components/youtube/AudioPlayer';
+import VideoPlayer from '@/components/youtube/VideoPlayer';
 import { useYouTubePlaylistVideos } from '@/hooks/useYouTube';
 import { useTranslation } from '@/hooks/useTranslation';
 import Navbar from '@/components/Navbar';
@@ -84,35 +84,32 @@ const VideosPage = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Header */}
           <div className="flex items-center gap-4 mb-8">
-            <Link to="/emissions">
+            <Link to="/">
               <Button variant="outline" size="sm">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour aux émissions
+                Retour
               </Button>
             </Link>
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Écoute Audio
+                Vidéos YouTube
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
-                {videos?.length || 0} contenus audio disponibles
+                {videos?.length || 0} vidéos disponibles
               </p>
             </div>
           </div>
 
-          {/* Audio Player */}
+          {/* Video Player */}
           {selectedVideo && (
             <div className="mb-12">
-              <AudioPlayer 
+              <VideoPlayer 
                 videoId={selectedVideo.videoId} 
                 title={selectedVideo.title}
-                thumbnail={selectedVideo.thumbnail}
               />
-              <div className="max-w-4xl mx-auto mt-6 p-4 bg-white dark:bg-gray-800 rounded-lg">
-                <h2 className="text-xl font-bold mb-3 text-gray-900 dark:text-white">
-                  {selectedVideo.title}
-                </h2>
-                <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
+              <div className="max-w-4xl mx-auto mt-4">
+                <h2 className="text-2xl font-bold mb-2">{selectedVideo.title}</h2>
+                <p className="text-gray-600 dark:text-gray-400">
                   {selectedVideo.description}
                 </p>
               </div>
@@ -126,7 +123,6 @@ const VideosPage = () => {
                 key={video.id}
                 video={video}
                 onVideoSelect={setSelectedVideoId}
-                isAudioMode={true}
               />
             ))}
           </div>
