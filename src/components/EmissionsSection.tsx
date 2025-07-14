@@ -1,10 +1,10 @@
 
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Music, Book, GraduationCap, Heart, List, Mic, Bandage, ChevronDown, ChevronRight, Play } from "lucide-react";
+import { Music, Book, GraduationCap, Heart, List, Mic, Bandage, ChevronDown, ChevronRight, Play, FolderOpen } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
-import { useYouTubePlaylists, useMatchingPlaylist } from "@/hooks/useYouTube";
+import { useYouTubePlaylists } from "@/hooks/useYouTube";
 
 interface EmissionCategory {
   name: string;
@@ -63,12 +63,18 @@ const EmissionsSection = () => {
           : currentLanguage === "en" 
             ? "Listener Opinions"
             : "Maoni ya Wasikilizaji";
+      case "Autres":
+        return currentLanguage === "fr" 
+          ? "Autres" 
+          : currentLanguage === "en" 
+            ? "Others"
+            : "Mengine";
       default:
         return frName;
     }
   };
 
-  const emissionCategories: EmissionCategory[] = [
+  const baseEmissionCategories: EmissionCategory[] = [
     {
       name: getCategoryName("Enseignements Bibliques"),
       icon: <Book className="h-5 w-5" />,
@@ -137,6 +143,37 @@ const EmissionsSection = () => {
       subcategories: [],
     },
   ];
+
+  // Calculate unmatched playlists and create the "Autres" category
+  const { emissionCategories, unmatchedPlaylists } = useMemo(() => {
+    if (!playlists) {
+      return { emissionCategories: baseEmissionCategories, unmatchedPlaylists: [] };
+    }
+
+    // Get all subcategories from base categories
+    const allSubcategories = baseEmissionCategories.flatMap(cat => cat.subcategories);
+    
+    // Find playlists that don't match any subcategory
+    const unmatched = playlists.filter(playlist => {
+      return !allSubcategories.some(subcat => 
+        playlist.title.toLowerCase().includes(subcat.toLowerCase()) ||
+        subcat.toLowerCase().includes(playlist.title.toLowerCase())
+      );
+    });
+
+    // Create "Autres" category if there are unmatched playlists
+    const autresCategory: EmissionCategory = {
+      name: getCategoryName("Autres"),
+      icon: <FolderOpen className="h-5 w-5" />,
+      subcategories: unmatched.map(playlist => playlist.title),
+    };
+
+    const finalCategories = unmatched.length > 0 
+      ? [...baseEmissionCategories, autresCategory]
+      : baseEmissionCategories;
+
+    return { emissionCategories: finalCategories, unmatchedPlaylists: unmatched };
+  }, [playlists, currentLanguage]);
 
   const toggleCategory = (categoryName: string) => {
     if (selectedCategory === categoryName) {
