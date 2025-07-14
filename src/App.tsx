@@ -13,6 +13,7 @@ import NewsPage from "./pages/NewsPage";
 import Contact from "./pages/Contact";
 import PlaylistsPage from "./pages/PlaylistsPage";
 import VideosPage from "./pages/VideosPage";
+import EmissionsPage from "./pages/EmissionsPage";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ function App() {
               <Route path="/about" element={<About />} />
               
               {/* YouTube routes */}
+              <Route path="/emissions" element={<EmissionsPage />} />
               <Route path="/playlists" element={<PlaylistsPage />} />
               <Route path="/videos/:playlistId" element={<VideosPage />} />
               
