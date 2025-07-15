@@ -1,38 +1,13 @@
 
 import { useState } from "react";
-import { Heart, CreditCard, Gift, Building, Phone, Mail, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Heart, Building, Phone, Mail, MapPin } from "lucide-react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 
 const DonPage = () => {
-  const [amount, setAmount] = useState("25");
-  const [customAmount, setCustomAmount] = useState("");
-  const [donationType, setDonationType] = useState("one-time");
-
-  const predefinedAmounts = ["10", "25", "50", "100", "250"];
-
-  const handleAmountSelect = (value: string) => {
-    setAmount(value);
-    setCustomAmount("");
-  };
-
-  const handleCustomAmountChange = (value: string) => {
-    setCustomAmount(value);
-    setAmount("");
-  };
-
-  const handleDonation = () => {
-    const finalAmount = customAmount || amount;
-    console.log(`Don de ${finalAmount}€ - Type: ${donationType}`);
-    // Ici, vous pouvez intégrer votre système de paiement
-  };
-
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Navbar />
@@ -50,83 +25,7 @@ const DonPage = () => {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Formulaire de don */}
-            <Card className="shadow-lg">
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Gift className="h-5 w-5" />
-                  Faire un don en ligne
-                </CardTitle>
-                <CardDescription>
-                  Choisissez le montant de votre don et aidez-nous à continuer notre mission
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-6">
-                {/* Type de don */}
-                <div>
-                  <Label className="text-base font-medium mb-3 block">Type de don</Label>
-                  <RadioGroup value={donationType} onValueChange={setDonationType}>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="one-time" id="one-time" />
-                      <Label htmlFor="one-time">Don unique</Label>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <RadioGroupItem value="monthly" id="monthly" />
-                      <Label htmlFor="monthly">Don mensuel</Label>
-                    </div>
-                  </RadioGroup>
-                </div>
-
-                {/* Montants prédéfinis */}
-                <div>
-                  <Label className="text-base font-medium mb-3 block">Montant</Label>
-                  <div className="grid grid-cols-3 gap-3 mb-4">
-                    {predefinedAmounts.map((value) => (
-                      <Button
-                        key={value}
-                        variant={amount === value ? "default" : "outline"}
-                        onClick={() => handleAmountSelect(value)}
-                        className="h-12"
-                      >
-                        {value}€
-                      </Button>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Montant personnalisé */}
-                <div>
-                  <Label htmlFor="custom-amount" className="text-base font-medium mb-2 block">
-                    Autre montant
-                  </Label>
-                  <div className="relative">
-                    <Input
-                      id="custom-amount"
-                      type="number"
-                      placeholder="Montant personnalisé"
-                      value={customAmount}
-                      onChange={(e) => handleCustomAmountChange(e.target.value)}
-                      className="pl-8"
-                    />
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">
-                      €
-                    </span>
-                  </div>
-                </div>
-
-                {/* Bouton de don */}
-                <Button 
-                  onClick={handleDonation}
-                  className="w-full h-12 text-lg font-medium"
-                  disabled={!amount && !customAmount}
-                >
-                  <CreditCard className="mr-2 h-5 w-5" />
-                  Faire un don de {customAmount || amount}€
-                </Button>
-              </CardContent>
-            </Card>
-
+          <div className="grid lg:grid-cols-2 gap-8">
             {/* Informations bancaires */}
             <Card className="shadow-lg">
               <CardHeader>
