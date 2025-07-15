@@ -11,12 +11,13 @@ import NotFound from "./pages/NotFound";
 import ArticlePage from "./pages/ArticlePage";
 import NewsPage from "./pages/NewsPage";
 import Contact from "./pages/Contact";
+import Emissions from "./pages/Emissions"; // <-- IMPORTE TA PAGE EMISSIONS
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
-    <TranslationProvider> {/* ✅ ENVELOPPAGE DES TRADUCTIONS */}
+    <TranslationProvider> {/* ✅ ENVELOPPE DES TRADUCTIONS */}
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
           <Router>
@@ -27,6 +28,7 @@ function App() {
               <Route path="/article/:slug" element={<ArticlePage />} />
               <Route path="/actualites" element={<NewsPage />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/emissions" element={<Emissions />} /> {/* <-- DÉCLARE LA ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster />
