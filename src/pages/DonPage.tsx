@@ -46,7 +46,7 @@ const DonPage = () => {
               Soutenez Radio Sauti ya Injili
             </h1>
             <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-              Votre générosité nous permet de continuer à diffuser l'Évangile et de toucher des vies à travers nos émissions.
+              Votre générosité nous permet de continuer à diffuser l&apos;Évangile et de toucher des vies à travers nos émissions.
             </p>
           </div>
 
@@ -145,22 +145,18 @@ const DonPage = () => {
                 </div>
                 <div>
                   <Label className="font-medium text-gray-700 dark:text-gray-300">Banque</Label>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Equity Bank</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">FirstBANK DRC, SA</p>
                 </div>
                 <div>
                   <Label className="font-medium text-gray-700 dark:text-gray-300">Numéro de compte</Label>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">1234567890</p>
-                </div>
-                <div>
-                  <Label className="font-medium text-gray-700 dark:text-gray-300">Code Swift</Label>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">EQBLKENA</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">00014280003010013790510</p>
                 </div>
                 
                 <Separator className="my-4" />
                 
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                   <p className="text-sm text-blue-800 dark:text-blue-200">
-                    <strong>Important :</strong> Veuillez mentionner "Don Radio Sauti ya Injili" 
+                    <strong>Important :</strong> Veuillez mentionner &quot;Don Radio Sauti ya Injili&quot; 
                     dans la référence de votre virement.
                   </p>
                 </div>
@@ -180,24 +176,20 @@ const DonPage = () => {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div>
-                  <Label className="font-medium text-gray-700 dark:text-gray-300">M-Pesa</Label>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">+254 712 345 678</p>
+                  <Label className="font-medium text-gray-700 dark:text-gray-300">Numéro 1</Label>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">+243 976 512 077</p>
                 </div>
                 <div>
-                  <Label className="font-medium text-gray-700 dark:text-gray-300">Airtel Money</Label>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">+254 734 567 890</p>
-                </div>
-                <div>
-                  <Label className="font-medium text-gray-700 dark:text-gray-300">T-Kash</Label>
-                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">+254 756 789 012</p>
+                  <Label className="font-medium text-gray-700 dark:text-gray-300">Numéro 2</Label>
+                  <p className="text-sm text-gray-600 dark:text-gray-400 font-mono">+243 993 918 000</p>
                 </div>
                 
                 <Separator className="my-4" />
                 
                 <div className="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
                   <p className="text-sm text-green-800 dark:text-green-200">
-                    <strong>Instructions :</strong> Envoyez votre don à l'un des numéros ci-dessus 
-                    et mentionnez "Don Radio" dans le message.
+                    <strong>Instructions :</strong> Envoyez votre don à l&apos;un des numéros ci-dessus 
+                    et mentionnez &quot;Don Radio&quot; dans le message.
                   </p>
                 </div>
               </CardContent>
@@ -229,7 +221,7 @@ const DonPage = () => {
                   <Phone className="h-5 w-5 text-green-600" />
                   <div>
                     <p className="font-medium">Téléphone</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">+254 712 345 678</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">+243 976 512 077</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
@@ -237,8 +229,8 @@ const DonPage = () => {
                   <div>
                     <p className="font-medium">Adresse</p>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      123 Avenue de la Paix<br />
-                      Nairobi, Kenya
+                      Goma, Nord-Kivu<br />
+                      République Démocratique du Congo
                     </p>
                   </div>
                 </div>
@@ -261,7 +253,7 @@ const DonPage = () => {
                   <div>
                     <h3 className="font-medium">10€</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Permet de diffuser l'Évangile pendant 1 heure
+                      Permet de diffuser l&apos;Évangile pendant 1 heure
                     </p>
                   </div>
                 </div>
@@ -272,7 +264,7 @@ const DonPage = () => {
                   <div>
                     <h3 className="font-medium">25€</h3>
                     <p className="text-sm text-gray-600 dark:text-gray-400">
-                      Couvre les frais d'une émission complète
+                      Couvre les frais d&apos;une émission complète
                     </p>
                   </div>
                 </div>
