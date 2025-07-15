@@ -21,3 +21,12 @@ export default defineConfig(({ mode }) => ({
     },
   },
 }));
+export default defineConfig({
+  // ...
+  build: {
+    rollupOptions: {
+      external: ['react-helmet-async']
+    }
+  }
+})
+
