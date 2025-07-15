@@ -11,7 +11,7 @@ import NotFound from "./pages/NotFound";
 import ArticlePage from "./pages/ArticlePage";
 import NewsPage from "./pages/NewsPage";
 import Contact from "./pages/Contact";
-import Emissions from "./pages/Emissions"; // <-- IMPORTE TA PAGE EMISSIONS
+import Emissions from "./pages/EmissionsPage"; // <-- IMPORTE TA PAGE EMISSIONS
 
 const queryClient = new QueryClient();
 
