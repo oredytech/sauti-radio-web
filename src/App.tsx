@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import PlaylistsPage from "./pages/PlaylistsPage";
 import VideosPage from "./pages/VideosPage";
 import EmissionsPage from "./pages/EmissionsPage";
+import DonPage from "./pages/DonPage";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +42,7 @@ function App() {
               {/* Standard pages */}
               <Route path="/actualites" element={<NewsPage />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/don" element={<DonPage />} />
               
               {/* This route will try to match a direct slug before showing 404 */}
               <Route path="/:slug" element={<ArticlePage />} />

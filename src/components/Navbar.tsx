@@ -22,13 +22,6 @@ const Navbar = () => {
     { label: t('nav.internal.gallery'), path: "/activities/gallery" },
   ];
 
-  const teamItems = [
-    { label: t('nav.team.direction'), path: "/team/direction" },
-    { label: t('nav.team.technical'), path: "/team/technical" },
-    { label: t('nav.team.editorial'), path: "/team/editorial" },
-    { label: t('nav.team.collaborators'), path: "/team/collaborators" },
-  ];
-
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
       <div className="container mx-auto px-4">
@@ -50,7 +43,7 @@ const Navbar = () => {
             <NavLink to="/emissions">{t('nav.shows')}</NavLink>
             <NavLink to="/actualites">{t('nav.news')}</NavLink>
             <DropdownMenu label={t('nav.internal')} items={internalActivitiesItems} />
-            <DropdownMenu label={t('nav.team')} items={teamItems} />
+            <NavLink to="/don">Faire un don</NavLink>
             <NavLink to="/contact">{t('nav.contact')}</NavLink>
             <NavLink to="/about">{t('nav.about')}</NavLink>
           </div>
