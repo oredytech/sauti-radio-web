@@ -14,10 +14,15 @@ export default defineConfig(({ mode }) => {
       mode === "development" && componentTagger(),
     ].filter(Boolean),
     resolve: {
-  alias: {
-      "@": path.resolve(__dirname, "./src"),
-      "react-helmet-async": path.resolve(__dirname, "node_modules/react-helmet-async"),
+      alias: {
+        "@": path.resolve(__dirname, "./src"),
+        "react-helmet-async": path.resolve(__dirname, "node_modules/react-helmet-async"),
+      },
     },
-  },
-  }; 
+    build: {
+      rollupOptions: {
+        external: ["react-helmet-async"],
+      },
+    },
+  };
 });
