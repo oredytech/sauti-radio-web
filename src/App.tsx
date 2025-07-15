@@ -12,9 +12,9 @@ import ArticlePage from "./pages/ArticlePage";
 import NewsPage from "./pages/NewsPage";
 import Contact from "./pages/Contact";
 import Emissions from "./pages/EmissionsPage"; // <-- IMPORTE TA PAGE EMISSIONS
-import Emissions from "./pages/DonPage";
-import Emissions from "./pages/PlaylistsPage";
-import Emissions from "./pages/VideosPage";
+import DonPage from "./pages/DonPage";
+import PlaylistsPage from "./pages/PlaylistsPage";
+import VideosPage from "./pages/VideosPage";
 
 const queryClient = new QueryClient();
 
