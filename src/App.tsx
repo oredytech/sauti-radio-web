@@ -13,6 +13,8 @@ import NewsPage from "./pages/NewsPage";
 import Contact from "./pages/Contact";
 import Emissions from "./pages/EmissionsPage"; // <-- IMPORTE TA PAGE EMISSIONS
 import Emissions from "./pages/DonPage";
+import Emissions from "./pages/PlaylistsPage";
+import Emissions from "./pages/VideosPage";
 
 const queryClient = new QueryClient();
 
@@ -30,7 +32,9 @@ function App() {
               <Route path="/actualites" element={<NewsPage />} />
               <Route path="/contact" element={<Contact />} />
               <Route path="/emissions" element={<Emissions />} /> {/* <-- DÉCLARE LA ROUTE */}
-              <Route path="/don" element={<Don />} />
+              <Route path="/don" element={<DonPage />} /> {/* <-- DÉCLARE LA ROUTE */}
+              <Route path="/videos/:slug" element={<VideosPage />} /> {/* <-- DÉCLARE LA ROUTE */}
+              <Route path="/playlists" element={<PlaylistsPage />} /> {/* <-- DÉCLARE LA ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster />
