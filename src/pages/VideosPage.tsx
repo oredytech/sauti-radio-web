@@ -16,7 +16,13 @@ const VideosPage = () => {
   const { t } = useTranslation();
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   
+  console.log('Current playlistId:', playlistId);
+  
   const { data: videos, isLoading, error } = useYouTubePlaylistVideos(playlistId || '');
+
+  console.log('Videos data:', videos);
+  console.log('Loading state:', isLoading);
+  console.log('Error state:', error);
 
   if (isLoading) {
     return (
@@ -52,6 +58,7 @@ const VideosPage = () => {
   }
 
   if (error) {
+    console.error('YouTube API Error:', error);
     return (
       <>
         <Navbar />
@@ -62,10 +69,13 @@ const VideosPage = () => {
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               Impossible de charger les vidéos de cette playlist.
             </p>
-            <Link to="/">
+            <p className="text-sm text-gray-500 mb-4">
+              ID de playlist: {playlistId}
+            </p>
+            <Link to="/playlists">
               <Button>
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour à l'accueil
+                Retour aux playlists
               </Button>
             </Link>
           </div>
@@ -75,7 +85,31 @@ const VideosPage = () => {
     );
   }
 
-  const selectedVideo = selectedVideoId ? videos?.find(v => v.videoId === selectedVideoId) : videos?.[0];
+  if (!videos || videos.length === 0) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <Youtube className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Aucune vidéo trouvée</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Cette playlist ne contient aucune vidéo.
+            </p>
+            <Link to="/playlists">
+              <Button>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Retour aux playlists
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const selectedVideo = selectedVideoId ? videos.find(v => v.videoId === selectedVideoId) : videos[0];
 
   return (
     <>
@@ -84,7 +118,7 @@ const VideosPage = () => {
         <div className="container mx-auto px-4 py-8">
           {/* Header */}
           <div className="flex items-center gap-4 mb-8">
-            <Link to="/">
+            <Link to="/playlists">
               <Button variant="outline" size="sm">
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Retour
@@ -95,7 +129,7 @@ const VideosPage = () => {
                 Vidéos YouTube
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
-                {videos?.length || 0} vidéos disponibles
+                {videos.length} vidéos disponibles
               </p>
             </div>
           </div>
@@ -118,7 +152,7 @@ const VideosPage = () => {
 
           {/* Videos Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {videos?.map((video) => (
+            {videos.map((video) => (
               <VideoCard
                 key={video.id}
                 video={video}
