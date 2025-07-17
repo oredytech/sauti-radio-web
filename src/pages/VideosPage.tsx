@@ -8,7 +8,7 @@ import RadioPlayer from "@/components/RadioPlayer";
 import { YouTubeVideo } from '@/lib/youtube';
 import { formatViewCount } from '@/lib/utils';
 import { Card, CardContent } from "@/components/ui/card";
-import ReactPlayer from 'react-player/youtube';
+import ReactPlayer from 'react-player';
 
 const VideosPage = () => {
   const [videos, setVideos] = useState<YouTubeVideo[]>([]);
@@ -134,13 +134,12 @@ const VideosPage = () => {
               {selectedVideo && (
                 <Card>
                   <CardContent className="p-0">
-                    <div className="aspect-video">
+                    <div className="aspect-video relative">
                       <ReactPlayer
                         url={`https://www.youtube.com/watch?v=${selectedVideo.id}`}
                         width="100%"
                         height="100%"
                         controls
-                        style={{ position: 'absolute', top: 0, left: 0 }}
                         config={{
                           youtube: {
                             playerVars: { 
@@ -160,7 +159,7 @@ const VideosPage = () => {
                         {selectedVideo.description}
                       </p>
                       <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
-                        <span>{formatViewCount(parseInt(selectedVideo.viewCount))} vues</span>
+                        <span>{formatViewCount(selectedVideo.viewCount)} vues</span>
                         <span>{new Date(selectedVideo.publishedAt).toLocaleDateString('fr-FR')}</span>
                       </div>
                     </div>
@@ -196,7 +195,7 @@ const VideosPage = () => {
                           {video.title}
                         </h4>
                         <div className="text-xs text-gray-500 dark:text-gray-400">
-                          <p>{formatViewCount(parseInt(video.viewCount))} vues</p>
+                          <p>{formatViewCount(video.viewCount)} vues</p>
                           <p>{new Date(video.publishedAt).toLocaleDateString('fr-FR')}</p>
                         </div>
                       </div>
