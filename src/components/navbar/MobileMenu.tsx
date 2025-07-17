@@ -13,11 +13,6 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
   const closeMenu = () => setIsOpen(false);
   const { t } = useTranslation();
 
-  const internalActivitiesItems = [
-    { label: t('nav.internal.info'), path: "/activities/internal-info" },
-    { label: t('nav.internal.gallery'), path: "/activities/gallery" },
-  ];
-
   const teamItems = [
     { label: t('nav.team.direction'), path: "/team/direction" },
     { label: t('nav.team.technical'), path: "/team/technical" },
@@ -37,13 +32,6 @@ const MobileMenu = ({ isOpen, setIsOpen }: MobileMenuProps) => {
         <Link to="/actualites" className="block px-3 py-2 rounded-md text-base font-medium text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800" onClick={closeMenu}>
           {t('nav.news')}
         </Link>
-        
-        <DropdownMenu 
-          label={t('nav.internal')} 
-          items={internalActivitiesItems} 
-          isMobile={true} 
-          onClick={closeMenu} 
-        />
         
         <DropdownMenu 
           label={t('nav.team')} 
