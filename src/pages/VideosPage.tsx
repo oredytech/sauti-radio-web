@@ -1,26 +1,28 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Play, Eye, Clock } from 'lucide-react';
+import { ArrowLeft, Youtube, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import VideoCard from '@/components/youtube/VideoCard';
 import VideoPlayer from '@/components/youtube/VideoPlayer';
 import { useYouTubePlaylistVideos } from '@/hooks/useYouTube';
 import { useTranslation } from '@/hooks/useTranslation';
-import { formatViewCount, formatDuration } from '@/lib/utils';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import RadioPlayer from '@/components/RadioPlayer';
 
 const VideosPage = () => {
   const { playlistId } = useParams<{ playlistId: string }>();
   const { t } = useTranslation();
-  const { data: videos, isLoading, error } = useYouTubePlaylistVideos(playlistId);
-  const [selectedVideoId, setSelectedVideoId] = React.useState<string | null>(null);
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  
+  console.log('Current playlistId:', playlistId);
+  
+  const { data: videos, isLoading, error } = useYouTubePlaylistVideos(playlistId || '');
 
-  const handleVideoSelect = (videoId: string) => {
-    setSelectedVideoId(videoId);
-  };
+  console.log('Videos data:', videos);
+  console.log('Loading state:', isLoading);
+  console.log('Error state:', error);
 
   if (isLoading) {
     return (
@@ -29,62 +31,85 @@ const VideosPage = () => {
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
           <div className="container mx-auto px-4 py-8">
             <div className="flex items-center gap-4 mb-8">
-              <Link to="/playlists">
-                <Button variant="outline" size="sm">
-                  <ArrowLeft className="w-4 h-4 mr-2" />
-                  {t('common.back')}
-                </Button>
-              </Link>
+              <Skeleton className="h-10 w-32" />
               <Skeleton className="h-8 w-64" />
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
+            
+            {/* Video player skeleton */}
+            <div className="mb-12">
+              <Skeleton className="aspect-video w-full max-w-4xl mx-auto rounded-lg" />
+            </div>
+            
+            {/* Video grid skeleton */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {Array.from({ length: 8 }).map((_, i) => (
                 <div key={i} className="space-y-4">
                   <Skeleton className="aspect-video rounded-lg" />
                   <Skeleton className="h-4 w-full" />
-                  <div className="flex items-center gap-2">
-                    <Eye className="w-4 h-4 text-gray-400" />
-                    <Skeleton className="h-4 w-12" />
-                    <Clock className="w-4 h-4 text-gray-400" />
-                    <Skeleton className="h-4 w-12" />
-                  </div>
+                  <Skeleton className="h-4 w-2/3" />
                 </div>
               ))}
             </div>
           </div>
         </div>
         <Footer />
-        <RadioPlayer />
       </>
     );
   }
 
-  if (error || !videos?.length) {
+  if (error) {
+    console.error('YouTube API Error:', error);
     return (
       <>
         <Navbar />
         <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
           <div className="text-center">
-            <h2 className="text-2xl font-bold mb-2">
-              {t('youtube.noVideos')}
-            </h2>
+            <Youtube className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Erreur de chargement</h2>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              {t('youtube.checkPlaylist')}
+              Impossible de charger les vidéos de cette playlist.
+            </p>
+            <p className="text-sm text-gray-500 mb-4">
+              ID de playlist: {playlistId}
             </p>
             <Link to="/playlists">
               <Button>
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                {t('common.backToPlaylists')}
+                Retour aux playlists
               </Button>
             </Link>
           </div>
         </div>
         <Footer />
-        <RadioPlayer />
       </>
     );
   }
+
+  if (!videos || videos.length === 0) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <Youtube className="w-16 h-16 text-gray-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Aucune vidéo trouvée</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Cette playlist ne contient aucune vidéo.
+            </p>
+            <Link to="/playlists">
+              <Button>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Retour aux playlists
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const selectedVideo = selectedVideoId ? videos.find(v => v.videoId === selectedVideoId) : videos[0];
 
   return (
     <>
@@ -96,40 +121,48 @@ const VideosPage = () => {
             <Link to="/playlists">
               <Button variant="outline" size="sm">
                 <ArrowLeft className="w-4 h-4 mr-2" />
-                {t('common.back')}
+                Retour
               </Button>
             </Link>
             <div>
               <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                {videos[0]?.playlistTitle}
+                Vidéos YouTube
               </h1>
               <p className="text-gray-600 dark:text-gray-400">
-                {t('youtube.videosInPlaylist', { count: videos.length })}
+                {videos.length} vidéos disponibles
               </p>
             </div>
           </div>
 
           {/* Video Player */}
-          {selectedVideoId ? (
-            <VideoPlayer videoId={selectedVideoId} />
-          ) : (
-            <VideoPlayer videoId={videos[0]?.videoId} />
+          {selectedVideo && (
+            <div className="mb-12">
+              <VideoPlayer 
+                videoId={selectedVideo.videoId} 
+                title={selectedVideo.title}
+              />
+              <div className="max-w-4xl mx-auto mt-4">
+                <h2 className="text-2xl font-bold mb-2">{selectedVideo.title}</h2>
+                <p className="text-gray-600 dark:text-gray-400">
+                  {selectedVideo.description}
+                </p>
+              </div>
+            </div>
           )}
 
-          {/* Video List */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+          {/* Videos Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {videos.map((video) => (
               <VideoCard
-                key={video.videoId}
+                key={video.id}
                 video={video}
-                onClick={() => handleVideoSelect(video.videoId)}
+                onVideoSelect={setSelectedVideoId}
               />
             ))}
           </div>
         </div>
       </div>
       <Footer />
-      <RadioPlayer />
     </>
   );
 };

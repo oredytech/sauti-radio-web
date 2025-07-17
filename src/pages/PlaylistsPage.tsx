@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, Youtube, Loader2 } from 'lucide-react';
@@ -8,7 +9,6 @@ import { useYouTubePlaylists } from '@/hooks/useYouTube';
 import { useTranslation } from '@/hooks/useTranslation';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import RadioPlayer from '@/components/RadioPlayer';
 
 const PlaylistsPage = () => {
   const { t } = useTranslation();
@@ -37,7 +37,6 @@ const PlaylistsPage = () => {
           </div>
         </div>
         <Footer />
-        <RadioPlayer />
       </>
     );
   }
@@ -62,7 +61,6 @@ const PlaylistsPage = () => {
           </div>
         </div>
         <Footer />
-        <RadioPlayer />
       </>
     );
   }
@@ -109,7 +107,6 @@ const PlaylistsPage = () => {
         </div>
       </div>
       <Footer />
-      <RadioPlayer />
     </>
   );
 };

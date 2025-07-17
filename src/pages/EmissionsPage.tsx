@@ -1,182 +1,248 @@
-import React from "react";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
-import { Helmet } from "react-helmet-async";
-import { useTranslation } from "@/hooks/useTranslation";
 
-const EmissionsPage: React.FC = () => {
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { ArrowLeft, Youtube, Loader2, Radio } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Skeleton } from '@/components/ui/skeleton';
+import PlaylistCard from '@/components/youtube/PlaylistCard';
+import { useYouTubePlaylists } from '@/hooks/useYouTube';
+import { useTranslation } from '@/hooks/useTranslation';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+
+// Emissions avec leurs sous-catégories
+const emissions = [
+  {
+    id: 1,
+    name: "Enseignements",
+    subcategories: [
+      "Enseignement du Dimanche",
+      "Enseignement du Mercredi",
+      "Enseignement Spéciaux",
+      "Formation Biblique"
+    ]
+  },
+  {
+    id: 2,
+    name: "Cultes",
+    subcategories: [
+      "Culte du Dimanche",
+      "Culte du Mercredi",
+      "Culte du Vendredi",
+      "Culte Spéciaux"
+    ]
+  },
+  {
+    id: 3,
+    name: "Prières",
+    subcategories: [
+      "Prière du Matin",
+      "Prière du Soir",
+      "Intercession",
+      "Jeûne et Prière"
+    ]
+  },
+  {
+    id: 4,
+    name: "Témoignages",
+    subcategories: [
+      "Témoignages Personnels",
+      "Guérisons",
+      "Délivrances",
+      "Témoignages Spéciaux"
+    ]
+  },
+  {
+    id: 5,
+    name: "Évangélisation",
+    subcategories: [
+      "Campagnes d'Évangélisation",
+      "Mission",
+      "Évangélisation de Rue",
+      "Conférences"
+    ]
+  }
+];
+
+const EmissionsPage = () => {
   const { t } = useTranslation();
+  const { data: playlists, isLoading, error } = useYouTubePlaylists();
 
-  const emissions = [
-    {
-      id: 1,
-      title: "Matin Spirituel",
-      time: "06:00 - 08:00",
-      description: "Commencez votre journée avec des méditations et des prières inspirantes",
-      image: "/lovable-uploads/spiritual-morning.jpg"
-    },
-    {
-      id: 2,
-      title: "Actualités Chrétiennes",
-      time: "08:00 - 09:00",
-      description: "Les dernières nouvelles du monde chrétien et de la communauté",
-      image: "/lovable-uploads/christian-news.jpg"
-    },
-    {
-      id: 3,
-      title: "Musique Gospel",
-      time: "09:00 - 12:00",
-      description: "Les meilleurs chants gospel pour élever votre âme",
-      image: "/lovable-uploads/gospel-music.jpg"
-    },
-    {
-      id: 4,
-      title: "Enseignement Biblique",
-      time: "14:00 - 15:00",
-      description: "Approfondissez votre connaissance de la Parole de Dieu",
-      image: "/lovable-uploads/bible-teaching.jpg"
-    },
-    {
-      id: 5,
-      title: "Témoignages",
-      time: "15:00 - 16:00",
-      description: "Écoutez les témoignages inspirants de nos auditeurs",
-      image: "/lovable-uploads/testimonies.jpg"
-    },
-    {
-      id: 6,
-      title: "Prière du Soir",
-      time: "20:00 - 21:00",
-      description: "Terminez votre journée dans la prière et la méditation",
-      image: "/lovable-uploads/evening-prayer.jpg"
-    }
-  ];
+  // Fonction pour trouver les playlists correspondant à une sous-catégorie
+  const getMatchingPlaylists = (subcategoryName: string) => {
+    if (!playlists) return [];
+    return playlists.filter(playlist => 
+      playlist.title.toLowerCase().includes(subcategoryName.toLowerCase()) ||
+      subcategoryName.toLowerCase().includes(playlist.title.toLowerCase())
+    );
+  };
 
-  return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
-      <Helmet>
-        <title>{t('nav.shows')} - Radio Sauti ya Injili</title>
-        <meta name="description" content="Découvrez les émissions de Radio Sauti ya Injili" />
-      </Helmet>
-      
-      <Navbar />
-      
-      {/* Hero Section */}
-      <section className="bg-white dark:bg-gray-800 py-16 transition-colors duration-300">
-        <div className="container mx-auto px-4">
-          <div className="text-center max-w-4xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6">
-              Nos Émissions
-            </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Découvrez notre programmation riche et variée, conçue pour nourrir votre foi et enrichir votre vie spirituelle
-            </p>
-          </div>
-        </div>
-      </section>
+  // Playlists non catégorisées (Autres)
+  const getUncategorizedPlaylists = () => {
+    if (!playlists) return [];
+    const allSubcategories = emissions.flatMap(emission => emission.subcategories);
+    return playlists.filter(playlist => {
+      return !allSubcategories.some(subcategory =>
+        playlist.title.toLowerCase().includes(subcategory.toLowerCase()) ||
+        subcategory.toLowerCase().includes(playlist.title.toLowerCase())
+      );
+    });
+  };
 
-      {/* Emissions Grid */}
-      <section className="py-16">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {emissions.map((emission) => (
-              <div key={emission.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
-                <div className="aspect-video bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
-                  <div className="text-white text-center">
-                    <h3 className="text-xl font-bold mb-2">{emission.title}</h3>
-                    <p className="text-lg">{emission.time}</p>
+  if (isLoading) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+          <div className="container mx-auto px-4 py-8">
+            <div className="flex items-center gap-4 mb-8">
+              <Skeleton className="h-10 w-32" />
+              <Skeleton className="h-8 w-64" />
+            </div>
+            
+            <div className="space-y-12">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="space-y-6">
+                  <Skeleton className="h-8 w-48" />
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {Array.from({ length: 4 }).map((_, j) => (
+                      <div key={j} className="space-y-4">
+                        <Skeleton className="aspect-video rounded-lg" />
+                        <Skeleton className="h-4 w-full" />
+                        <Skeleton className="h-4 w-2/3" />
+                      </div>
+                    ))}
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-3">
-                    {emission.title}
-                  </h3>
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
-                    {emission.description}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-blue-600 dark:text-blue-400">
-                      {emission.time}
-                    </span>
-                    <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
-                      En direct
-                    </span>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Schedule Section */}
-      <section className="py-16 bg-white dark:bg-gray-800">
-        <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              Grille des Programmes
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Retrouvez tous vos programmes préférés selon notre grille horaire
-            </p>
-          </div>
-          
-          <div className="max-w-4xl mx-auto">
-            <div className="bg-gray-50 dark:bg-gray-700 rounded-lg p-6">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                    Lundi - Vendredi
-                  </h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Matin Spirituel</span>
-                      <span className="text-gray-600 dark:text-gray-300">06:00 - 08:00</span>
-                    </li>
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Actualités Chrétiennes</span>
-                      <span className="text-gray-600 dark:text-gray-300">08:00 - 09:00</span>
-                    </li>
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Musique Gospel</span>
-                      <span className="text-gray-600 dark:text-gray-300">09:00 - 12:00</span>
-                    </li>
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Enseignement Biblique</span>
-                      <span className="text-gray-600 dark:text-gray-300">14:00 - 15:00</span>
-                    </li>
-                  </ul>
-                </div>
-                
-                <div>
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
-                    Weekend
-                  </h3>
-                  <ul className="space-y-3">
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Culte du Dimanche</span>
-                      <span className="text-gray-600 dark:text-gray-300">09:00 - 11:00</span>
-                    </li>
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Émission Jeunesse</span>
-                      <span className="text-gray-600 dark:text-gray-300">15:00 - 17:00</span>
-                    </li>
-                    <li className="flex justify-between items-center py-2 border-b border-gray-200 dark:border-gray-600">
-                      <span className="text-gray-900 dark:text-white">Soirée Musicale</span>
-                      <span className="text-gray-600 dark:text-gray-300">19:00 - 21:00</span>
-                    </li>
-                  </ul>
-                </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>
-      </section>
-      
+        <Footer />
+      </>
+    );
+  }
+
+  if (error) {
+    return (
+      <>
+        <Navbar />
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
+          <div className="text-center">
+            <Youtube className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <h2 className="text-2xl font-bold mb-2">Erreur de chargement</h2>
+            <p className="text-gray-600 dark:text-gray-400 mb-4">
+              Impossible de charger les playlists YouTube.
+            </p>
+            <Link to="/">
+              <Button>
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Retour à l'accueil
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <Footer />
+      </>
+    );
+  }
+
+  const uncategorizedPlaylists = getUncategorizedPlaylists();
+
+  return (
+    <>
+      <Navbar />
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+        <div className="container mx-auto px-4 py-8">
+          {/* Header */}
+          <div className="flex items-center gap-4 mb-8">
+            <Link to="/">
+              <Button variant="outline" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Retour
+              </Button>
+            </Link>
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3">
+                <Radio className="w-8 h-8 text-blue-600" />
+                Nos Émissions
+              </h1>
+              <p className="text-gray-600 dark:text-gray-400">
+                Découvrez toutes nos émissions spirituelles organisées par catégories
+              </p>
+            </div>
+          </div>
+
+          {/* Emissions par catégories */}
+          <div className="space-y-12">
+            {emissions.map((emission) => {
+              // Récupérer toutes les playlists pour cette catégorie
+              const categoryPlaylists = emission.subcategories.flatMap(subcategory => 
+                getMatchingPlaylists(subcategory)
+              );
+              
+              // Supprimer les doublons
+              const uniquePlaylists = categoryPlaylists.filter((playlist, index, self) => 
+                index === self.findIndex(p => p.id === playlist.id)
+              );
+
+              if (uniquePlaylists.length === 0) return null;
+
+              return (
+                <section key={emission.id} className="space-y-6">
+                  <div className="border-l-4 border-blue-600 pl-6">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                      {emission.name}
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400">
+                      {uniquePlaylists.length} playlist{uniquePlaylists.length > 1 ? 's' : ''} disponible{uniquePlaylists.length > 1 ? 's' : ''}
+                    </p>
+                  </div>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {uniquePlaylists.map((playlist) => (
+                      <PlaylistCard key={playlist.id} playlist={playlist} />
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
+
+            {/* Section "Autres" pour les playlists non catégorisées */}
+            {uncategorizedPlaylists.length > 0 && (
+              <section className="space-y-6">
+                <div className="border-l-4 border-gray-400 pl-6">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+                    Autres
+                  </h2>
+                  <p className="text-gray-600 dark:text-gray-400">
+                    {uncategorizedPlaylists.length} playlist{uncategorizedPlaylists.length > 1 ? 's' : ''} supplémentaire{uncategorizedPlaylists.length > 1 ? 's' : ''}
+                  </p>
+                </div>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                  {uncategorizedPlaylists.map((playlist) => (
+                    <PlaylistCard key={playlist.id} playlist={playlist} />
+                  ))}
+                </div>
+              </section>
+            )}
+          </div>
+
+          {/* Message si aucune playlist */}
+          {(!playlists || playlists.length === 0) && (
+            <div className="text-center py-12">
+              <Youtube className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Aucune émission trouvée</h3>
+              <p className="text-gray-600 dark:text-gray-400">
+                Les émissions apparaîtront ici une fois les playlists configurées.
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
       <Footer />
-      <RadioPlayer />
-    </div>
+    </>
   );
 };
 
