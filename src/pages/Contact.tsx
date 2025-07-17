@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import RadioPlayer from "@/components/RadioPlayer";
 
 // Form validation schema
 const contactFormSchema = z.object({
@@ -67,7 +68,7 @@ const Contact = () => {
       setIsSubmitting(false);
     }, 1500);
   };
-  return <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+  return <div className="min-h-screen">
       <Helmet>
         <title>Contact | Radio Sauti ya Injili</title>
         <meta name="description" content="Contactez-nous pour toute question, suggestion ou partenariat avec Radio Sauti ya Injili." />
@@ -206,6 +207,7 @@ const Contact = () => {
       </main>
       
       <Footer />
+      <RadioPlayer />
     </div>;
 };
 export default Contact;

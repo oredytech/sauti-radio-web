@@ -1,169 +1,178 @@
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Helmet } from 'react-helmet-async';
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { youtube } from "@/lib/youtube";
+import { formatViewCount } from "@/lib/utils";
+import { Clock, Eye } from "lucide-react";
+import ReactPlayer from 'react-player/youtube'
+import { useTranslation } from "@/hooks/useTranslation";
+import RadioPlayer from "@/components/RadioPlayer";
 
-import React, { useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
-import { ArrowLeft, Youtube, Loader2 } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Skeleton } from '@/components/ui/skeleton';
-import VideoCard from '@/components/youtube/VideoCard';
-import VideoPlayer from '@/components/youtube/VideoPlayer';
-import { useYouTubePlaylistVideos } from '@/hooks/useYouTube';
-import { useTranslation } from '@/hooks/useTranslation';
-import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
+interface YouTubeVideo {
+  kind: string;
+  etag: string;
+  id: {
+    kind: string;
+    videoId: string;
+  };
+  snippet: {
+    publishedAt: string;
+    channelId: string;
+    title: string;
+    description: string;
+    thumbnails: {
+      default: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      medium: {
+        url: string;
+        width: number;
+        height: number;
+      };
+      high: {
+        url: string;
+        width: number;
+        height: number;
+      };
+    };
+    channelTitle: string;
+    liveBroadcastContent: string;
+    publishTime: string;
+  };
+  statistics: {
+    viewCount: string;
+  };
+}
 
 const VideosPage = () => {
   const { playlistId } = useParams<{ playlistId: string }>();
+  const [videos, setVideos] = useState<YouTubeVideo[]>([]);
+  const [playlistTitle, setPlaylistTitle] = useState<string>("");
   const { t } = useTranslation();
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
-  
-  console.log('Current playlistId:', playlistId);
-  
-  const { data: videos, isLoading, error } = useYouTubePlaylistVideos(playlistId || '');
 
-  console.log('Videos data:', videos);
-  console.log('Loading state:', isLoading);
-  console.log('Error state:', error);
+  useEffect(() => {
+    const fetchVideos = async () => {
+      if (!playlistId) return;
 
-  if (isLoading) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-          <div className="container mx-auto px-4 py-8">
-            <div className="flex items-center gap-4 mb-8">
-              <Skeleton className="h-10 w-32" />
-              <Skeleton className="h-8 w-64" />
-            </div>
-            
-            {/* Video player skeleton */}
-            <div className="mb-12">
-              <Skeleton className="aspect-video w-full max-w-4xl mx-auto rounded-lg" />
-            </div>
-            
-            {/* Video grid skeleton */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {Array.from({ length: 8 }).map((_, i) => (
-                <div key={i} className="space-y-4">
-                  <Skeleton className="aspect-video rounded-lg" />
-                  <Skeleton className="h-4 w-full" />
-                  <Skeleton className="h-4 w-2/3" />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+      try {
+        const playlistResponse = await youtube.playlists.list({
+          id: [playlistId],
+          part: ["snippet"],
+        });
 
-  if (error) {
-    console.error('YouTube API Error:', error);
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-          <div className="text-center">
-            <Youtube className="w-16 h-16 text-red-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Erreur de chargement</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Impossible de charger les vidéos de cette playlist.
-            </p>
-            <p className="text-sm text-gray-500 mb-4">
-              ID de playlist: {playlistId}
-            </p>
-            <Link to="/playlists">
-              <Button>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour aux playlists
-              </Button>
-            </Link>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+        if (playlistResponse.data.items && playlistResponse.data.items.length > 0) {
+          setPlaylistTitle(playlistResponse.data.items[0].snippet?.title || "Playlist");
+        }
 
-  if (!videos || videos.length === 0) {
-    return (
-      <>
-        <Navbar />
-        <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center">
-          <div className="text-center">
-            <Youtube className="w-16 h-16 text-gray-600 mx-auto mb-4" />
-            <h2 className="text-2xl font-bold mb-2">Aucune vidéo trouvée</h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
-              Cette playlist ne contient aucune vidéo.
-            </p>
-            <Link to="/playlists">
-              <Button>
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour aux playlists
-              </Button>
-            </Link>
-          </div>
-        </div>
-        <Footer />
-      </>
-    );
-  }
+        const response = await youtube.playlistItems.list({
+          playlistId: playlistId,
+          part: ["snippet", "status"],
+          maxResults: 50,
+        });
 
-  const selectedVideo = selectedVideoId ? videos.find(v => v.videoId === selectedVideoId) : videos[0];
+        if (response.data.items) {
+          const videoDetails = await Promise.all(
+            response.data.items
+              .filter((item) => item.snippet?.resourceId?.kind === "youtube#video")
+              .map(async (item) => {
+                const videoId = item.snippet?.resourceId?.videoId;
+                if (!videoId) return null;
+
+                try {
+                  const videoResponse = await youtube.videos.list({
+                    id: [videoId],
+                    part: ["snippet", "statistics"],
+                  });
+
+                  if (videoResponse.data.items && videoResponse.data.items.length > 0) {
+                    return {
+                      ...videoResponse.data.items[0],
+                    };
+                  }
+                  return null;
+                } catch (error) {
+                  console.error("Error fetching video details:", error);
+                  return null;
+                }
+              })
+          );
+
+          // Filter out any null results from the video details fetch
+          const validVideos = videoDetails.filter((video): video is YouTubeVideo => video !== null);
+          setVideos(validVideos);
+        }
+      } catch (error) {
+        console.error("Error fetching playlist items:", error);
+      }
+    };
+
+    fetchVideos();
+  }, [playlistId]);
 
   return (
-    <>
+    <div className="min-h-screen">
+      <Helmet>
+        <title>{playlistTitle} - Radio Sauti ya Injili</title>
+        <meta name="description" content={`Regardez les vidéos de la playlist ${playlistTitle} sur Radio Sauti ya Injili`} />
+      </Helmet>
+
       <Navbar />
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
-        <div className="container mx-auto px-4 py-8">
-          {/* Header */}
-          <div className="flex items-center gap-4 mb-8">
-            <Link to="/playlists">
-              <Button variant="outline" size="sm">
-                <ArrowLeft className="w-4 h-4 mr-2" />
-                Retour
-              </Button>
-            </Link>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-                Vidéos YouTube
-              </h1>
-              <p className="text-gray-600 dark:text-gray-400">
-                {videos.length} vidéos disponibles
-              </p>
-            </div>
+
+      <main className="pt-20 pb-24">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+              {playlistTitle}
+            </h1>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
+              {t('videos.watch')} {playlistTitle} {t('videos.on')} Radio Sauti ya Injili
+            </p>
           </div>
 
-          {/* Video Player */}
-          {selectedVideo && (
-            <div className="mb-12">
-              <VideoPlayer 
-                videoId={selectedVideo.videoId} 
-                title={selectedVideo.title}
-              />
-              <div className="max-w-4xl mx-auto mt-4">
-                <h2 className="text-2xl font-bold mb-2">{selectedVideo.title}</h2>
-                <p className="text-gray-600 dark:text-gray-400">
-                  {selectedVideo.description}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Videos Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {videos.map((video) => (
-              <VideoCard
-                key={video.id}
-                video={video}
-                onVideoSelect={setSelectedVideoId}
-              />
+              <div key={video.id.videoId} className="group relative overflow-hidden rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300">
+                <div className="aspect-w-16 aspect-h-9">
+                  <ReactPlayer
+                    url={`https://www.youtube.com/watch?v=${video.id.videoId}`}
+                    width="100%"
+                    height="100%"
+                    style={{ position: 'absolute', top: 0, left: 0 }}
+                    config={{
+                      youtube: {
+                        playerVars: { showinfo: 0 },
+                      },
+                    }}
+                  />
+                </div>
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-70 transition-opacity duration-300 flex items-end">
+                  <div className="p-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <h3 className="text-sm font-semibold mb-1">{video.snippet.title}</h3>
+                    <div className="flex items-center text-xs space-x-3">
+                      <div className="flex items-center">
+                        <Eye className="h-4 w-4 mr-1" />
+                        <span>{formatViewCount(video.statistics.viewCount)}</span>
+                      </div>
+                      <div className="flex items-center">
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span>{new Date(video.snippet.publishedAt).toLocaleDateString()}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             ))}
           </div>
         </div>
-      </div>
+      </main>
+
       <Footer />
-    </>
+      <RadioPlayer />
+    </div>
   );
 };
 

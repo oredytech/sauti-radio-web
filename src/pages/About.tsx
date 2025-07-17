@@ -1,9 +1,9 @@
-
 import React from 'react';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import RadioControl from "@/components/RadioControl";
 import { useTranslation } from "@/hooks/useTranslation";
+import RadioPlayer from "@/components/RadioPlayer";
 
 const About = () => {
   const { t, currentLanguage } = useTranslation();
@@ -328,6 +328,7 @@ const About = () => {
         </div>
       </section>
       <Footer />
+      <RadioPlayer />
     </div>
   );
 };

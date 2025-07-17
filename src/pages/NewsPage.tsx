@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -12,6 +11,7 @@ import HeroCarousel from "@/components/news/HeroCarousel";
 import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "@/hooks/useTranslation";
+import RadioPlayer from "@/components/RadioPlayer";
 
 const NewsPage: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -63,7 +63,7 @@ const NewsPage: React.FC = () => {
   const nextFourPosts = heroPosts?.slice(5, 9) || [];
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen">
       <Helmet>
         <title>{t('news.title')}</title>
         <meta name="description" content={t('news.description')} />
@@ -145,6 +145,7 @@ const NewsPage: React.FC = () => {
       </section>
 
       <Footer />
+      <RadioPlayer />
     </div>
   );
 };
