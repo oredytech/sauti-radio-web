@@ -2,6 +2,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import RadioPlayer from "@/components/RadioPlayer";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -116,6 +117,7 @@ const GalleryPage: React.FC = () => {
       </section>
 
       <Footer />
+      <RadioPlayer />
     </div>
   );
 };
