@@ -16,6 +16,7 @@ import EmissionsPage from "./pages/EmissionsPage";
 import DonPage from "./pages/DonPage";
 import PlaylistsPage from "./pages/PlaylistsPage";
 import VideosPage from "./pages/VideosPage";
+import EquipePage from "./pages/EquipePage";
 
 const queryClient = new QueryClient();
 
@@ -36,6 +37,7 @@ function App() {
               <Route path="/don" element={<DonPage />} />
               <Route path="/videos/:playlistId" element={<VideosPage />} />
               <Route path="/playlists" element={<PlaylistsPage />} />
+              <Route path="/equipe" element={<EquipePage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
             <Toaster />

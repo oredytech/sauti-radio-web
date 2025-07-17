@@ -1,6 +1,7 @@
 
 import { MapPin, Phone, Mail, ArrowUp, Facebook, Mail as MailIcon } from "lucide-react";
 import { useTranslation } from "@/hooks/useTranslation";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -15,7 +16,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#0D0B21] text-white relative">
       <div className="container mx-auto px-4 py-12 pb-20">
-        <div className="grid md:grid-cols-3 gap-12">
+        <div className="grid md:grid-cols-4 gap-12">
           {/* Faire un don */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
@@ -35,6 +36,19 @@ const Footer = () => {
             <p className="text-gray-300">
               {t('footer.aboutDescription')}
             </p>
+          </div>
+
+          {/* Équipe */}
+          <div>
+            <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
+              Équipe
+            </h3>
+            <Link 
+              to="/equipe" 
+              className="text-gray-300 hover:text-blue-400 transition-colors block"
+            >
+              Notre équipe
+            </Link>
           </div>
 
           {/* Contacts */}
