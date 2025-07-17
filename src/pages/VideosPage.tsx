@@ -56,6 +56,11 @@ const VideosPage = () => {
   const { t } = useTranslation();
 
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
+
+  useEffect(() => {
     const fetchVideos = async () => {
       if (!playlistId) return;
 
@@ -102,7 +107,6 @@ const VideosPage = () => {
               })
           );
 
-          // Filter out any null results from the video details fetch
           const validVideos = videoDetails.filter((video): video is YouTubeVideo => video !== null);
           setVideos(validVideos);
         }
@@ -145,7 +149,11 @@ const VideosPage = () => {
                     style={{ position: 'absolute', top: 0, left: 0 }}
                     config={{
                       youtube: {
-                        playerVars: { showinfo: 0 },
+                        playerVars: { 
+                          showinfo: 0,
+                          rel: 0,
+                          modestbranding: 1
+                        },
                       },
                     }}
                   />

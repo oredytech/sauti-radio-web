@@ -1,4 +1,5 @@
 
+import { useEffect } from "react";
 import { Helmet } from 'react-helmet-async';
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -7,6 +8,11 @@ import { useTranslation } from "@/hooks/useTranslation";
 
 const GalleryPage = () => {
   const { t } = useTranslation();
+
+  useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+  }, []);
 
   const galleryImages = [
     {

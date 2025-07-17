@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster";
 import { TranslationProvider } from "@/hooks/useTranslation";
+import { useScrollToTop } from "@/hooks/useScrollToTop";
 
 // Pages
 import Index from "./pages/Index";
@@ -21,12 +22,18 @@ import GalleryPage from "./pages/GalleryPage";
 
 const queryClient = new QueryClient();
 
+const ScrollToTopWrapper = () => {
+  useScrollToTop();
+  return null;
+};
+
 function App() {
   return (
     <TranslationProvider>
       <QueryClientProvider client={queryClient}>
         <HelmetProvider>
           <Router>
+            <ScrollToTopWrapper />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/about" element={<About />} />
