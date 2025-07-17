@@ -1,3 +1,4 @@
+
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type Language = 'fr' | 'en' | 'sw';
@@ -33,17 +34,6 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.team.technical': 'Technique',
     'nav.team.editorial': 'Rédaction',
     'nav.team.collaborators': 'Collaborateurs',
-    
-    // Don/Donation page
-    'don.title': 'Faire un don',
-    'don.metaDescription': 'Soutenez Radio Sauti ya Injili par vos dons et contributions',
-    'don.description': 'Votre soutien nous permet de continuer à diffuser la Parole de Dieu et d\'atteindre plus de cœurs avec l\'Évangile.',
-    'don.makeDonation': 'Comment faire un don',
-    'don.bankDetails': 'Vous pouvez faire votre don via notre compte bancaire :',
-    'don.bankName': 'Nom de la banque',
-    'don.accountNumber': 'Numéro de compte',
-    'don.alternativeMethods': 'D\'autres méthodes de don seront bientôt disponibles.',
-    'don.contactUs': 'Pour toute question concernant les dons, contactez-nous au +243 979 665 249 ou par email.',
     
     // Emissions section
     'emissions.title': 'Nos émissions',
@@ -155,17 +145,6 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.team.editorial': 'Editorial',
     'nav.team.collaborators': 'Collaborators',
     
-    // Don/Donation page
-    'don.title': 'Make a Donation',
-    'don.metaDescription': 'Support Radio Sauti ya Injili with your donations and contributions',
-    'don.description': 'Your support allows us to continue broadcasting God\'s Word and reach more hearts with the Gospel.',
-    'don.makeDonation': 'How to make a donation',
-    'don.bankDetails': 'You can make your donation via our bank account:',
-    'don.bankName': 'Bank name',
-    'don.accountNumber': 'Account number',
-    'don.alternativeMethods': 'Other donation methods will be available soon.',
-    'don.contactUs': 'For any questions about donations, contact us at +243 979 665 249 or by email.',
-    
     // Emissions section
     'emissions.title': 'Our Shows',
     'emissions.subtitle': 'Discover our different show categories',
@@ -275,17 +254,6 @@ const translations: Record<Language, Record<string, string>> = {
     'nav.team.technical': 'Kiufundi',
     'nav.team.editorial': 'Uhariri',
     'nav.team.collaborators': 'Washirika',
-    
-    // Don/Donation page
-    'don.title': 'Changia',
-    'don.metaDescription': 'Unga mkono Radio Sauti ya Injili kwa michango yako',
-    'don.description': 'Msaada wako unatuwezesha kuendelea kutangaza Neno la Mungu na kufikia mioyo zaidi kwa Injili.',
-    'don.makeDonation': 'Jinsi ya kutoa mchango',
-    'don.bankDetails': 'Unaweza kutoa mchango wako kupitia akaunti yetu ya benki:',
-    'don.bankName': 'Jina la benki',
-    'don.accountNumber': 'Nambari ya akaunti',
-    'don.alternativeMethods': 'Njia nyingine za kutoa michango zitapatikana hivi karibuni.',
-    'don.contactUs': 'Kwa maswali yoyote kuhusu michango, wasiliana nasi kwa +243 979 665 249 au kwa barua pepe.',
     
     // Emissions section
     'emissions.title': 'Vipindi Vyetu',
