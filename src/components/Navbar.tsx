@@ -10,11 +10,17 @@ import MobileMenu from "./navbar/MobileMenu";
 import RadioControl from "./RadioControl";
 import LanguageSwitcher from "./navbar/LanguageSwitcher";
 import { useTranslation } from "@/hooks/useTranslation";
+import DropdownMenu from "./navbar/DropdownMenu";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [showSearch, setShowSearch] = useState(false);
   const { t } = useTranslation();
+
+  const internalActivitiesItems = [
+    { label: t('nav.internal.info'), path: "/activities/internal-info" },
+    { label: t('nav.internal.gallery'), path: "/activities/gallery" },
+  ];
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md sticky top-0 z-50 transition-colors duration-300">
@@ -36,9 +42,10 @@ const Navbar = () => {
             <NavLink to="/">{t('nav.home')}</NavLink>
             <NavLink to="/emissions">{t('nav.shows')}</NavLink>
             <NavLink to="/actualites">{t('nav.news')}</NavLink>
-            <NavLink to="/about">{t('nav.about')}</NavLink>
-            <NavLink to="/contact">{t('nav.contact')}</NavLink>
+            <DropdownMenu label={t('nav.internal')} items={internalActivitiesItems} />
             <NavLink to="/don">Faire un don</NavLink>
+            <NavLink to="/contact">{t('nav.contact')}</NavLink>
+            <NavLink to="/about">{t('nav.about')}</NavLink>
           </div>
 
           <div className="flex items-center space-x-2">

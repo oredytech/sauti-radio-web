@@ -1,3 +1,4 @@
+
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
@@ -16,7 +17,6 @@ import {
   fetchPostBySlug,
   fetchPosts
 } from "@/utils/wordpress";
-import RadioPlayer from "@/components/RadioPlayer";
 
 const ArticlePage = () => {
   const { slug = "" } = useParams<{ slug: string }>();
@@ -150,7 +150,7 @@ const ArticlePage = () => {
   const postUrl = window.location.href;
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <Helmet>
         <title>{translateWithBrowser(title)} | Sauti Radio</title>
         <meta name="description" content={translateWithBrowser(excerpt)} />
@@ -190,7 +190,6 @@ const ArticlePage = () => {
         </div>
       </div>
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };

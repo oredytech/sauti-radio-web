@@ -1,3 +1,4 @@
+
 import { useLocation, Link } from "react-router-dom";
 import { useEffect } from "react";
 import Navbar from "@/components/Navbar";
@@ -7,7 +8,6 @@ import { fetchPostBySlug } from "@/utils/wordpress";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "@/hooks/useTranslation";
-import RadioPlayer from "@/components/RadioPlayer";
 
 const NotFound = () => {
   const location = useLocation();
@@ -134,7 +134,7 @@ const NotFound = () => {
   }, [location.pathname, navigate, toast, t]);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900">
       <Navbar />
       <div className="flex-grow flex items-center justify-center p-4">
         <div className="max-w-md w-full text-center bg-white dark:bg-gray-800 p-8 rounded-lg shadow-lg">
@@ -157,7 +157,6 @@ const NotFound = () => {
         </div>
       </div>
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };

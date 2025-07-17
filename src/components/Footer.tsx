@@ -16,7 +16,7 @@ const Footer = () => {
   return (
     <footer className="bg-[#0D0B21] text-white relative">
       <div className="container mx-auto px-4 py-12 pb-20">
-        <div className="grid md:grid-cols-5 gap-12">
+        <div className="grid md:grid-cols-4 gap-12">
           {/* Faire un don */}
           <div>
             <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
@@ -36,31 +36,6 @@ const Footer = () => {
             <p className="text-gray-300">
               {t('footer.aboutDescription')}
             </p>
-          </div>
-
-          {/* Activités internes */}
-          <div>
-            <h3 className="text-xl font-bold mb-6 text-white border-b border-blue-800 pb-2 inline-block">
-              {t('nav.internal')}
-            </h3>
-            <ul className="space-y-2">
-              <li>
-                <Link 
-                  to="/activities/internal-info" 
-                  className="text-gray-300 hover:text-blue-400 transition-colors block"
-                >
-                  {t('nav.internal.info')}
-                </Link>
-              </li>
-              <li>
-                <Link 
-                  to="/activities/gallery" 
-                  className="text-gray-300 hover:text-blue-400 transition-colors block"
-                >
-                  {t('nav.internal.gallery')}
-                </Link>
-              </li>
-            </ul>
           </div>
 
           {/* Équipe */}
