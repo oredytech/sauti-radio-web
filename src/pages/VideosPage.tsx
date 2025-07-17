@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Helmet } from 'react-helmet-async';
@@ -7,7 +6,7 @@ import Footer from "@/components/Footer";
 import { youtube } from "@/lib/youtube";
 import { formatViewCount } from "@/lib/utils";
 import { Clock, Eye } from "lucide-react";
-import ReactPlayer from 'react-player';
+import ReactPlayer from 'react-player/youtube'
 import { useTranslation } from "@/hooks/useTranslation";
 import RadioPlayer from "@/components/RadioPlayer";
 
