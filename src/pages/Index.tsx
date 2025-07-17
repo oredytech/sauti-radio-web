@@ -7,7 +7,6 @@ import Events from "@/components/Events";
 import EmissionsSection from "@/components/EmissionsSection";
 import YouTubeCallToAction from "@/components/YouTubeCallToAction";
 import Footer from "@/components/Footer";
-import RadioPlayer from "@/components/RadioPlayer";
 
 const Index = () => {
   return (
@@ -20,7 +19,6 @@ const Index = () => {
       <AppDownload />
       <YouTubeCallToAction />
       <Footer />
-      <RadioPlayer />
     </div>
   );
 };

@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from 'react-helmet-async';
 import { Toaster } from "@/components/ui/toaster";
 import { TranslationProvider } from "@/hooks/useTranslation";
+import RadioPlayer from "@/components/RadioPlayer";
 
 // Pages
 import Index from "./pages/Index";
@@ -42,6 +43,7 @@ function App() {
               <Route path="/activities/gallery" element={<GalleryPage />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
+            <RadioPlayer />
             <Toaster />
           </Router>
         </HelmetProvider>
