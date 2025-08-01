@@ -28,7 +28,7 @@ const About = () => {
                 <h2 className="text-2xl font-bold text-primary mb-4">Préambule</h2>
                 <p className="mb-4">
                   La Radio Sauti ya Injili en sigle "RSI" étant une organisation légale de droit congolais est 
-                  constitué des hommes et des femmes engagés dans la mission d'annoncer la bonne nouvelle de Jésus Christ.
+                  constitué des hommes et des femmes engagés dans la mission d'annoncer la Bonne Nouvelle de Jésus Christ.
                 </p>
               </div>
 
@@ -36,9 +36,9 @@ const About = () => {
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Dénomination sociale</h2>
                 <p className="mb-4">
-                  La Radio Sauti ya Injili, RSI en sigle, est une Association Sans But Lucratif œuvrant dans le 
-                  secteur médiatique, travaillant avec des différentes confessions religieuses pour l'expansion 
-                  de l'Evangile de Jésus-Christ jusqu'aux extrémités de la terre.
+                  L'Association est dénommée Radio est dénommée Radio Sauti ya Injili en sigle « RSI » ; elle doit être 
+                  protégée par ses membres présents et futurs en tant qu'Association Sans But Lucratif « Asbl ». Tout usage 
+                  parallèle est prohibé.
                 </p>
               </div>
 
@@ -46,9 +46,8 @@ const About = () => {
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Adresse physique et électronique</h2>
                 <p className="mb-4">
-                  La Radio Sauti ya Injili est située dans le Quartier Mabanga-sud, sur l'avenue Mutongo N°16, 
-                  Commune de Karisimbi, Ville de Goma, dans la province du Nord-Kivu, en République Démocratique 
-                  du Congo, et précisément dans l'enceinte de l'Institut NAHURA.
+                  Le siège social de l'Association est situé dans la ville de Goma, en République Démocratique du Congo, 
+                  Province du Nord-Kivu, dans la Commune de KARISIMBI, Quartier MABANGA- SUD, Avenue MUTONGO, N°16.
                 </p>
                 <p className="mb-4">
                   Elle émet sur 89.0 MHZ FM stéréo et en ligne sur <a href="http://www.rsirdc.org" className="text-blue-600 dark:text-blue-400 hover:underline">www.rsirdc.org</a>
@@ -60,7 +59,7 @@ const About = () => {
                   Les numéros de contact officiels sont: +243 976512077 et +243 813134109.
                 </p>
                 <p className="mb-4">
-                  Son adresse mail est : <a href="mailto:rsigom2015@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">rsigom2015@gmail.com</a>
+                  Son adresse mail est : <a href="mailto:rsigoma2015@gmail.com" className="text-blue-600 dark:text-blue-400 hover:underline">rsigoma2015@gmail.com</a>
                 </p>
               </div>
 
@@ -78,10 +77,10 @@ const About = () => {
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Histoire de la Radio Sauti ya Injili</h2>
                 <p className="mb-4">
-                  La Radio Sauti ya Injili avait été conçue au Nord-Kivu en 1958 sous la dénomination de SAUTI YA HABIRI NJEMA. 
-                  À l'époque, elle fonctionnait comme un studio d'enregistrement des émissions. Celles-ci qui étaient diffusées 
+                  La Radio Sauti ya Injili avait été conçue au Nord-Kivu en 1958 sous la dénomination de SAUTI YA HABARI NJEMA. 
+                  À l'époque, elle fonctionnait comme un studio d'enregistrement des émissions. Celles-ci étaient diffusées 
                   par la suite sur les antennes de la radio du gouvernement congolais (à Bukavu et à Goma) et à d'autres radios 
-                  partenaires étrangères comme la Radio KORDAC (Bujumbura, Burundi), Radio ADDIS-ABEBA (Ethiopie), 
+                  partenaires étrangères comme la Radio CORDAC (Bujumbura, Burundi), Radio ADDIS-ABEBA (Ethiopie), 
                   Radio MORONVIA (Liberia), Radio KIJABE Kenya.
                 </p>
                 <p className="mb-4">
@@ -94,18 +93,18 @@ const About = () => {
                   Bien que créée en date du 19 mars 2001, la Radio Sauti ya Injili a été opérationnelle en date du 26 février 
                   2005 à sa propre station, autonome à Goma avec un émetteur de 250w, don d'un partenaire américain. C'est 
                   alors que la première émission a été diffusée à la Radio dans les ondes à partir des installations techniques 
-                  autonomes. Par la suite, afin d'éviter les interférances avec d'autres radios nouvellement créées, la RSI a 
+                  autonomes. Par la suite, afin d'éviter les interférences avec d'autres radios nouvellement créées, la RSI a 
                   été obligée d'acheter un émetteur d'une capacité de 1000 Watts provenant des recettes locales.
                 </p>
                 <p className="mb-4">
-                  Toutefois, l'inspiration du Président - Directeur visionnaire, Pasteur Ezra Kasereka Makoma était venue des 
-                  services des émissions qu'il rendait à d'autres radios : RTNC/Goma, RTNC/Bukavu, Radio Kijabe /KENYA, Radio 
-                  Kordak/ BUJUMBURA, Radio Monrovia/ LIBERIA et Radio Addis-Abeba/ ETHIOPIA. Notons en passant que le 
+                  Toutefois, l'inspiration du Président - Directeur visionnaire, Pasteur Ezra Kasereka Makoma consistait de produire 
+                  des émissions qu'il rendait à d'autres radios : RTNC/Goma, RTNC/Bukavu, Radio Kijabe /KENYA, Radio CORDAC/ 
+                  BUJUMBURA-BURUNDI, Radio Monrovia/ LIBERIA et Radio Addis-Abeba/ ETHIOPIA. Notons en passant que le 
                   visionnaire a été soutenu par :
                 </p>
                 <ul className="list-disc pl-6 mb-4">
-                  <li>Dr Nelson des USA, via son fils Dan NELSON qui a respecté le testament de son père et qui, ainsi, donna à la RSI, le 1er émetteur de 250 Watts en Février 2005.</li>
-                  <li>Philip BETTS, Patron de l'ESCO-ZAIRE, qui a facilité l'octroi de la parcelle et la construction des installations où fonctionnent présentement la RSI, et aussi l'érection de l'antenne émettrice.</li>
+                  <li>Dr. Nelson des USA, via son fils Dan NELSON qui a respecté le testament de son père et qui, ainsi, donna à la RSI, le 1er émetteur de 250 Watts en Février 2005.</li>
+                  <li>Philip BETTS, Patron de l'ex ESCO-ZAIRE, aujourd'hui appelé ESCO-KIVU, qui a facilité l'octroi de la parcelle et la construction des installations où fonctionnent présentement la RSI, et aussi l'érection de l'antenne émettrice.</li>
                 </ul>
               </div>
 
@@ -114,20 +113,21 @@ const About = () => {
                 <h2 className="text-2xl font-bold text-primary mb-4">Statut juridique</h2>
                 <p className="mb-4">
                   Cette station de radio « RSI » est autonome et diffuse depuis le 26 février 2005 ses émissions à partir de son 
-                  propre émetteur. Elle est régie par un Règlement Intérieur et des statuts notariés. La RSI est reconnue 
-                  officiellement suivant :
+                  propre émetteur. Elle est régie par des Statuts notariés et un Règlement Intérieur. La RSI est reconnue 
+                  officiellement par des documents suivant :
                 </p>
                 <ul className="list-disc pl-6 mb-4">
                   <li>Le récépissé de la déclaration d'exploitation n°04/CAB.MP/0002/2004 délivré à Kinshasa le 18 mai 2004 par le ministre de la presse et information.</li>
-                  <li>L'arrêté ministériel n°678/CAB/MIN/J 12004 délivre à Kinshasa le 15/1/2004 par le ministre de la justice et garde de seaux.</li>
+                  <li>L'arrêté ministériel n°687/CAB/MIN/J/2004 délivre à Kinshasa le 15 NOV 2004 par le ministre de la justice et garde de seaux.</li>
+                  <li>Le certificat d'enregistrement délivré par le Ministère du Plan et suivi de la mise en œuvre de la Révolution de la Modernité ayant une validité de deux ans.</li>
                 </ul>
                 <p className="mb-4">
-                  La Radio Sauti ya Injili est une structure qui n'évolue pas en marge, elle dispose de tous les documents 
+                  La Radio Sauti ya Injili est une structure qui n'évolue pas en vase clôt, elle dispose de tous les documents 
                   nécessaires pour exercer ses activités. C'est ainsi qu'à la fin de l'année 2006, elle a été reconnue comme 
-                  membre du RATECO (réseaux des radios et télévisions communautaires de l'Est de la RD Congo). Elle fait 
+                  membre du RATECO (réseau des radios et télévisions communautaires de l'Est de la RD Congo). Elle fait 
                   partie des membres du CORACON (Collectif des Radios et Télévisions Communautaires du Nord Kivu), du REMED 
                   (Réseau des Médias pour le Développent), l'UNPC Nord Kivu (Union Nationale de la Presse du Congo au Nord Kivu) 
-                  et bien d'autres corporations réunissant les journalistes aux niveaux provincial et national.
+                  et bien d'autres corporations réunissant les journalistes aux niveaux Provincial et National.
                 </p>
               </div>
 
@@ -161,6 +161,18 @@ const About = () => {
                 </ul>
               </div>
 
+              {/* Emblème */}
+              <div className="text-gray-600 dark:text-gray-300">
+                <h2 className="text-2xl font-bold text-primary mb-4">EMBLEME :</h2>
+                <p className="mb-2">Notre emblème (logo type) est constitué de :</p>
+                <ul className="list-disc pl-6 mb-4">
+                  <li>La Bible, ouverte source de notre inspiration par le Saint-Esprit, est la base doctrinale de nos enseignements pour le salut de l'humanité.</li>
+                  <li>La croix sur la Bible : le salut est venu de Dieu par Jésus mort sur la croix.</li>
+                  <li>Les rayons symbolisent la lumière et la puissance du Saint-Esprit pour la proclamation de la Bonne Nouvelle de Jésus-Christ.</li>
+                  <li>Le microphone symbolise la macro-chaire pour rependre la Bonne Nouvelle à travers les ondes à partir de Goma, dans la R.D Congo vers l'Afrique et dans le monde.</li>
+                </ul>
+              </div>
+
               {/* Objectifs */}
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Objectifs de la RSI</h2>
@@ -173,10 +185,10 @@ const About = () => {
                 <h3 className="text-xl font-semibold text-primary mb-2">Objectifs spécifiques :</h3>
                 <p className="mb-2">La RSI a pour objectifs spécifiques :</p>
                 <ul className="list-disc pl-6 mb-4">
-                  <li>Proclamer la bonne nouvelle de Jésus-Christ comme recommander dans l'évangile de Mathieu 28.19-20 le recommande,</li>
-                  <li>Promouvoir la paix et la cohabitation pacifique entre différentes tribus de l'EST du pays et avec les pays voisin,</li>
+                  <li>Proclamer la Bonne Nouvelle de Jésus-Christ comme recommandé dans l'évangile de Mathieu 28.19-20,</li>
+                  <li>Promouvoir la paix et la cohabitation pacifique entre différentes tribus de l'EST du pays et avec les pays voisins,</li>
                   <li>Réconcilier les familles et couples séparés, instruire la communauté sur les différentes thématiques comme le développement, la santé, l'agriculture, l'élevage et l'art culinaire, etc.</li>
-                  <li>Bénir et divertir le peuple de Dieu à travers des messages bibliques, des prédications et des chansons.</li>
+                  <li>Bénir et divertir le peuple de Dieu à travers des Messages Bibliques, des Prédications et des Chansons.</li>
                 </ul>
               </div>
 
@@ -189,59 +201,68 @@ const About = () => {
                 <ul className="list-disc pl-6 mb-4">
                   <li>Territoire de Nyiragongo : dans son entièreté,</li>
                   <li>Territoire de Rutshuru : Rugari, Rubare, Katale, Tongo, etc…</li>
-                  <li>Territoire de Masisi : Mubambiro, Sake, bihambwe, katale, Masisi centre, Ngesha, Nyabrondo, Kashebere, Kibati, Mikumbi, Mungazi, Ishunga,…</li>
+                  <li>Territoire de Masisi : Mubambiro, Sake, bihambwe, katale, Masisi centre, Ngesha, Nyabiondo,</li>
                   <li>Territoire de Lubero : Bulotwa, Kirumba-Kasando, Kipese, Kamandi, Kaseghe, Lubango, Kagheri, Lukanga,…</li>
                   <li>Territoire de Beni précisément à Mutwanga</li>
-                  <li>Territoire de Walikale précisément à Waloa-Luanda, Luberiki,</li>
+                  <li>Territoire de Walikale précisément à Waloa-Luanda, groupement Luberiki : Kashebere, Kibati, Mikumbi, Mungazi, Ishunga,…</li>
                   <li>Ville de Goma : On est également suivi fidèlement dans les 18 quartiers de la ville de Goma : Mabanga-Sud, Mabanga-Nord, Katoyi, Les Volcans, Himbi, Mikeno, Mapendo, Bujovu, Kahembe, Murara, Virunga, Majengo, Katindo, Kasika, Kyeshero, Ndosho, Mugunga et Lac-Vert.</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold text-primary mb-2">AU SUD-KIVU :</h3>
                 <p className="mb-2">Dans la Province du Sud-Kivu, la RSI est très écoutée fidèlement dans la plupart de ses territoires et d'autres endroits où les auditeurs, par le souci de nous suivre, sont obligés d'escalader des montagnes. Voici les territoires où elle est écoutée :</p>
                 <ul className="list-disc pl-6 mb-4">
-                  <li>Territoire de KALEHE : dans les localités : Minova, Muchibwe, Nyamukubi, Kitembo, Kazimba, Vahe, Buhumba, Kigoma, Kagarama, Kisinje, Chandoto, Kabuye Bwisha, Buhati, Kalungu, Sanje, Numbi, Nyakalende, Mubiri, Makengele, Karango, Kinyezire, Karango, Nyamubingwa, Nyamasasa, Busheku, Mukwija, Nyabibwe, Buzi-Bulenga, Lushebere, Shofi, Kasheke, Ibanda, Mukaba, Kirali, chihombehembe, Bulambika, Bitale, Ziralo, Nyanda, Chowero, Chambombo, chabondo, Bumbi, Chongero, etc….</li>
-                  <li>Territoire de KABARE : Dans les localités : Kabare-centre, Kabamba, Lemera, Mubingu, Kachuchu, Katana-centre, ISRSAC- Lwiro, Kayandja, Fomulac, Birava Mulashe, Miti, Kalonge, Kabisi, Murhesa, Mudaka, Kashunguri, Luhihi, Mugererebo, Mushwesshe, Mumoto, Mbombero etc…</li>
+                  <li>Territoire de KALEHE : dans les localités suivantes: Minova, Muchibwe, Nyamukubi, Kitembo, Kazimba, Vahe, Buhumba, Kigoma, Kagarama, Kisinje, Chandoto, Kabuye Bwisha, Buhati, Kalungu, Sanje, Numbi, Nyakalende, Mubiri, Makengele,Kinyezire, Karango, Nyamubingwa, Nyamasasa, Busheku, Mukwija, Nyabibwe, Buzi-Bulenga, Lushebere, Shofi, Kasheke, Ibanda, Mukaba, Kirali, chihombehembe, Bulambika, Bitale, Ziralo, Nyanda, Chowero, Chambombo, chabondo, Bumbi, Chongero, etc….</li>
+                  <li>Territoire de KABARE : Dans les localités suivantes : Kabare-centre, Kabamba, Lemera, Mubingu, Kachuchu, Katana-centre, ISRSAC- Lwiro, Kayandja, Fomulac, Birava,  Mulashe, Miti, Kalonge, Kabisi, Murhesa, Mudaka, Kashunguri, Luhihi, Mugererebo, Mushweshe, Mumosho, Mbombero etc…</li>
                   <li>Territoire D'IDJWI : Dans les deux iles, à savoir, Idwi-Nord et Idjwi-Sud</li>
                   <li>Territoire WALUNGU : Dans les localités : Walungu-Centre, Ngweshe, Nyangezi, Luwindja, Kaziba, Buhamba, etc…</li>
-                  <li>Territoire de SHABUNDA : Beaucoup des villages…</li>
                   <li>Territoire de FIZI : Fizi-centre, Baraka, Mboko, Milembwe…</li>
                   <li>Territoire ou ville d'UVIRA : Dans les localités de : Lemera, Luvungi, Sange, Mulongwe, Kamanyola, Ngomo…</li>
-                  <li>Territoire ou Ville de BUKAVU : Commune de Bagira, de Kadutu : Kharale, et d'Ibanda-Panzi.</li>
+                  <li>Territoire ou Ville de BUKAVU : Commune de Bagira, de Kadutu : Kharale, et d'Ibanda-Panzi,</li>
+                  <li>Et dans le territoire de SHABUNDA.</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold text-primary mb-2">PAYS LIMITROPHES :</h3>
                 <p className="mb-2">Dans les pays voisins de la RDC, la Radio Sauti ya Injili est fidèlement écoutée sur FM</p>
                 <ul className="list-disc pl-6 mb-4">
-                  <li>Au RWANDA : Préfectures de Gisenyi, Kibuye et Cyangugu.</li>
-                  <li>En UGANDA : à KISORO.</li>
+                  <li>Au RWANDA : District de Rubavu (Ville de Gisenyi), District de Kalonge (Ville de Kibuye), District de RUZIZI (Ville de Cyangugu).</li>
+                  <li>Au BURUNDI : dans le Bujumbura-Rural</li>
+                  <li>En UGANDA : à KISORO et Entebe</li>
                 </ul>
 
                 <h3 className="text-xl font-semibold text-primary mb-2">DANS LE MONDE :</h3>
-                <p className="mb-4">Nous sommes également suivi partout au Monde à travers notre site web : <a href="http://www.rsirdc.org" className="text-blue-600 dark:text-blue-400 hover:underline">www.rsirdc.org</a></p>
+                <p className="mb-4">Nous sommes également suivi partout au Monde à travers notre site web : <a href="http://www.rsirdc.org" className="text-blue-600 dark:text-blue-400 hover:underline">www.rsirdc.org</a>, Certains auditeurs nous appellent : Du Canada, Allemagne, Belgique, Londre, Nairobi-Kenya, Darsalam-Tanzanie, etc…</p>
               </div>
 
               {/* Langues de diffusion */}
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Langues de diffusion</h2>
-                <p className="mb-2">La station RSI diffuse ses émissions en 15 langues dont :</p>
+                <p className="mb-2">La station RSI diffuse ses émissions en 15 langues à savoir :</p>
                 <ul className="list-disc pl-6 mb-4">
                   <li>Trois internationales : Anglais, Français et Swahili ;</li>
-                  <li>Douze (12) langues locales dont : Mashi, Kihavu, kitembo, kihunde, kinande, lingala, kinyarwanda, kinyanga, kibembe, kilega, Kinyindu et Kifulero.</li>
+                  <li>Douze (12) langues locales, à savoir : Mashi, Kihavu, Kitembo, Kihunde, Kinande, Lingala, Kinyarwanda, Kinyanga, Kibembe, Kilega, Kinyindu et Kifulero.</li>
                 </ul>
               </div>
 
               {/* Services et activités */}
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Services et activités de la RSI</h2>
+                <h3 className="text-xl font-semibold text-primary mb-2">a. Services :</h3>
                 <ul className="list-disc pl-6 mb-4">
                   <li>Diffusion des enseignements bibliques et prédications ;</li>
-                  <li>Campagnes d'évangélisation avec les Eglises chrétiennes de la région ;</li>
                   <li>Diffusion des programmes éducatifs et émissions de sensibilisation en faveur de la communauté locale, régionale;</li>
+                  <li>Promotion des œuvres Gospel des artistes solo et des chorales.</li>
+                  <li>Promotion médiatique des activités entrepreneuriales de développement.</li>
+                  <li>Facilitations de la communication entre membres de la communauté.</li>
+                </ul>
+                <h3 className="text-xl font-semibold text-primary mb-2">b. Activités :</h3>
+                <ul className="list-disc pl-6 mb-4">
                   <li>Production des contenus médiatiques via nos studios de production comme des magazines, microprogrammes, des sketchs, des messages de sensibilisation, des Débats publics interactifs, des Interviews;</li>
                   <li>Diffusion en direct (Live) de vos cérémonies, grands événements et activités de sensibilisation: cultes chrétiens, rencontres, conférences chrétiennes, etc. :</li>
-                  <li>Promotion des cantiques Gospel via nos émissions ;</li>
-                  <li>Promotion et diffusion des activités de paix, de cohabitation sociale, de réconciliation et d'amour</li>
-                  <li>Promotion médiatique des activités entrepreneuriales de développement.</li>
+                  <li>Organisation des Campagnes d'Evangélisation en collaboration avec les Eglises chrétiennes amies de la région ;</li>
+                  <li>Encadrement des couples,</li>
+                  <li>Promotion et diffusion des activités de paix, de cohabitation sociale, de réconciliation et d'amour,</li>
+                  <li>Cultes d'action de grâce occasionnelles</li>
+                  <li>Affermissement des âmes.</li>
                 </ul>
               </div>
 
@@ -249,7 +270,8 @@ const About = () => {
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Des partenaires de la RSI</h2>
                 <ul className="list-disc pl-6 mb-4">
-                  <li>Le Gouvernement de la RDC via ses institutions et ses services techniques</li>
+                  <li>Le Gouvernement de la RDC via ses institutions et ses services techniques,</li>
+                  <li>Les Eglises amies,</li>
                   <li>CORACON (Collectif des Radios et Télévisions Communautaires du Nord Kivu): en renforcement des capacités des Journalistes et en dotation des matériels de production ;</li>
                   <li>REMED (Réseau des Médias pour le Développement) : en renforcement des capacités des Journalistes et en dotation des matériels de production ;</li>
                   <li>UNPC Nord Kivu (Union Nationale de la Presse du Congo au Nord Kivu): en renforcement des capacités des Journalistes ;</li>
@@ -264,10 +286,10 @@ const About = () => {
                 <p className="mb-2">La RSI collabore avec d'autres radios, surtout les radios chrétiennes, à travers le monde en diffusant gratuitement leurs émissions sur les antennes il s'agit :</p>
                 <ul className="list-disc pl-6 mb-4">
                   <li>La RTNC Kinshasa : chaîne officielle du gouvernement de la RDC</li>
-                  <li>La voix de l'évangile/France</li>
+                  <li>Radio La Voix de l'Evangile/France</li>
                   <li>Vivre la vérité/Roger Cook London</li>
                   <li>Mungu kwanza Online Radio de Tanzanie</li>
-                  <li>Redio Sauti ya Injili Moshi de Tanzanie.</li>
+                  <li>Redio Sauti ya Injili Moshi/Kilimanjaro en Tanzanie.</li>
                   <li>Radio Evangélique BULUMBI de BUTEMBO</li>
                 </ul>
               </div>
@@ -304,7 +326,7 @@ const About = () => {
               {/* Besoins */}
               <div className="text-gray-600 dark:text-gray-300">
                 <h2 className="text-2xl font-bold text-primary mb-4">Etat des besoins actuels</h2>
-                <p className="mb-2">La RSI ne cesse de presenter ses principaux besoins pour un meilleur avancement. Il s'agit de :</p>
+                <p className="mb-2">La RSI ne cesse de présenter ses principaux besoins pour un meilleur avancement. Il s'agit de :</p>
                 <ul className="list-disc pl-6 mb-4">
                   <li>Disposer d'une station de Télévision ;</li>
                   <li>Construction d'un bâtiment en étages pour abriter les studios modernes et les bureaux administratifs ;</li>
@@ -322,6 +344,16 @@ const About = () => {
                   Afin d'améliorer et pérenniser ses services, la RSI invite toutes personnes de bonne volonté d'apporter sa contribution : 
                   Financière, Matérielle, Technique, Morale et Spirituelle.
                 </p>
+              </div>
+
+              {/* Audit interne */}
+              <div className="text-gray-600 dark:text-gray-300">
+                <h2 className="text-2xl font-bold text-primary mb-4">Audit interne</h2>
+                <ul className="list-disc pl-6 mb-4">
+                  <li>Présidente : Madame KIVALYA DEKILA</li>
+                  <li>Vice-Président : Ir KAMBALE BALIKWISHA Frédéric</li>
+                  <li>Secrétaire : Pasteur KABUYAYA KABANDA</li>
+                </ul>
               </div>
             </div>
           </div>
