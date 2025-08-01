@@ -113,7 +113,7 @@ const DonPage = () => {
                   <Mail className="h-5 w-5 text-blue-600" />
                   <div>
                     <p className="font-medium">Email</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">dons@sautiYaInjili.org</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-400">rsirdc205@gmail.com</p>
                   </div>
                 </div>
                 <div className="flex items-center space-x-3">
