@@ -19,7 +19,7 @@ export interface YouTubePlaylist {
   videoCount: number;
 }
 
-const YOUTUBE_API_KEY = 'AIzaSyAm1eWQTfpnRIPKIPw4HTZDOgWuciITktI';
+const YOUTUBE_API_KEY = 'AIzaSyDlW76AwS46zEg6KnNB3EUh9HE5OGrQiDw';
 const CHANNEL_ID = 'UCVtyJTceyibnYDLQ7eCK8gg';
 
 export const useYouTubePlaylists = () => {
