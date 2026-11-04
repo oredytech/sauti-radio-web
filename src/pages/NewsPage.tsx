@@ -1,7 +1,6 @@
 
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -9,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ArticleCard from "@/components/news/ArticleCard";
 import HeroCarousel from "@/components/news/HeroCarousel";
-import { WordPressPost, decodeHtmlEntities, generateSlug } from "@/utils/wordpress";
+import { WordPressPost, decodeHtmlEntities, generateSlug, fetchPosts } from "@/utils/wordpress";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -18,23 +17,17 @@ const NewsPage: React.FC = () => {
   const perPage = 12;
   const { t } = useTranslation();
 
-  const { data: allPosts, isLoading } = useQuery({
+  const { data: allPosts, isLoading, isError } = useQuery({
     queryKey: ["all-posts", page],
     queryFn: async () => {
-      const response = await axios.get<WordPressPost[]>(
-        `https://rsirdc.net/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`
-      );
-      return response.data;
+      return await fetchPosts(page, perPage);
     },
   });
 
   const { data: heroPosts } = useQuery({
     queryKey: ["hero-posts"],
     queryFn: async () => {
-      const response = await axios.get<WordPressPost[]>(
-        "https://rsirdc.net/wp-json/wp/v2/posts?_embed&per_page=10"
-      );
-      return response.data;
+      return await fetchPosts(1, 10);
     },
   });
 
