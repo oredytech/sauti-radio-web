@@ -19,6 +19,11 @@ export interface WordPressPost {
   };
 }
 
+// Single source of truth for the WordPress site that provides our articles.
+// Change this one line and every article page, list and share link follows.
+export const WP_SITE_URL = "https://blog.rsirdc.org";
+export const WP_API_URL = `${WP_SITE_URL}/wp-json/wp/v2`;
+
 export const decodeHtmlEntities = (html: string) => {
   const txt = document.createElement('textarea');
   txt.innerHTML = html;
@@ -59,7 +64,7 @@ export const extractIdFromSlug = (slug: string): number | null => {
 export const fetchPostById = async (id: number): Promise<WordPressPost> => {
   try {
     const response = await fetch(
-      `https://rsirdc.net/wp-json/wp/v2/posts/${id}?_embed`
+      `${WP_API_URL}/posts/${id}?_embed`
     );
     
     if (!response.ok) {
@@ -81,7 +86,7 @@ export const fetchPostBySlug = async (slug: string): Promise<WordPressPost | nul
     
     // Try to fetch posts with this slug
     const response = await fetch(
-      `https://rsirdc.net/wp-json/wp/v2/posts?slug=${sanitizedSlug}&_embed`
+      `${WP_API_URL}/posts?slug=${sanitizedSlug}&_embed`
     );
     
     if (!response.ok) {
@@ -102,7 +107,7 @@ export const fetchPostBySlug = async (slug: string): Promise<WordPressPost | nul
 export const fetchPosts = async (page: number = 1, perPage: number = 10): Promise<WordPressPost[]> => {
   try {
     const response = await fetch(
-      `https://rsirdc.net/wp-json/wp/v2/posts?_embed&per_page=${perPage}&page=${page}`
+      `${WP_API_URL}/posts?_embed&per_page=${perPage}&page=${page}`
     );
     
     if (!response.ok) {

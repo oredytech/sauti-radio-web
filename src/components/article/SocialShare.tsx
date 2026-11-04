@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { Facebook, Twitter, Linkedin, Mail, Copy, Share2 } from "lucide-react";
+import { WP_SITE_URL } from "@/utils/wordpress";
 
 interface SocialShareProps {
   url: string;
@@ -38,8 +39,8 @@ const SocialShare = ({ url, title }: SocialShareProps) => {
         return url;
       }
       
-      // Use rsirdc.net domain for article sharing without the /article/ part
-      return `https://rsirdc.net/${slug}`;
+      // Share the article from the blog itself, without the /article/ part
+      return `${WP_SITE_URL}/${slug}`;
     } catch (err) {
       console.error("Error formatting URL:", err);
       // If URL parsing fails, return the original URL
