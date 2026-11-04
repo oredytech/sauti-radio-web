@@ -113,10 +113,10 @@ const NewsPage: React.FC = () => {
           {isError ? (
             <div className="rounded-lg border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-10 text-center">
               <h3 className="text-lg font-semibold text-primary dark:text-blue-400 mb-2">
-                {t('common.error')}
+                {t('404.error')}
               </h3>
               <p className="text-gray-600 dark:text-gray-300">
-                {t('common.errorDesc')}
+                {t('404.errorDesc')}
               </p>
             </div>
           ) : (
