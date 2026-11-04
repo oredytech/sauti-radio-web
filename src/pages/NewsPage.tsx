@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import ArticleCard from "@/components/news/ArticleCard";
 import HeroCarousel from "@/components/news/HeroCarousel";
-import { WordPressPost, decodeHtmlEntities, generateSlug, fetchPosts } from "@/utils/wordpress";
+import { decodeHtmlEntities, generateSlug, fetchPosts } from "@/utils/wordpress";
 import { Helmet } from "react-helmet-async";
 import { useTranslation } from "@/hooks/useTranslation";
 
@@ -110,11 +110,22 @@ const NewsPage: React.FC = () => {
       {/* Articles Grid */}
       <section className="py-12">
         <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {allPosts?.map((post) => (
-              <ArticleCard key={post.id} post={post} />
-            ))}
-          </div>
+          {isError ? (
+            <div className="rounded-lg border border-dashed border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 p-10 text-center">
+              <h3 className="text-lg font-semibold text-primary dark:text-blue-400 mb-2">
+                {t('common.error')}
+              </h3>
+              <p className="text-gray-600 dark:text-gray-300">
+                {t('common.errorDesc')}
+              </p>
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {allPosts?.map((post) => (
+                <ArticleCard key={post.id} post={post} />
+              ))}
+            </div>
+          )}
 
           <div className="flex justify-center gap-4 mt-12">
             <Button
