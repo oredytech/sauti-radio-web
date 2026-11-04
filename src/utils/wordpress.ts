@@ -21,7 +21,7 @@ export interface WordPressPost {
 
 // Single source of truth for the WordPress site that provides our articles.
 // Change this one line and every article page, list and share link follows.
-export const WP_SITE_URL = "https://blog.rsirdc.org";
+export const WP_SITE_URL = "https://rsirdc.org";
 export const WP_API_URL = `${WP_SITE_URL}/wp-json/wp/v2`;
 
 export const decodeHtmlEntities = (html: string) => {
